@@ -8,7 +8,7 @@ public class UserCanvasSelectObjects : MonoBehaviour
     bool wristUIActive = true;
     public GameObject rightHand;
 
-    public GameObject cubeToInstantiate;
+    public GameObject moleculeToInstantiate;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +36,6 @@ public class UserCanvasSelectObjects : MonoBehaviour
 
     public void GenerateCube()
     {
-        GameObject cube = Instantiate(cubeToInstantiate, rightHand.transform.position, Quaternion.identity);
+        GameObject cube = Instantiate(moleculeToInstantiate, rightHand.transform.position, Quaternion.identity);
     }
 }

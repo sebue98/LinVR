@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 8828265861121330368}
   - component: {fileID: 8828265861121330369}
   - component: {fileID: 8828265861121330370}
-  - component: {fileID: 1961560029390394298}
   m_Layer: 0
   m_Name: Grabable Cube
   m_TagString: CubeToDupe
@@ -241,19 +240,3 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
---- !u!114 &1961560029390394298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8828265861121330371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48ae76850cfe97445b93afb1fbf68a29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collidedObject: {fileID: 0}
-  existingCube: {fileID: 0}
-  newCubePrefab: {fileID: 8828265861121330371, guid: c1d473fb0c3f3844f90a7446e46a5db5,
-    type: 3}

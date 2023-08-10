@@ -6,6 +6,16 @@ TagManager:
   tags:
   - CubeToDupe
   - AttachPoint
+  - Coal
+  - Hydrogen1
+  - Hydrogen2
+  - Hydrogen3
+  - Hydrogen4
+  - Molecule
+  - Connection1
+  - Connection2
+  - Connection3
+  - Connection4
   layers:
   - Default
   - TransparentFX
