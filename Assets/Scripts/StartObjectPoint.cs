@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class StartObjectPoint : MonoBehaviour
 {
-    public GameObject replacementObject;
+    public GameObject fixedObject;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +27,7 @@ public class StartObjectPoint : MonoBehaviour
             Destroy(gameObject);
             Destroy(collision.gameObject);
 
-            GameObject newObject = Instantiate(replacementObject, position, rotation);
+            GameObject newObject = Instantiate(fixedObject, position, rotation);
             ChainMaster.Instance.carbons.Add(new Carbon());
         }
     }

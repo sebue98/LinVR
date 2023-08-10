@@ -9,21 +9,12 @@ public class HydrogenCollision : MonoBehaviour
         //This line gives us the collided sub object of the molecule held in hand
         Collider myCollider = collision.GetContact(0).thisCollider;
 
-
+        /*
         //This line checks with which of the 4 molecules we have collided with
         Collider collider = collision.collider;
         if (collider.CompareTag("Hydrogen1"))
         {
             Debug.Log(gameObject.tag + " Collided with Hydrogen 1");
-            for (var i = gameObject.transform.childCount - 1; i >= 0; i--)
-            {
-                // only destroy tagged object
-                if (gameObject.transform.GetChild(i).gameObject.CompareTag("Hydrogen1"))
-                    {
-                    Destroy(gameObject.transform.GetChild(i).gameObject);
-                    Destroy(gameObject.transform.GetChild(i+1).gameObject);
-                }
-            }
         }
         else if (collider.CompareTag("Hydrogen2"))
         {
@@ -38,7 +29,7 @@ public class HydrogenCollision : MonoBehaviour
             Debug.Log(gameObject.tag + " Collided with Hydrogen 4");
         }
 
-        Debug.Log(gameObject.name + " collided with: " + collision.gameObject.name);
+        Debug.Log(gameObject.name + " collided with: " + collision.gameObject.name);*/
     }
 }
 
