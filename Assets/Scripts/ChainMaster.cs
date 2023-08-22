@@ -36,9 +36,7 @@ public class ChainMaster : MonoBehaviour
 
     public GameObject FindObjectByName(string objectName)
     {
-        // Find the object with the specified name in the list
         GameObject foundObject = carbonGameObjects.Find(obj => obj.name == objectName);
-
         return foundObject;
     }
 
@@ -50,7 +48,7 @@ public class ChainMaster : MonoBehaviour
             {
                 float xLength = fixedMolecule.transform.GetChild(i + 1).gameObject.GetComponent<Renderer>().bounds.size.x;
                 float yLength = fixedMolecule.transform.GetChild(i + 1).gameObject.GetComponent<Renderer>().bounds.size.y;
-                Vector3 childPosition = changeDirectionToMoveMolecule(fixedMolecule.transform.GetChild(i).gameObject.transform.position, xLength, yLength, tagToSearch);
+                Vector3 childPosition = ChangeDirectionToMoveMolecule(fixedMolecule.transform.GetChild(i).gameObject.transform.position, xLength, yLength, tagToSearch);
 
                 Transform childTransform = fixedMolecule.transform.GetChild(i).gameObject.transform;
                 Destroy(fixedMolecule.transform.GetChild(i).gameObject);
@@ -60,12 +58,12 @@ public class ChainMaster : MonoBehaviour
                 ChainMaster.Instance.counter++;
                 ChainMaster.Instance.carbons.Add(new Carbon());
                 ChainMaster.Instance.carbonGameObjects.Add(instantiatedMolecule);
-                adaptInstantiatedMolecule(instantiatedMolecule, tagOfMoleculeToAdapt);
+                AdaptInstantiatedMolecule(instantiatedMolecule, tagOfMoleculeToAdapt);
             }
         }
     }
 
-    private void adaptInstantiatedMolecule(GameObject newMolecule, string tag)
+    private void AdaptInstantiatedMolecule(GameObject newMolecule, string tag)
     {
         for (var k = newMolecule.transform.childCount - 1; k >= 0; k--)
         {
@@ -76,7 +74,7 @@ public class ChainMaster : MonoBehaviour
         }
     }
 
-    private Vector3 changeDirectionToMoveMolecule(Vector3 childPosition, float xLength, float yLength, string tagToSearch)
+    private Vector3 ChangeDirectionToMoveMolecule(Vector3 childPosition, float xLength, float yLength, string tagToSearch)
     {
         switch (tagToSearch)
         {

@@ -7,7 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class checkForObjectHeld : MonoBehaviour
 {
 
-    public XRBaseInteractable interactable; // Assign in the Inspector
+    public XRBaseInteractable interactable;
 
     private bool isHoldingObject = false;
 
