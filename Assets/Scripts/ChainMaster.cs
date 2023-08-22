@@ -48,12 +48,15 @@ public class ChainMaster : MonoBehaviour
             {
                 float xLength = fixedMolecule.transform.GetChild(i + 1).gameObject.GetComponent<Renderer>().bounds.size.x;
                 float yLength = fixedMolecule.transform.GetChild(i + 1).gameObject.GetComponent<Renderer>().bounds.size.y;
-                Vector3 childPosition = ChangeDirectionToMoveMolecule(fixedMolecule.transform.GetChild(i).gameObject.transform.position, xLength, yLength, tagToSearch);
+                //Vector3 childPosition = ChangeDirectionToMoveMolecule(fixedMolecule.transform.GetChild(i).gameObject, xLength, yLength, tagToSearch);
+
+                Vector3 offset = ChangeDirectionToMoveMolecule(fixedMolecule.transform.GetChild(i).gameObject, xLength, yLength, tagToSearch);
+
 
                 Transform childTransform = fixedMolecule.transform.GetChild(i).gameObject.transform;
                 Destroy(fixedMolecule.transform.GetChild(i).gameObject);
 
-                instantiatedMolecule = (GameObject)Instantiate(moleculeToInstantiate, childPosition, childTransform.rotation * quaternion);
+                instantiatedMolecule = (GameObject)Instantiate(moleculeToInstantiate, fixedMolecule.transform.GetChild(i).gameObject.transform.position + offset, childTransform.rotation * quaternion);
                 instantiatedMolecule.name = "Carbon" + ChainMaster.Instance.counter;
                 ChainMaster.Instance.counter++;
                 ChainMaster.Instance.carbons.Add(new Carbon());
@@ -74,24 +77,20 @@ public class ChainMaster : MonoBehaviour
         }
     }
 
-    private Vector3 ChangeDirectionToMoveMolecule(Vector3 childPosition, float xLength, float yLength, string tagToSearch)
+    private Vector3 ChangeDirectionToMoveMolecule(GameObject childPosition, float xLength, float yLength, string tagToSearch)
     {
         switch (tagToSearch)
         {
             case "Hydrogen1":
-                childPosition.y += yLength;
-                return childPosition;
+                    return childPosition.transform.up * yLength;
             case "Hydrogen2":
-                childPosition.x += xLength;
-                return childPosition;
+                    return childPosition.transform.forward * xLength;
             case "Hydrogen3":
-                childPosition.y -= yLength;
-                return childPosition;
+                return childPosition.transform.up * -yLength;
             case "Hydrogen4":
-                childPosition.x -= xLength;
-                return childPosition;
+                return childPosition.transform.forward * -xLength;
             default:
-                return childPosition;
+            return childPosition.transform.forward;
         }
     }
 }
