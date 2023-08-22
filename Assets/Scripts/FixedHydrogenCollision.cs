@@ -4,64 +4,36 @@ using UnityEngine;
 
 public class FixedHydrogenCollision : MonoBehaviour
 {
-    public GameObject moleculeToInstantiate;
+    public bool hasCollided = false;
 
     private void OnCollisionEnter(Collision collision)
     {
         //This line gives us the collided sub object of the molecule held in hand
         Collider myCollider = collision.GetContact(0).thisCollider;
-        //Need to delete the right hydrogen when clipping onto the existing hydrogen
 
-        //This line checks with which of the 4 molecules we have collided with
+        if (myCollider.CompareTag("Hydrogen1"))
+        {
+            //Place new Molecule in
+            ChainMaster.Instance.SpawnMolecule(this.gameObject,"Hydrogen1", "Hydrogen3", Quaternion.Euler(90f, 90f, 90f), myCollider.transform.parent.name);
+            //Destroy Molecule in Hand
+            Destroy(collision.gameObject);
+        }
+        else if (myCollider.CompareTag("Hydrogen2"))
+        {
+            ChainMaster.Instance.SpawnMolecule(this.gameObject, "Hydrogen2", "Hydrogen4", Quaternion.Euler(90f, -180f, 180f), myCollider.transform.parent.name);
+            Destroy(collision.gameObject);
+        }
+        else if (myCollider.CompareTag("Hydrogen3"))
+        {
+            ChainMaster.Instance.SpawnMolecule(this.gameObject, "Hydrogen3", "Hydrogen1", Quaternion.Euler(90f, 90f, 90f), myCollider.transform.parent.name);
+            Destroy(collision.gameObject);
+        }
+        else if (myCollider.CompareTag("Hydrogen4"))
+        {
+            ChainMaster.Instance.SpawnMolecule(this.gameObject, "Hydrogen4", "Hydrogen2", Quaternion.Euler(90f, -180f, 180f), myCollider.transform.parent.name);
+            Destroy(collision.gameObject);
+        }
 
-        //This collider refers to the object that was held in hand and collided with the other molecule
-        Collider collider = collision.collider;
-        Debug.Log("We collided with: " + collider.tag);
-        if (collider.CompareTag("Hydrogen1"))
-        {
-            //searchForHydrogenToDelete("Hydrogen1", Quaternion.Euler(90f, 90f, -90f));
-        }
-        else if (collider.CompareTag("Hydrogen2"))
-        {
-            //searchForHydrogenToDelete("Hydrogen1", Quaternion.Euler(90f, 90f, -90f));
-        }
-        else if (collider.CompareTag("Hydrogen3"))
-        {
-            //Debug.Log(gameObject.tag + " Collided with Hydrogen 3");
-        }
-        else if (collider.CompareTag("Hydrogen4"))
-        {
-            //Debug.Log(gameObject.tag + " Collided with Hydrogen 4");
-        }
-
-        //Debug.Log(gameObject.name + " collided with: " + collision.gameObject.name);
-    }
-
-    private void searchForHydrogenToDelete(string tagToSearch, Quaternion quaternion)
-    {
-        for (var i = gameObject.transform.childCount - 1; i >= 0; i--)
-        {
-            if (gameObject.transform.GetChild(i).gameObject.CompareTag(tagToSearch))
-            {
-                Vector3 childPosition = gameObject.transform.GetChild(i).gameObject.transform.position;
-                Transform childTransform = gameObject.transform.GetChild(i).gameObject.transform;
-                Destroy(gameObject.transform.GetChild(i).gameObject);
-                GameObject tempMolecule = Instantiate(moleculeToInstantiate, childPosition, childTransform.rotation * quaternion);
-                adaptInstantiatedMolecule(tempMolecule, tagToSearch);
-            }
-        }
-    }
-
-    private void adaptInstantiatedMolecule(GameObject newMolecule, string tag)
-    {
-        for (var k = newMolecule.transform.childCount - 1; k >= 0; k--)
-        {
-            if (moleculeToInstantiate.transform.GetChild(k).gameObject.CompareTag(tag))
-            {
-                Destroy(newMolecule.transform.GetChild(k).gameObject);
-                Destroy(newMolecule.transform.GetChild(k + 1).gameObject);
-            }
-        }
     }
 }
 

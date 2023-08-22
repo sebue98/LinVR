@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6629797300637803691, guid: 1273b91ccba141d4188743e2d22fa488, type: 3}
+  - {fileID: 2100000, guid: 8d35f39638e3db94184ddd0524dd5345, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -144,7 +144,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3846018093981099296, guid: 1273b91ccba141d4188743e2d22fa488, type: 3}
+  - {fileID: 2100000, guid: 8d35f39638e3db94184ddd0524dd5345, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -227,7 +227,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6922793697723135513, guid: 1273b91ccba141d4188743e2d22fa488, type: 3}
+  - {fileID: 2100000, guid: 8d35f39638e3db94184ddd0524dd5345, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -344,7 +344,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.006
+  m_Radius: 0.005
   m_Center: {x: -0.0000000016298145, y: -0.0000000016298142, z: 0}
 --- !u!1 &3241319122391236535
 GameObject:
@@ -442,7 +442,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.006
+  m_Radius: 0.005
   m_Center: {x: -0.0000000016298145, y: -0.0000000016298142, z: 0}
 --- !u!114 &1640730950516332378
 MonoBehaviour:
@@ -517,7 +517,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4874126678125670354, guid: 1273b91ccba141d4188743e2d22fa488, type: 3}
+  - {fileID: 2100000, guid: 8d35f39638e3db94184ddd0524dd5345, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -635,7 +635,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.006
+  m_Radius: 0.005
   m_Center: {x: -0.0000000016298145, y: -0.0000000016298142, z: 0}
 --- !u!114 &8509824539642068398
 MonoBehaviour:
@@ -663,7 +663,7 @@ GameObject:
   - component: {fileID: 1483598793040727248}
   m_Layer: 0
   m_Name: FixedMolecule
-  m_TagString: Molecule
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -846,6 +846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moleculeToInstantiate: {fileID: 6487351461044992380}
+  hasCollided: 0
 --- !u!1 &7728717441783942575
 GameObject:
   m_ObjectHideFlags: 0
@@ -942,7 +943,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.006
+  m_Radius: 0.005
   m_Center: {x: -0.0000000016298145, y: -0.0000000016298142, z: 0}
 --- !u!114 &2250652249054432949
 MonoBehaviour:
@@ -1052,7 +1053,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.006
+  m_Radius: 0.005
   m_Center: {x: -0.0000000016298145, y: -0.0000000016298142, z: 0}
 --- !u!114 &8336078184154343336
 MonoBehaviour:

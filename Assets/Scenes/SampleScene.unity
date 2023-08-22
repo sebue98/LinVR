@@ -528,7 +528,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27616ff8436d10843a2e8fd0cb5bbfff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moleculeToInstantiate: {fileID: 6487351461044992380, guid: 6fc76268040602546984d85650f66200,
+    type: 3}
+  instantiatedMolecule: {fileID: 0}
+  counter: 0
   carbons: []
+  carbonGameObjects: []
 --- !u!4 &269096238
 Transform:
   m_ObjectHideFlags: 0
@@ -1289,7 +1294,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Radius: 0.025
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &990518022
 MonoBehaviour:
@@ -2003,7 +2008,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Radius: 0.025
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1406627675
 MonoBehaviour:
@@ -2390,7 +2395,7 @@ MonoBehaviour:
   m_Reticle: {fileID: 0}
   m_BlockedReticle: {fileID: 0}
   m_StopLineAtFirstRaycastHit: 1
-  m_StopLineAtSelection: 0
+  m_StopLineAtSelection: 1
 --- !u!120 &1479738573
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -2539,7 +2544,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_SelectActionTrigger: 0
-  m_HideControllerOnSelect: 0
+  m_HideControllerOnSelect: 1
   m_AllowHoveredActivate: 0
   m_TargetPriorityMode: 0
   m_PlayAudioClipOnSelectEntered: 0

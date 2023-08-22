@@ -27,8 +27,13 @@ public class StartObjectPoint : MonoBehaviour
             Destroy(gameObject);
             Destroy(collision.gameObject);
 
-            GameObject newObject = Instantiate(fixedObject, position, rotation);
-            ChainMaster.Instance.carbons.Add(new Carbon());
+            GameObject newObject = (GameObject)Instantiate(fixedObject, position, rotation);
+            newObject.name = "Carbon" + ChainMaster.Instance.counter;
+            ChainMaster.Instance.carbonGameObjects.Add(newObject);
+            ChainMaster.Instance.counter++;
+            Carbon temp = new Carbon();
+            temp.moleculeName = newObject.name;
+            ChainMaster.Instance.carbons.Add(temp);
         }
     }
 }

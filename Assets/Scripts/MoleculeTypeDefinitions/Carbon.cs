@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Carbon : MonoBehaviour
 {
+    public string moleculeName;
+
     //Properties
     public bool Hydrogen1 { get; set; }
     public bool Hydrogen2 { get; set; }
@@ -17,6 +19,7 @@ public class Carbon : MonoBehaviour
 
     public Carbon()
     {
+
         Hydrogen1 = true;
         Hydrogen2 = true;
         Hydrogen3 = true;
