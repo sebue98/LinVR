@@ -661,8 +661,9 @@ GameObject:
   - component: {fileID: 4912175035416882352}
   - component: {fileID: 3811864558951837665}
   - component: {fileID: 1483598793040727248}
+  - component: {fileID: 6646369584663064118}
   m_Layer: 0
-  m_Name: FixedMolecule
+  m_Name: Carbon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -846,6 +847,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasCollided: 0
+--- !u!114 &6646369584663064118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6487351461044992380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce81558f73239c942ac23a1aa33110d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moleculeName: 
 --- !u!1 &7728717441783942575
 GameObject:
   m_ObjectHideFlags: 0

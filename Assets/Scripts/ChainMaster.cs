@@ -10,6 +10,7 @@ public class ChainMaster : MonoBehaviour
     public GameObject instantiatedMolecule;
 
     public int counter = 0;
+    public bool moleculeCanSpawn = false;
     public List<Carbon> carbons;
     public List<GameObject> carbonGameObjects;
 
@@ -40,7 +41,7 @@ public class ChainMaster : MonoBehaviour
         return foundObject;
     }
 
-    public void SpawnMolecule(GameObject fixedMolecule, string tagToSearch, string tagOfMoleculeToAdapt, Quaternion quaternion, string parentName)
+    public GameObject SpawnMolecule(GameObject fixedMolecule, string tagToSearch, string tagOfMoleculeToAdapt, Quaternion quaternion, string parentName, string neighbourSide)
     {
         for (var i = fixedMolecule.transform.childCount - 1; i >= 0; i--)
         {
@@ -57,6 +58,7 @@ public class ChainMaster : MonoBehaviour
                 Destroy(fixedMolecule.transform.GetChild(i).gameObject);
 
                 instantiatedMolecule = (GameObject)Instantiate(moleculeToInstantiate, fixedMolecule.transform.GetChild(i).gameObject.transform.position + offset, childTransform.rotation * quaternion);
+                SetNeighbour(fixedMolecule, instantiatedMolecule, neighbourSide);
                 instantiatedMolecule.name = "Carbon" + ChainMaster.Instance.counter;
                 ChainMaster.Instance.counter++;
                 ChainMaster.Instance.carbons.Add(new Carbon());
@@ -64,6 +66,7 @@ public class ChainMaster : MonoBehaviour
                 AdaptInstantiatedMolecule(instantiatedMolecule, tagOfMoleculeToAdapt);
             }
         }
+        return instantiatedMolecule;
     }
 
     private void AdaptInstantiatedMolecule(GameObject newMolecule, string tag)
@@ -86,11 +89,30 @@ public class ChainMaster : MonoBehaviour
             case "Hydrogen2":
                     return childPosition.transform.forward * xLength;
             case "Hydrogen3":
-                return childPosition.transform.up * -yLength;
+                return -childPosition.transform.up * yLength;
             case "Hydrogen4":
-                return childPosition.transform.forward * -xLength;
+                return -childPosition.transform.forward * xLength;
             default:
             return childPosition.transform.forward;
+        }
+    }
+
+    private void SetNeighbour(GameObject fixedMolecule, GameObject instantiatedMolecule, string neighbourSide)
+    {
+        switch(neighbourSide)
+        {
+            case "top":
+                instantiatedMolecule.GetComponent<Carbon>().topMolecule = fixedMolecule;
+                break;
+            case "left":
+                instantiatedMolecule.GetComponent<Carbon>().leftMolecule = fixedMolecule;
+                break;
+            case "bottom":
+                instantiatedMolecule.GetComponent<Carbon>().bottomMolecule = fixedMolecule;
+                break;
+            case "right":
+                instantiatedMolecule.GetComponent<Carbon>().rightMolecule = fixedMolecule;
+                break;
         }
     }
 }

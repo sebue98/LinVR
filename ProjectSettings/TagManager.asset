@@ -16,6 +16,10 @@ TagManager:
   - Connection2
   - Connection3
   - Connection4
+  - HandHydrogen2
+  - HandHydrogen3
+  - HandHydrogen1
+  - HandHydrogen4
   layers:
   - Default
   - TransparentFX

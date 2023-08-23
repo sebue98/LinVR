@@ -37,5 +37,6 @@ public class UserCanvasSelectObjects : MonoBehaviour
     public void GenerateCube()
     {
         GameObject cube = Instantiate(moleculeToInstantiate, rightHand.transform.position, Quaternion.identity);
+        ChainMaster.Instance.moleculeCanSpawn = true;
     }
 }

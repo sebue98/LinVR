@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 1640730950516332378}
   m_Layer: 0
   m_Name: H1
-  m_TagString: Hydrogen1
+  m_TagString: HandHydrogen1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -554,7 +554,7 @@ GameObject:
   - component: {fileID: 8509824539642068398}
   m_Layer: 0
   m_Name: H3
-  m_TagString: Hydrogen3
+  m_TagString: HandHydrogen3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -662,7 +662,7 @@ GameObject:
   - component: {fileID: 3811864558951837665}
   - component: {fileID: 984817624670779409}
   m_Layer: 0
-  m_Name: Molecule
+  m_Name: HandMolecule
   m_TagString: Molecule
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -860,7 +860,7 @@ GameObject:
   - component: {fileID: 2250652249054432949}
   m_Layer: 0
   m_Name: H4
-  m_TagString: Hydrogen4
+  m_TagString: HandHydrogen4
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -970,7 +970,7 @@ GameObject:
   - component: {fileID: 8336078184154343336}
   m_Layer: 0
   m_Name: H2
-  m_TagString: Hydrogen2
+  m_TagString: HandHydrogen2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
