@@ -20,6 +20,7 @@ TagManager:
   - HandHydrogen3
   - HandHydrogen1
   - HandHydrogen4
+  - XRRightHandController
   layers:
   - Default
   - TransparentFX

@@ -358,7 +358,6 @@ GameObject:
   - component: {fileID: 1260487525721772586}
   - component: {fileID: 8423255451186855891}
   - component: {fileID: 8305991460216303010}
-  - component: {fileID: 1640730950516332378}
   m_Layer: 0
   m_Name: H1
   m_TagString: HandHydrogen1
@@ -444,18 +443,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.005
   m_Center: {x: -0.0000000016298145, y: -0.0000000016298142, z: 0}
---- !u!114 &1640730950516332378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3241319122391236535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24cedaeaab9d7b746b9d6a5fe3a6a76b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4151484990608648486
 GameObject:
   m_ObjectHideFlags: 0
@@ -551,7 +538,6 @@ GameObject:
   - component: {fileID: 3337109280079861472}
   - component: {fileID: 5404728696411793036}
   - component: {fileID: 4698256964938945389}
-  - component: {fileID: 8509824539642068398}
   m_Layer: 0
   m_Name: H3
   m_TagString: HandHydrogen3
@@ -637,18 +623,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.005
   m_Center: {x: -0.0000000016298145, y: -0.0000000016298142, z: 0}
---- !u!114 &8509824539642068398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5237779687286641452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24cedaeaab9d7b746b9d6a5fe3a6a76b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6487351461044992380
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,7 +634,6 @@ GameObject:
   - component: {fileID: 5858166499973456838}
   - component: {fileID: 4912175035416882352}
   - component: {fileID: 3811864558951837665}
-  - component: {fileID: 984817624670779409}
   m_Layer: 0
   m_Name: HandMolecule
   m_TagString: Molecule
@@ -833,18 +806,6 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
---- !u!114 &984817624670779409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6487351461044992380}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24cedaeaab9d7b746b9d6a5fe3a6a76b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7728717441783942575
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,7 +818,6 @@ GameObject:
   - component: {fileID: 5799951613623690670}
   - component: {fileID: 3968583459453862374}
   - component: {fileID: 3017857920804006831}
-  - component: {fileID: 2250652249054432949}
   m_Layer: 0
   m_Name: H4
   m_TagString: HandHydrogen4
@@ -943,18 +903,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.005
   m_Center: {x: -0.0000000016298145, y: -0.0000000016298142, z: 0}
---- !u!114 &2250652249054432949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7728717441783942575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24cedaeaab9d7b746b9d6a5fe3a6a76b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8411639984322023655
 GameObject:
   m_ObjectHideFlags: 0
@@ -967,7 +915,6 @@ GameObject:
   - component: {fileID: 964705277971958041}
   - component: {fileID: 6166257330600789928}
   - component: {fileID: 819802432707500274}
-  - component: {fileID: 8336078184154343336}
   m_Layer: 0
   m_Name: H2
   m_TagString: HandHydrogen2
@@ -1053,15 +1000,3 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.005
   m_Center: {x: -0.0000000016298145, y: -0.0000000016298142, z: 0}
---- !u!114 &8336078184154343336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8411639984322023655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24cedaeaab9d7b746b9d6a5fe3a6a76b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

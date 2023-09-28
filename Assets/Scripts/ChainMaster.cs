@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class ChainMaster : MonoBehaviour
 {
+    enum State
+    {
+        Spawn,
+        Delete
+    }
     private static ChainMaster _instance;
 
     public GameObject moleculeToInstantiate;
@@ -43,6 +48,7 @@ public class ChainMaster : MonoBehaviour
 
     public GameObject SpawnMolecule(GameObject fixedMolecule, string tagToSearch, string tagOfMoleculeToAdapt, Quaternion quaternion, string parentName, string neighbourSide)
     {
+        Debug.Log("Test test");
         for (var i = fixedMolecule.transform.childCount - 1; i >= 0; i--)
         {
             if (fixedMolecule.transform.GetChild(i).gameObject.CompareTag(tagToSearch))
