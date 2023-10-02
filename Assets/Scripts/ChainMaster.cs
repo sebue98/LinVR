@@ -2,16 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum State
+{
+    Spawn,
+    carbon,
+    hydrogen,
+    nitrogen,
+    sulfur,
+    Delete,
+}
+
 public class ChainMaster : MonoBehaviour
 {
-    enum State
-    {
-        Spawn,
-        Delete
-    }
+    
     private static ChainMaster _instance;
 
-    public GameObject moleculeToInstantiate;
+    public GameObject carbon;
+    public GameObject hydrogen;
+    public GameObject nitrogen;
+    public GameObject sulfur;
+
+    public State currentState = State.Spawn;
+
+    private GameObject moleculeToInstantiate;
     public GameObject instantiatedMolecule;
 
     public int counter = 0;
@@ -28,6 +41,7 @@ public class ChainMaster : MonoBehaviour
     {
         if (_instance == null)
         {
+            currentState = State.Spawn;
             _instance = this;
             DontDestroyOnLoad(gameObject);
         }
@@ -46,9 +60,18 @@ public class ChainMaster : MonoBehaviour
         return foundObject;
     }
 
+    public GameObject SpawnNewMolecule(GameObject fixedMolecule, Transform molculeTransform, Quaternion moleculeQuaternion)
+    {
+        Debug.Log(currentState.ToString());
+        moleculeToInstantiate = SwitchSpawnMolecule();
+        Instantiate(moleculeToInstantiate, molculeTransform.position, moleculeQuaternion);
+        return instantiatedMolecule;
+    }
+
     public GameObject SpawnMolecule(GameObject fixedMolecule, string tagToSearch, string tagOfMoleculeToAdapt, Quaternion quaternion, string parentName, string neighbourSide)
     {
-        Debug.Log("Test test");
+        Debug.Log(currentState.ToString());
+        moleculeToInstantiate = SwitchSpawnMolecule();
         for (var i = fixedMolecule.transform.childCount - 1; i >= 0; i--)
         {
             if (fixedMolecule.transform.GetChild(i).gameObject.CompareTag(tagToSearch))
@@ -73,6 +96,23 @@ public class ChainMaster : MonoBehaviour
             }
         }
         return instantiatedMolecule;
+    }
+
+    private GameObject SwitchSpawnMolecule()
+    {
+        switch(currentState.ToString())
+        {
+            case "carbon":
+                return carbon;
+            case "hydrogen":
+                return hydrogen;
+            case "nitrogen":
+                return nitrogen;
+            case "sulfur":
+                return sulfur;
+            default:
+                return carbon;
+        }
     }
 
     private void AdaptInstantiatedMolecule(GameObject newMolecule, string tag)

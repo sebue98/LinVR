@@ -13,15 +13,6 @@ public class CustomGrid : MonoBehaviour
     public int gridSizeX;
     public int gridSizeY;
 
-    public InputActionProperty triggerAction;
-
-    public InputHelpers.Button triggerButton;
-
-    public GameObject rightController;
-    private XRController XRrightController = null;
-
-    public InputData _inputData;
-
     private int count = 0;
     private float gridPositionX = -1f;
     private float gridPositionY = 0.5f;
