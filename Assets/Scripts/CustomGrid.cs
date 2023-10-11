@@ -8,14 +8,14 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class CustomGrid : MonoBehaviour
 {
     [SerializeField]
-    private float size = 0.1f;
+    private float size = 0.137f;
     public GameObject spawnField;
     public int gridSizeX;
     public int gridSizeY;
 
     private int count = 0;
-    private float gridPositionX = -1f;
-    private float gridPositionY = 0.5f;
+    private float gridPositionX = -1.3f;
+    private float gridPositionY = 0.53f;
 
     public void Start()
     {
@@ -23,13 +23,13 @@ public class CustomGrid : MonoBehaviour
         {
             for (int j = 0; j < gridSizeY; j++)
             {
-                GameObject temp = Instantiate(spawnField, new Vector3(gridPositionX, gridPositionY, 1f), Quaternion.identity);
-                temp.name = "Spawnfield " + count;
+                GameObject temp = Instantiate(spawnField, new Vector3(gridPositionX, gridPositionY, 2.7f), Quaternion.identity);
+                temp.name = count.ToString();
                 gridPositionX += size;
                 count++;
             }
             gridPositionY += size;
-            gridPositionX = -1f;
+            gridPositionX = -1.3f;
         }
     }
 

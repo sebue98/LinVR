@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,35 +19,27 @@ public class MoleculePlacer : MonoBehaviour
 
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        //This line gives us the collided sub object of the molecule held in hand
+        Collider myCollider = collision.GetContact(0).thisCollider;
+        GameMaster.Instance.spawnablePlates.Add(int.Parse(myCollider.name));
+    }
+
     public void SpawnMolecule()
     {
-        ChainMaster.Instance.SpawnNewMolecule(moleculeToPlace, gameObject.transform, Quaternion.Euler(0.0f, 90f, 0.0f));
-        //Instantiate(moleculeToPlace, gameObject.transform.position, Quaternion.Euler(0.0f, 90f, 0.0f));
-        Destroy(gameObject);
+        if(!(GameMaster.Instance.currentState == State.start))
+        {
+            if (GameMaster.Instance.spawnablePlates.Contains(int.Parse(gameObject.name)) || GameMaster.Instance.spawnablePlates.Count == 0)
+            {
+                GameMaster.Instance.SpawnNewMolecule(moleculeToPlace, gameObject.transform, Quaternion.Euler(0.0f, 90f, 0.0f));
+                Destroy(gameObject);
+            }
+            else
+            {
+                Debug.Log("Cannot place a molecule here");
+            }
+        }
     }
 
-    public void TempFunction()
-    {
-        Debug.Log("Spawning molecule mode");
-    }
-
-    public void SetCarbon()
-    {
-        ChainMaster.Instance.currentState = State.carbon;
-    }
-
-    public void SetHydrogen()
-    {
-        ChainMaster.Instance.currentState = State.hydrogen;
-    }
-
-    public void SetNitrogen()
-    {
-        ChainMaster.Instance.currentState = State.nitrogen;
-    }
-
-    public void SetSulfur()
-    {
-        ChainMaster.Instance.currentState = State.sulfur;
-    }
 }

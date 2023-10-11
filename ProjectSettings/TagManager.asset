@@ -21,6 +21,7 @@ TagManager:
   - HandHydrogen1
   - HandHydrogen4
   - XRRightHandController
+  - NumberDecisionBoard
   layers:
   - Default
   - TransparentFX
