@@ -47,28 +47,67 @@ public class Carbon : MonoBehaviour
     {
         if(GameMaster.Instance.neighbourToConnectTo > 0)
         {
-            GameMaster.Instance.numberDecisionBoard.SetActive(false);
-            //Case C1,C2,C4,C1
-            GameObject MOC1 = gameObject.transform.Find("Connection1").gameObject;
-            GameObject MOC2 = gameObject.transform.Find("Connection2").gameObject;
+            switch(GameMaster.Instance.neighbourToConnectTo)
+            {
+                
+                //Case C1,C2,C4,C1
+                case 2:
+                    SetMoleculeAndHydrogenForDoubleConnection("Connection1", "Connection2", "Connection4", "H1", rightMolecule);
+                    break;
+                case 3:
+                    SetMoleculeAndHydrogenForDoubleConnection("Connection2", "Connection3", "Connection1", "H2", bottomMolecule);
+                    break;
+                //Case C1,C4,C1,C2
+                case 4:
+                    SetMoleculeAndHydrogenForDoubleConnection("Connection1", "Connection4", "Connection2", "H1", leftMolecule);
+                    break;
+                default:
+                    break;
+            }
 
-            gameObject.transform.Find("H1").gameObject.SetActive(false);
 
-            GameObject MTC1 = rightMolecule.transform.Find("Connection1").gameObject;
-            GameObject MTC4 = rightMolecule.transform.Find("Connection4").gameObject;
+        }
+    }
 
-            rightMolecule.transform.Find("H1").gameObject.SetActive(false);
+    public void SetMoleculeAndHydrogenForDoubleConnection(string connection1, string connection2, string connection3, string hydrogenToHide, GameObject moleculeToconnectTo)
+    {
+        GameMaster.Instance.numberDecisionBoard.SetActive(false);
+        //Case C1,C2,C4,C1
+        GameObject MOC1 = gameObject.transform.Find(connection1).gameObject;
+        GameObject MOC2 = gameObject.transform.Find(connection2).gameObject;
 
+        gameObject.transform.Find(hydrogenToHide).gameObject.SetActive(false);
+
+        GameObject MTC1 = moleculeToconnectTo.transform.Find(connection1).gameObject;
+        GameObject MTC2 = moleculeToconnectTo.transform.Find(connection3).gameObject;
+
+        moleculeToconnectTo.transform.Find(hydrogenToHide).gameObject.SetActive(false);
+
+        //horizontal = true, vertical = false
+        if(GameMaster.Instance.neighbourToConnectTo % 2 == 0)
+        {
             //Changing the position of the top and the right connection rod
             MOC1.transform.position = new Vector3(MOC2.transform.position.x, MOC2.transform.position.y + 0.01f, MOC2.transform.position.z);
             MOC1.transform.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
             MOC2.transform.position = new Vector3(MOC2.transform.position.x, MOC2.transform.position.y - 0.01f, MOC2.transform.position.z);
 
             //Changing the positon of the top and the left connection rod
-            MTC1.transform.position = new Vector3(MTC4.transform.position.x, MTC4.transform.position.y + 0.01f, MTC4.transform.position.z);
+            MTC1.transform.position = new Vector3(MTC2.transform.position.x, MTC2.transform.position.y + 0.01f, MTC2.transform.position.z);
             MTC1.transform.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
-            MTC4.transform.position = new Vector3(MTC4.transform.position.x, MTC4.transform.position.y - 0.01f, MTC4.transform.position.z);
+            MTC2.transform.position = new Vector3(MTC2.transform.position.x, MTC2.transform.position.y - 0.01f, MTC2.transform.position.z);
+        }
+        else
+        {
 
+            //Changing the position of the top and the right connection rod
+            MOC1.transform.position = new Vector3(MOC2.transform.position.x + 0.01f, MOC2.transform.position.y, MOC2.transform.position.z);
+            MOC1.transform.rotation = MOC2.transform.rotation;
+            MOC2.transform.position = new Vector3(MOC2.transform.position.x - 0.01f, MOC2.transform.position.y, MOC2.transform.position.z);
+
+            //Changing the positon of the top and the left connection rod
+            MTC1.transform.position = new Vector3(MTC2.transform.position.x + 0.01f, MTC2.transform.position.y, MTC2.transform.position.z);
+            MTC1.transform.rotation = MTC2.transform.rotation;
+            MTC2.transform.position = new Vector3(MTC2.transform.position.x - 0.01f, MTC2.transform.position.y , MTC2.transform.position.z);
         }
     }
 

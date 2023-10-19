@@ -73,9 +73,24 @@ public class ButtonBoard : MonoBehaviour
         GameMaster.Instance.numberDecisionBoard.SetActive(true);
     }
 
-    public void SetNeighbourToConnectTo()
+    public void SetNeighbourToConnectToOne()
+    {
+        GameMaster.Instance.neighbourToConnectTo = 1;
+    }
+
+    public void SetNeighbourToConnectToTwo()
     {
         GameMaster.Instance.neighbourToConnectTo = 2;
+    }
+
+    public void SetNeighbourToConnectToThree()
+    {
+        GameMaster.Instance.neighbourToConnectTo = 3;
+    }
+
+    public void SetNeighbourToConnectToFour()
+    {
+        GameMaster.Instance.neighbourToConnectTo = 4;
     }
 
     public void SetCarbon()
