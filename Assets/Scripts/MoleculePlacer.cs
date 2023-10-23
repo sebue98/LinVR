@@ -10,7 +10,7 @@ public class MoleculePlacer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
- 
+        
     }
 
     // Update is called once per frame
@@ -21,7 +21,7 @@ public class MoleculePlacer : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //This line gives us the collided sub object of the molecule held in hand
+        //This code detects which plates are eligible to spawn molecules on
         Collider myCollider = collision.GetContact(0).thisCollider;
         GameMaster.Instance.spawnablePlates.Add(int.Parse(myCollider.name));
     }

@@ -73,6 +73,24 @@ public class GameMaster : MonoBehaviour
         return instantiatedMolecule;
     }
 
+    private GameObject SwitchSpawnMolecule()
+    {
+        switch (currentState.ToString())
+        {
+            case "carbon":
+                return carbon;
+            case "oxygen":
+                return oxygen;
+            case "nitrogen":
+                return nitrogen;
+            case "sulfur":
+                return sulfur;
+            default:
+                return carbon;
+        }
+    }
+
+    /*
     public GameObject SpawnMolecule(GameObject fixedMolecule, string tagToSearch, string tagOfMoleculeToAdapt, Quaternion quaternion, string parentName, string neighbourSide)
     {
         Debug.Log(currentState.ToString());
@@ -103,23 +121,7 @@ public class GameMaster : MonoBehaviour
         return instantiatedMolecule;
     }
 
-    private GameObject SwitchSpawnMolecule()
-    {
-        switch(currentState.ToString())
-        {
-            case "carbon":
-                return carbon;
-            case "oxygen":
-                return oxygen;
-            case "nitrogen":
-                return nitrogen;
-            case "sulfur":
-                return sulfur;
-            default:
-                return carbon;
-        }
-    }
-
+    
     private void AdaptInstantiatedMolecule(GameObject newMolecule, string tag)
     {
         for (var k = newMolecule.transform.childCount - 1; k >= 0; k--)
@@ -166,4 +168,5 @@ public class GameMaster : MonoBehaviour
                 break;
         }
     }
+    */
 }

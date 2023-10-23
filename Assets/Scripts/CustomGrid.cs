@@ -1,21 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.XR;
-using UnityEngine.XR.Interaction.Toolkit;
 
 public class CustomGrid : MonoBehaviour
 {
     [SerializeField]
     private float size = 0.137f;
-    public GameObject spawnField;
-    public int gridSizeX;
-    public int gridSizeY;
-
     private int count = 0;
     private float gridPositionX = -1.3f;
     private float gridPositionY = 0.53f;
+
+    public GameObject spawnField;
+    public int gridSizeX;
+    public int gridSizeY;
 
     public void Start()
     {
@@ -31,11 +28,6 @@ public class CustomGrid : MonoBehaviour
             gridPositionY += size;
             gridPositionX = -1.3f;
         }
-    }
-
-    public void Update()
-    {
-        //Debug.Log(_inputData._rightController.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out bool triggerValue)); 
     }
 
     public Vector3 GetNearestPointOnGrid(Vector3 position)

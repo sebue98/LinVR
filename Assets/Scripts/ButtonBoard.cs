@@ -61,13 +61,13 @@ public class ButtonBoard : MonoBehaviour
         Debug.Log("Spawning molecule mode");
     }
 
-    public void setDoubleConnection()
+    public void SetDoubleConnection()
     {
         GameMaster.Instance.currentState = State.DoubleConnection;
         GameMaster.Instance.numberDecisionBoard.SetActive(true);
     }
 
-    public void setTripleConnection()
+    public void SetTripleConnection()
     {
         GameMaster.Instance.currentState = State.TripleConnection;
         GameMaster.Instance.numberDecisionBoard.SetActive(true);
