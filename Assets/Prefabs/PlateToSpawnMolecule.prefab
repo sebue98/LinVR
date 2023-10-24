@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 1702728656410524969}
   m_Layer: 0
   m_Name: PlateToSpawnMolecule
-  m_TagString: Untagged
+  m_TagString: SpawnPlate
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -249,3 +249,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moleculeToPlace: {fileID: 6487351461044992380, guid: fc71334d279f9e54f871e39877205a8b,
     type: 3}
+  positionOfPlateX: 0
+  positionOfPlateY: 0

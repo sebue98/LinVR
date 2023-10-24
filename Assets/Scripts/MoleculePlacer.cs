@@ -7,6 +7,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class MoleculePlacer : MonoBehaviour
 {
     public GameObject moleculeToPlace;
+    public int positionOfPlateX;
+    public int positionOfPlateY;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,11 +30,12 @@ public class MoleculePlacer : MonoBehaviour
 
     public void SpawnMolecule()
     {
-        if(!(GameMaster.Instance.currentState == State.start))
+        GameMaster tempInstance = GameMaster.Instance;
+        if(!(tempInstance.currentState == State.start))
         {
-            if (GameMaster.Instance.spawnablePlates.Contains(int.Parse(gameObject.name)) || GameMaster.Instance.spawnablePlates.Count == 0)
+            if ((tempInstance.spawnablePlates.Contains(int.Parse(gameObject.name)) && tempInstance.counter > 0 && tempInstance.currentOrientationForConnection != 0) || tempInstance.spawnablePlates.Count == 0)
             {
-                GameMaster.Instance.SpawnNewMolecule(moleculeToPlace, gameObject.transform, Quaternion.Euler(0.0f, 90f, 0.0f));
+                tempInstance.SpawnNewMolecule(moleculeToPlace, gameObject.transform, Quaternion.Euler(0.0f, 90f, 0.0f), positionOfPlateX, positionOfPlateY);
                 Destroy(gameObject);
             }
             else

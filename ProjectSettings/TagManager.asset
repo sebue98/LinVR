@@ -5,7 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - CubeToDupe
-  - AttachPoint
   - Coal
   - Hydrogen1
   - Hydrogen2
@@ -16,12 +15,9 @@ TagManager:
   - Connection2
   - Connection3
   - Connection4
-  - HandHydrogen2
-  - HandHydrogen3
-  - HandHydrogen1
-  - HandHydrogen4
   - XRRightHandController
   - NumberDecisionBoard
+  - SpawnPlate
   layers:
   - Default
   - TransparentFX
