@@ -279,8 +279,8 @@ MonoBehaviour:
   size: 0.137
   spawnField: {fileID: 1450536266441006509, guid: 743f28488fe64004b86eeb25c05fdb41,
     type: 3}
-  gridSizeX: 10
-  gridSizeY: 20
+  gridSizeX: 20
+  gridSizeY: 10
 --- !u!114 &162414370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,6 +295,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moleculeToPlace: {fileID: 6487351461044992380, guid: 6fc76268040602546984d85650f66200,
     type: 3}
+  positionOfPlateX: 0
+  positionOfPlateY: 0
 --- !u!1 &219974403
 GameObject:
   m_ObjectHideFlags: 0
@@ -761,11 +763,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d354a9690ca7a64e812a72c9ee1fc4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentOrientationForConnection: 0
   carbon: {fileID: 6487351461044992380, guid: fc71334d279f9e54f871e39877205a8b, type: 3}
   oxygen: {fileID: 6487351461044992380, guid: 11a0a72b995f7a646bd91fe2c0c37499, type: 3}
   nitrogen: {fileID: 6487351461044992380, guid: a43f97498100f9b4a99b9bcab627f22d,
     type: 3}
   sulfur: {fileID: 6487351461044992380, guid: 4fbf952e824181048a33278f7940b402, type: 3}
+  benzene: {fileID: 8998727367692063742, guid: 398f2f52513d6874cab5b2562cfa2f0b, type: 3}
   currentState: 0
   spawnablePlates: 
   numberDecisionBoard: {fileID: 1878800956}
@@ -773,11 +777,10 @@ MonoBehaviour:
   counter: 0
   neighbourToConnectTo: 0
   moleculeCanSpawn: 0
+  showDebug: 0
   carbons: []
   carbonGameObjects: []
   lastMoleculeConnectedTo: {fileID: 0}
-  XRRightHandController: {fileID: 1406627671}
-  rightController: {fileID: 0}
 --- !u!1 &290920936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1998,7 +2001,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1624547070}
         m_TargetAssemblyTypeName: ButtonBoard, Assembly-CSharp
-        m_MethodName: SetOxygen
+        m_MethodName: SetBenzene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3884,7 +3887,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Create Oxygen Molecule
+  m_text: Create Benzene Molecule
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4776,7 +4779,7 @@ MonoBehaviour:
   m_ValidColorGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 0, g: 1, b: 0.12695718, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -5016,7 +5019,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_SelectActionTrigger: 0
-  m_HideControllerOnSelect: 1
+  m_HideControllerOnSelect: 0
   m_AllowHoveredActivate: 0
   m_TargetPriorityMode: 0
   m_PlayAudioClipOnSelectEntered: 0
@@ -6186,6 +6189,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moleculeToPlace: {fileID: 0}
+  positionOfPlateX: 0
+  positionOfPlateY: 0
 --- !u!114 &1624547070
 MonoBehaviour:
   m_ObjectHideFlags: 0

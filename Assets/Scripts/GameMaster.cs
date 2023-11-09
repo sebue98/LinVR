@@ -10,6 +10,7 @@ public enum State
     oxygen,
     nitrogen,
     sulfur,
+    benzene,
     Delete,
     DoubleConnection,
     TripleConnection,
@@ -26,6 +27,7 @@ public class GameMaster : MonoBehaviour
     public GameObject oxygen;
     public GameObject nitrogen;
     public GameObject sulfur;
+    public GameObject benzene;
 
     public State currentState = State.start;
     public List<int> spawnablePlates;
@@ -36,6 +38,7 @@ public class GameMaster : MonoBehaviour
     public int counter = 0;
     public int neighbourToConnectTo = 0;
     public bool moleculeCanSpawn = false;
+    public bool showDebug = false;
     public List<Carbon> carbons;
     public List<GameObject> carbonGameObjects;
 
@@ -67,6 +70,8 @@ public class GameMaster : MonoBehaviour
     {
         InputDevice handRDevice = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
         InputDevice handLDevice = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
+        handRDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out bool value);
+        showDebug = value;
         handLDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out Vector2 posR);
         //Top Condition
         if(posR.y > 0.5f  && (- 0.5f < posR.x && posR.x < 0.5f))
@@ -89,8 +94,37 @@ public class GameMaster : MonoBehaviour
             //Debug.Log("Left");
             currentOrientationForConnection = 4;
         }
+
+        if (showDebug)
+            printWhiteboard();
+
     }
 
+    public void printWhiteboard()
+    {
+        for(int y = 9; y >= 0; y--)
+        {
+            string currentLine = "";
+            for(int x = 0; x < 20; x++)
+            {
+                if(currentWhiteboard[x,y] == null)
+                {
+                    Debug.Log("NULLOBJECT at " + x + "  " + y);
+                    Debug.Log(currentWhiteboard[x, y].name);
+                    currentLine += "X   ";
+                    continue;
+                }
+                if(currentWhiteboard[x,y].gameObject.CompareTag("Carbon"))
+                {
+                    //Debug.Log("Item in WhiteboardList: " + currentWhiteboard[x, y].gameObject.name + " at " + x + "  " + y);
+                    currentLine += "C   ";
+                    continue;
+                }
+                currentLine += ".   ";
+            }
+            Debug.Log(currentLine);
+        }
+    }
 
 
     public GameObject FindObjectByName(string objectName)
@@ -99,15 +133,33 @@ public class GameMaster : MonoBehaviour
         return foundObject;
     }
 
-    public GameObject SpawnNewMolecule(GameObject fixedMolecule, Transform molculeTransform, Quaternion moleculeQuaternion, int positionOfPlateX, int positionOfPlateY)
+    public void SettingMoleculesPlacesOnWhiteboard(GameObject instantiatedMolecule, int posX, int posY)
+    {
+
+        switch(instantiatedMolecule.tag)
+        {
+            case "Benzene":
+                {
+                    currentWhiteboard[posX, posY] = instantiatedMolecule.gameObject.transform.Find("Carbon1").gameObject;
+                    break;
+                }
+            case "Carbon":
+                {
+                    currentWhiteboard[posX, posY] = instantiatedMolecule;
+                    break;
+                }
+        }
+    }
+
+    public string SpawnNewMolecule(Transform molculeTransform, Quaternion moleculeQuaternion, int positionOfPlateX, int positionOfPlateY)
     {
         moleculeToInstantiate = SwitchSpawnMolecule();
         instantiatedMolecule = Instantiate(moleculeToInstantiate, molculeTransform.position, moleculeQuaternion);
         instantiatedMolecule.name = currentState.ToString() + " " + counter;
-        currentWhiteboard[positionOfPlateX, positionOfPlateY] = instantiatedMolecule;
+        SettingMoleculesPlacesOnWhiteboard(instantiatedMolecule, positionOfPlateX, positionOfPlateY);
         CheckForNeighbourAndEstablishConnection(instantiatedMolecule, positionOfPlateX, positionOfPlateY);
         counter++;
-        return instantiatedMolecule;
+        return instantiatedMolecule.tag;
     }
 
     public void CheckForNeighbourAndEstablishConnection(GameObject instantiatedMolecule, int posX, int posY)
@@ -134,7 +186,6 @@ public class GameMaster : MonoBehaviour
             //Setting neighbours
             topCarbon.bottomMolecule = instantiatedMolecule;
             instantiatedCarbon.topMolecule = topNeighbour;
-            //Debug.Log("Top Neighbour is existing");
         }
 
         //Check for right neighbour
@@ -159,7 +210,6 @@ public class GameMaster : MonoBehaviour
             //Setting neighbours
             rightCarbon.leftMolecule = instantiatedMolecule;
             instantiatedCarbon.rightMolecule = rightNeighbour;
-            //Debug.Log("Right Neighbour is existing");
         }
 
         //Check for bottom neighbour
@@ -184,7 +234,6 @@ public class GameMaster : MonoBehaviour
             //Setting neighbours
             bottomCarbon.topMolecule = instantiatedMolecule;
             instantiatedCarbon.bottomMolecule = bottomNeighbour;
-            //Debug.Log("Bottom Neighbour is existing");
         }
 
         //Check for left neighbour
@@ -209,7 +258,6 @@ public class GameMaster : MonoBehaviour
             //Setting neighbours
             leftCarbon.rightMolecule = instantiatedMolecule;
             instantiatedCarbon.leftMolecule = leftNeighbour;
-            //Debug.Log("Left Neighbour is existing");
         }
 
     }
@@ -226,88 +274,10 @@ public class GameMaster : MonoBehaviour
                 return nitrogen;
             case "sulfur":
                 return sulfur;
+            case "benzene":
+                return benzene;
             default:
                 return carbon;
         }
     }
-
-    /*
-    public GameObject SpawnMolecule(GameObject fixedMolecule, string tagToSearch, string tagOfMoleculeToAdapt, Quaternion quaternion, string parentName, string neighbourSide)
-    {
-        Debug.Log(currentState.ToString());
-        moleculeToInstantiate = SwitchSpawnMolecule();
-        for (var i = fixedMolecule.transform.childCount - 1; i >= 0; i--)
-        {
-            if (fixedMolecule.transform.GetChild(i).gameObject.CompareTag(tagToSearch))
-            {
-                float xLength = fixedMolecule.transform.GetChild(i + 1).gameObject.GetComponent<Renderer>().bounds.size.x;
-                float yLength = fixedMolecule.transform.GetChild(i + 1).gameObject.GetComponent<Renderer>().bounds.size.y;
-                //Vector3 childPosition = ChangeDirectionToMoveMolecule(fixedMolecule.transform.GetChild(i).gameObject, xLength, yLength, tagToSearch);
-
-                Vector3 offset = ChangeDirectionToMoveMolecule(fixedMolecule.transform.GetChild(i).gameObject, xLength, yLength, tagToSearch);
-
-
-                Transform childTransform = fixedMolecule.transform.GetChild(i).gameObject.transform;
-                Destroy(fixedMolecule.transform.GetChild(i).gameObject);
-
-                instantiatedMolecule = (GameObject)Instantiate(moleculeToInstantiate, fixedMolecule.transform.GetChild(i).gameObject.transform.position + offset, childTransform.rotation * quaternion);
-                SetNeighbour(fixedMolecule, instantiatedMolecule, neighbourSide);
-                instantiatedMolecule.name = "Carbon" + GameMaster.Instance.counter;
-                GameMaster.Instance.counter++;
-                GameMaster.Instance.carbons.Add(new Carbon());
-                GameMaster.Instance.carbonGameObjects.Add(instantiatedMolecule);
-                AdaptInstantiatedMolecule(instantiatedMolecule, tagOfMoleculeToAdapt);
-            }
-        }
-        return instantiatedMolecule;
-    }
-
-    
-    private void AdaptInstantiatedMolecule(GameObject newMolecule, string tag)
-    {
-        for (var k = newMolecule.transform.childCount - 1; k >= 0; k--)
-        {
-            if (newMolecule.transform.GetChild(k).gameObject.CompareTag(tag))
-            {
-                Destroy(newMolecule.transform.GetChild(k).gameObject);
-            }
-        }
-    }
-
-    private Vector3 ChangeDirectionToMoveMolecule(GameObject childPosition, float xLength, float yLength, string tagToSearch)
-    {
-        switch (tagToSearch)
-        {
-            case "Hydrogen1":
-                    return childPosition.transform.up * yLength;
-            case "Hydrogen2":
-                    return childPosition.transform.forward * xLength;
-            case "Hydrogen3":
-                return -childPosition.transform.up * yLength;
-            case "Hydrogen4":
-                return -childPosition.transform.forward * xLength;
-            default:
-            return childPosition.transform.forward;
-        }
-    }
-
-    private void SetNeighbour(GameObject fixedMolecule, GameObject instantiatedMolecule, string neighbourSide)
-    {
-        switch(neighbourSide)
-        {
-            case "top":
-                instantiatedMolecule.GetComponent<Carbon>().topMolecule = fixedMolecule;
-                break;
-            case "left":
-                instantiatedMolecule.GetComponent<Carbon>().leftMolecule = fixedMolecule;
-                break;
-            case "bottom":
-                instantiatedMolecule.GetComponent<Carbon>().bottomMolecule = fixedMolecule;
-                break;
-            case "right":
-                instantiatedMolecule.GetComponent<Carbon>().rightMolecule = fixedMolecule;
-                break;
-        }
-    }
-    */
 }

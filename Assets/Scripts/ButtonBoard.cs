@@ -117,4 +117,9 @@ public class ButtonBoard : MonoBehaviour
     {
         GameMaster.Instance.currentState = State.Delete;
     }
+
+    public void SetBenzene()
+    {
+        GameMaster.Instance.currentState = State.benzene;
+    }
 }

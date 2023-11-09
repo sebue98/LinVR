@@ -21,11 +21,27 @@ public class MoleculePlacer : MonoBehaviour
 
     }
 
+
     private void OnCollisionEnter(Collision collision)
     {
+        //For future context: even though carbon object and spawnplate do NOT collide, it still detects a collision
+        //because of the "collision offset" predefined in unity. We will keep this offset due to convencience of the
+        //objects placed and we still need this kind of collision to be detected for setting the spawnable plates.
+
         //This code detects which plates are eligible to spawn molecules on
         Collider myCollider = collision.GetContact(0).thisCollider;
-        GameMaster.Instance.spawnablePlates.Add(int.Parse(myCollider.name));
+        if (!GameMaster.Instance.spawnablePlates.Contains(int.Parse(myCollider.name)))
+        {
+            GameMaster.Instance.spawnablePlates.Add(int.Parse(myCollider.name));
+        }
+        
+        if (collision.gameObject.CompareTag("Coal"))
+        {
+            Debug.Log("Carbon collision detected with " + collision.gameObject.transform.parent.name);
+            GameMaster.Instance.currentWhiteboard[positionOfPlateX, positionOfPlateY] = collision.gameObject.transform.parent.gameObject;
+            GameMaster.Instance.spawnablePlates.Remove(int.Parse(myCollider.name));
+            Destroy(gameObject);
+        }
     }
 
     public void SpawnMolecule()
@@ -35,7 +51,7 @@ public class MoleculePlacer : MonoBehaviour
         {
             if ((tempInstance.spawnablePlates.Contains(int.Parse(gameObject.name)) && tempInstance.counter > 0 && tempInstance.currentOrientationForConnection != 0) || tempInstance.spawnablePlates.Count == 0)
             {
-                tempInstance.SpawnNewMolecule(moleculeToPlace, gameObject.transform, Quaternion.Euler(0.0f, 90f, 0.0f), positionOfPlateX, positionOfPlateY);
+                string moleculeTag = tempInstance.SpawnNewMolecule(gameObject.transform, Quaternion.Euler(0.0f, 90f, 0.0f), positionOfPlateX, positionOfPlateY);
                 Destroy(gameObject);
             }
             else

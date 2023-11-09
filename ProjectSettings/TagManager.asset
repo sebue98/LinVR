@@ -18,6 +18,8 @@ TagManager:
   - XRRightHandController
   - NumberDecisionBoard
   - SpawnPlate
+  - Carbon
+  - Benzene
   layers:
   - Default
   - TransparentFX
@@ -25,8 +27,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Gameboard
+  - SpawnedObjects
   - 
   - 
   - 

@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: 1273b91ccba141d4188743e2d22fa488, type: 3}
+  - {fileID: 2100000, guid: 762286c5de8176f4788dbae7898838a0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 3218972820810881099}
   m_Layer: 0
   m_Name: Carbon
-  m_TagString: Untagged
+  m_TagString: Carbon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -181,9 +181,17 @@ MonoBehaviour:
   Connection2: {fileID: 1588497119682585588}
   Connection3: {fileID: 370304260827838869}
   Connection4: {fileID: 4151484990608648486}
+  vrHydrogen1: 1
+  vrHydrogen2: 1
+  vrHydrogen3: 1
+  vrHydrogen4: 1
+  vrConnection1: 1
+  vrConnection2: 1
+  vrConnection3: 1
+  vrConnection4: 1
   hydrogenBoolValues: 00000000
   hydrogenConnectionValues: 00000000
-  numberOfConnectedMolecules: 0
+  numberOfConnectionsToMolecules: 0
 --- !u!114 &3218972820810881099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,10 +234,36 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 101989147545182551}
+        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
+        m_MethodName: set_material
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 2100000, guid: a58d7cd715920754ba0076fbe9a728c3,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 101989147545182551}
+        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
+        m_MethodName: set_material
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 2100000, guid: 762286c5de8176f4788dbae7898838a0,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_Activated:
     m_PersistentCalls:
       m_Calls:

@@ -36,7 +36,7 @@ public class Carbon : MonoBehaviour
     public bool[] hydrogenBoolValues = new bool[4];
     public bool[] hydrogenConnectionValues = new bool[4];
 
-    public int numberOfConnectedMolecules = 0;
+    public int numberOfConnectionsToMolecules = 0;
 
     public Carbon()
     {
@@ -76,34 +76,47 @@ public class Carbon : MonoBehaviour
             {
                 hydrogenToDeleteForDoubleConnection = "H" + count;
                 connectionToChangeForDoubleConnection = "Connection" + count;
+                switch(count-1)
+                {
+                    case 0: vrHydrogen1 = false;
+                        break;
+                    case 1: vrHydrogen2 = false;
+                        break;
+                    case 2: vrHydrogen3 = false;
+                        break;
+                    case 3: vrHydrogen4 = false;
+                        break;
+                }
                 break;
             }
         }
-        hydrogenBoolArray[count-1] = false;
+       
         
 
         string[] result = { hydrogenToDeleteForDoubleConnection, connectionToChangeForDoubleConnection};
+
+        Debug.Log(hydrogenToDeleteForDoubleConnection + " " + connectionToChangeForDoubleConnection);
 
         return result;
     }
 
     public void CreateDoubleConnection()
     {
-        if(GameMaster.Instance.neighbourToConnectTo > 0 && numberOfConnectedMolecules < 4)
+        if(GameMaster.Instance.neighbourToConnectTo > 0 && numberOfConnectionsToMolecules < 4)
         {
             switch(GameMaster.Instance.neighbourToConnectTo)
             {
                 case 1:
-                    SetMoleculeAndHydrogenForDoubleConnection("Connection2", "Connection1", "Connection3", topMolecule);
+                    SetMoleculeAndHydrogenForDoubleConnection("Connection1", "Connection3", topMolecule);
                     break;
                 case 2:
-                    SetMoleculeAndHydrogenForDoubleConnection("Connection1", "Connection2", "Connection4", rightMolecule);
+                    SetMoleculeAndHydrogenForDoubleConnection("Connection2", "Connection4", rightMolecule);
                     break;
                 case 3:
-                    SetMoleculeAndHydrogenForDoubleConnection("Connection2", "Connection3", "Connection1", bottomMolecule);
+                    SetMoleculeAndHydrogenForDoubleConnection("Connection3", "Connection1", bottomMolecule);
                     break;
                 case 4:
-                    SetMoleculeAndHydrogenForDoubleConnection("Connection1", "Connection4", "Connection2", leftMolecule);
+                    SetMoleculeAndHydrogenForDoubleConnection("Connection4", "Connection2", leftMolecule);
                     break;
                 default:
                     break;
@@ -111,16 +124,16 @@ public class Carbon : MonoBehaviour
         }
     }
 
-    public void SetMoleculeAndHydrogenForDoubleConnection(string connection1, string choosenMoleculeConnection, string moleculeToConnectConnection, GameObject moleculeToconnectTo)
+    public void SetMoleculeAndHydrogenForDoubleConnection(string choosenMoleculeConnection, string moleculeToConnectConnection, GameObject moleculeToconnectTo)
     {
         GameMaster.Instance.numberDecisionBoard.SetActive(false);
         Carbon carbonComponentOfMoleculeToConnect = moleculeToconnectTo.GetComponent<Carbon>();
         string[] choosenMoleculeAttributeArray = GetHydrogenToDeleteForDoubleConnection(hydrogenBoolValues);
-        string[] moleculeToConnectAttributeArray = GetHydrogenToDeleteForDoubleConnection(carbonComponentOfMoleculeToConnect.hydrogenBoolValues);
+        string[] moleculeToConnectAttributeArray = carbonComponentOfMoleculeToConnect.GetHydrogenToDeleteForDoubleConnection(carbonComponentOfMoleculeToConnect.hydrogenBoolValues);
 
         //Increase connected molecule's counter of both gameobjects
-        numberOfConnectedMolecules++;
-        carbonComponentOfMoleculeToConnect.numberOfConnectedMolecules++;
+        numberOfConnectionsToMolecules++;
+        carbonComponentOfMoleculeToConnect.numberOfConnectionsToMolecules++;
 
         //Choosen molecule for double connection
         GameObject MOC1 = gameObject.transform.Find(choosenMoleculeAttributeArray[1]).gameObject;
