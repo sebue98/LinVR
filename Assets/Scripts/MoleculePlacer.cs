@@ -37,11 +37,29 @@ public class MoleculePlacer : MonoBehaviour
         
         if (collision.gameObject.CompareTag("Coal"))
         {
-            Debug.Log("Carbon collision detected with " + collision.gameObject.transform.parent.name);
             GameMaster.Instance.currentWhiteboard[positionOfPlateX, positionOfPlateY] = collision.gameObject.transform.parent.gameObject;
             GameMaster.Instance.spawnablePlates.Remove(int.Parse(myCollider.name));
             Destroy(gameObject);
         }
+    }
+
+    private bool CheckIfCurrentOrientationForConnectionIsValid(GameMaster tempInstance)
+    {
+        if (tempInstance.counter == 0)
+            return true;
+
+        int offsetX = 0;
+        int offsetY = 0;
+
+        switch (tempInstance.currentOrientationForConnection)
+        {
+            case 1: offsetY = 1; break;
+            case 2: offsetX = 1; break;
+            case 3: offsetY = -1; break;
+            case 4: offsetX = -1; break;
+        }
+
+        return !tempInstance.currentWhiteboard[positionOfPlateX + offsetX, positionOfPlateY + offsetY].gameObject.CompareTag("SpawnPlate");
     }
 
     public void SpawnMolecule()
@@ -49,13 +67,17 @@ public class MoleculePlacer : MonoBehaviour
         GameMaster tempInstance = GameMaster.Instance;
         if(!(tempInstance.currentState == State.start))
         {
-            if ((tempInstance.spawnablePlates.Contains(int.Parse(gameObject.name)) && tempInstance.counter > 0 && tempInstance.currentOrientationForConnection != 0) || tempInstance.spawnablePlates.Count == 0)
+            if (tempInstance.spawnablePlates.Contains(int.Parse(gameObject.name)) && tempInstance.counter > 0 
+                && (tempInstance.currentOrientationForConnection != 0 && CheckIfCurrentOrientationForConnectionIsValid(tempInstance))
+                || tempInstance.spawnablePlates.Count == 0)
             {
+                GameMaster.Instance.currentErrorState = ErrorState.blankBoard;
                 string moleculeTag = tempInstance.SpawnNewMolecule(gameObject.transform, Quaternion.Euler(0.0f, 90f, 0.0f), positionOfPlateX, positionOfPlateY);
                 Destroy(gameObject);
             }
             else
             {
+                GameMaster.Instance.currentErrorState = ErrorState.illegalSpawnPlace;
                 Debug.Log("Cannot place a molecule here");
             }
         }

@@ -32,13 +32,5 @@ public class CustomGrid : MonoBehaviour
             gridPositionY += size;
             gridPositionX = -1.3f;
         }
-        /* Function to display grid
-        for (int i = 0; i < gridSizeX; i++)
-        {
-            for (int j = 0; j < gridSizeY; j++)
-            {
-                Debug.Log(whiteboard[j, i].gameObject.name);
-            }
-        }*/
     }
 }

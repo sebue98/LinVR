@@ -19,23 +19,29 @@ public class ButtonBoard : MonoBehaviour
     public Button setBottomButton;
     public Button setLeftButton;
     public Button showCurrentModeButton;
-    public TextMeshProUGUI textMeshProComponent;
+    public TextMeshProUGUI selectedModeTextMeshProComponent;
+    public Button errorMessageButton;
+    public TextMeshProUGUI errorMessageTextMeshProComponent;
+
+    private GameMaster GMInstance;
+    private Color errorColorMaterial = new Color(255,82,90);
 
     // Start is called before the first frame update
     void Start()
     {
-
+        GMInstance = GameMaster.Instance;
     }
 
     // Update is called once per frame
     void Update()
     {
-        textMeshProComponent.text = changeCurrentMode();
+        selectedModeTextMeshProComponent.text = changeCurrentMode();
+        errorMessageTextMeshProComponent.text = changeErrorMessage();
     }
 
     public string changeCurrentMode()
     {
-        switch(GameMaster.Instance.currentState.ToString())
+        switch(GMInstance.currentState.ToString())
         {
             case "carbon":
                 return "Current Mode: Carbon";
@@ -53,6 +59,28 @@ public class ButtonBoard : MonoBehaviour
                 return "Current Mode: Create Triple Connection";
             default:
                 return "No mode selected";
+        }
+    }
+
+    public string changeErrorMessage()
+    {
+        switch(GMInstance.currentErrorState.ToString())
+        {
+            case "illegalDoubleConnection":
+                {
+                    errorMessageButton.GetComponent<Image>().color = new Color32(255, 82, 90, 255);
+                    return "Cannot create double connection here";
+                }
+            case "illegalSpawnPlace":
+                {
+                    errorMessageButton.GetComponent<Image>().color = new Color32(255, 82, 90, 255);
+                    return "Cannot place Molecule here";
+                }
+            default:
+                {
+                    errorMessageButton.GetComponent<Image>().color = new Color(255, 255, 255);
+                    return "";
+                }
         }
     }
 
@@ -122,4 +150,6 @@ public class ButtonBoard : MonoBehaviour
     {
         GameMaster.Instance.currentState = State.benzene;
     }
+
+
 }

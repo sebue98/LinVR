@@ -95,8 +95,6 @@ public class Carbon : MonoBehaviour
 
         string[] result = { hydrogenToDeleteForDoubleConnection, connectionToChangeForDoubleConnection};
 
-        Debug.Log(hydrogenToDeleteForDoubleConnection + " " + connectionToChangeForDoubleConnection);
-
         return result;
     }
 
@@ -128,6 +126,12 @@ public class Carbon : MonoBehaviour
     {
         GameMaster.Instance.numberDecisionBoard.SetActive(false);
         Carbon carbonComponentOfMoleculeToConnect = moleculeToconnectTo.GetComponent<Carbon>();
+        if (carbonComponentOfMoleculeToConnect.numberOfConnectionsToMolecules > 3)
+        {
+            GameMaster.Instance.currentErrorState = ErrorState.illegalDoubleConnection;
+            //Debug.Log("Not possible to create double connection here.");
+            return;
+        }
         string[] choosenMoleculeAttributeArray = GetHydrogenToDeleteForDoubleConnection(hydrogenBoolValues);
         string[] moleculeToConnectAttributeArray = carbonComponentOfMoleculeToConnect.GetHydrogenToDeleteForDoubleConnection(carbonComponentOfMoleculeToConnect.hydrogenBoolValues);
 
@@ -175,60 +179,5 @@ public class Carbon : MonoBehaviour
             MTC1.transform.rotation = MTC2.transform.rotation;
             MTC2.transform.position = new Vector3(MTC2.transform.position.x - 0.01f, MTC2.transform.position.y , MTC2.transform.position.z);
         }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        /*
-            //This line gives us the collided sub object of the molecule collided with
-            Collider myCollider = collision.GetContact(0).thisCollider;
-            GameObject HydrogenCollidedWith = collision.GetContact(0).otherCollider.gameObject;
-            if (!myCollider.gameObject.CompareTag("Coal") || !myCollider.gameObject.CompareTag("SpawnPlate"))
-            {
-                Debug.Log(myCollider.gameObject.name);
-                Debug.Log(HydrogenCollidedWith.gameObject.name);
-
-                if(HydrogenCollidedWith.CompareTag("Hydrogen1"))
-                {
-                    numberOfConnectedMolecules++;
-                    vrHydrogen3 = false;
-                    HydrogenCollidedWith.transform.parent.gameObject.GetComponent<Carbon>().vrHydrogen1 = false;
-                    bottomMolecule = collision.GetContact(0).otherCollider.gameObject.transform.parent.gameObject;
-                    bottomMolecule.GetComponent<Carbon>().vrHydrogen1 = false;
-                    HydrogenCollidedWith.transform.parent.gameObject.GetComponent<Carbon>().topMolecule = this.gameObject;
-                    collision.GetContact(0).otherCollider.gameObject.SetActive(false);
-                    myCollider.gameObject.SetActive(false);
-                }
-                else if(HydrogenCollidedWith.CompareTag("Hydrogen2"))
-                {
-                    numberOfConnectedMolecules++;
-                    vrHydrogen4 = false;
-                    HydrogenCollidedWith.transform.parent.gameObject.GetComponent<Carbon>().vrHydrogen2 = false;
-                    leftMolecule = collision.GetContact(0).otherCollider.gameObject.transform.parent.gameObject;
-                    HydrogenCollidedWith.transform.parent.gameObject.GetComponent<Carbon>().rightMolecule = this.gameObject;
-                    collision.GetContact(0).otherCollider.gameObject.SetActive(false);
-                    myCollider.gameObject.SetActive(false);
-                }
-                else if(HydrogenCollidedWith.CompareTag("Hydrogen3"))
-                {
-                    numberOfConnectedMolecules++;
-                    vrHydrogen1 = false;
-                    HydrogenCollidedWith.transform.parent.gameObject.GetComponent<Carbon>().vrHydrogen3 = false;
-                    topMolecule = collision.GetContact(0).otherCollider.gameObject.transform.parent.gameObject;
-                    HydrogenCollidedWith.transform.parent.gameObject.GetComponent<Carbon>().bottomMolecule = this.gameObject;
-                    collision.GetContact(0).otherCollider.gameObject.SetActive(false);
-                    myCollider.gameObject.SetActive(false);
-                }
-                else if(HydrogenCollidedWith.CompareTag("Hydrogen4"))
-                {
-                    numberOfConnectedMolecules++;
-                    vrHydrogen2 = false;
-                    HydrogenCollidedWith.transform.parent.gameObject.GetComponent<Carbon>().vrHydrogen4 = false;
-                    rightMolecule = collision.GetContact(0).otherCollider.gameObject.transform.parent.gameObject;
-                    HydrogenCollidedWith.transform.parent.gameObject.GetComponent<Carbon>().leftMolecule = this.gameObject;
-                    collision.GetContact(0).otherCollider.gameObject.SetActive(false);
-                    myCollider.gameObject.SetActive(false);
-                }
-            }*/
     }
 }

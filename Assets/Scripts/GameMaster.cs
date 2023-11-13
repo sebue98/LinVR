@@ -16,6 +16,13 @@ public enum State
     TripleConnection,
 }
 
+public enum ErrorState
+{
+    illegalDoubleConnection,
+    illegalSpawnPlace,
+    blankBoard
+}
+
 public class GameMaster : MonoBehaviour
 {
     
@@ -30,6 +37,7 @@ public class GameMaster : MonoBehaviour
     public GameObject benzene;
 
     public State currentState = State.start;
+    public ErrorState currentErrorState = ErrorState.blankBoard;
     public List<int> spawnablePlates;
     public GameObject numberDecisionBoard;
 
@@ -109,14 +117,11 @@ public class GameMaster : MonoBehaviour
             {
                 if(currentWhiteboard[x,y] == null)
                 {
-                    Debug.Log("NULLOBJECT at " + x + "  " + y);
-                    Debug.Log(currentWhiteboard[x, y].name);
                     currentLine += "X   ";
                     continue;
                 }
                 if(currentWhiteboard[x,y].gameObject.CompareTag("Carbon"))
                 {
-                    //Debug.Log("Item in WhiteboardList: " + currentWhiteboard[x, y].gameObject.name + " at " + x + "  " + y);
                     currentLine += "C   ";
                     continue;
                 }
@@ -164,6 +169,10 @@ public class GameMaster : MonoBehaviour
 
     public void CheckForNeighbourAndEstablishConnection(GameObject instantiatedMolecule, int posX, int posY)
     {
+        if(instantiatedMolecule.CompareTag("Benzene"))
+        {
+            instantiatedMolecule = currentWhiteboard[posX, posY].gameObject;
+        }
         //Check for top neighbour
         if(!currentWhiteboard[posX, posY + 1].gameObject.CompareTag("SpawnPlate") && currentOrientationForConnection == 1)
         {
@@ -186,6 +195,10 @@ public class GameMaster : MonoBehaviour
             //Setting neighbours
             topCarbon.bottomMolecule = instantiatedMolecule;
             instantiatedCarbon.topMolecule = topNeighbour;
+
+            //Increasing number of connections
+            topCarbon.numberOfConnectionsToMolecules++;
+            instantiatedCarbon.numberOfConnectionsToMolecules++;
         }
 
         //Check for right neighbour
@@ -210,6 +223,10 @@ public class GameMaster : MonoBehaviour
             //Setting neighbours
             rightCarbon.leftMolecule = instantiatedMolecule;
             instantiatedCarbon.rightMolecule = rightNeighbour;
+
+            //Increasing number of connections
+            rightCarbon.numberOfConnectionsToMolecules++;
+            instantiatedCarbon.numberOfConnectionsToMolecules++;
         }
 
         //Check for bottom neighbour
@@ -234,6 +251,10 @@ public class GameMaster : MonoBehaviour
             //Setting neighbours
             bottomCarbon.topMolecule = instantiatedMolecule;
             instantiatedCarbon.bottomMolecule = bottomNeighbour;
+
+            //Increasing number of connections
+            bottomCarbon.numberOfConnectionsToMolecules++;
+            instantiatedCarbon.numberOfConnectionsToMolecules++;
         }
 
         //Check for left neighbour
@@ -241,6 +262,7 @@ public class GameMaster : MonoBehaviour
         {
             GameObject leftNeighbour = currentWhiteboard[posX - 1, posY].gameObject;
             Carbon leftCarbon = leftNeighbour.GetComponent<Carbon>();
+
             Carbon instantiatedCarbon = instantiatedMolecule.GetComponent<Carbon>();
 
             //Disabling Hydrogens
@@ -258,8 +280,12 @@ public class GameMaster : MonoBehaviour
             //Setting neighbours
             leftCarbon.rightMolecule = instantiatedMolecule;
             instantiatedCarbon.leftMolecule = leftNeighbour;
-        }
 
+            //Increasing number of connections
+            leftCarbon.numberOfConnectionsToMolecules++;
+            instantiatedCarbon.numberOfConnectionsToMolecules++;
+        }
+        
     }
 
     private GameObject SwitchSpawnMolecule()
