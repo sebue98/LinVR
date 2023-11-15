@@ -65,7 +65,7 @@ public class Carbon : MonoBehaviour
         hydrogenConnectionValues[3] = vrConnection4;
     }
 
-    public string[] GetHydrogenToDeleteForDoubleConnection(bool[] hydrogenBoolArray)
+    public string[] GetFreeHydrogenAndConnectionForNewConnection(bool[] hydrogenBoolArray)
     {
         string hydrogenToDeleteForDoubleConnection = "";
         string connectionToChangeForDoubleConnection = "";
@@ -100,21 +100,46 @@ public class Carbon : MonoBehaviour
 
     public void CreateDoubleConnection()
     {
-        if(GameMaster.Instance.neighbourToConnectTo > 0 && numberOfConnectionsToMolecules < 4)
+        GameMaster GMInstance = GameMaster.Instance;
+        if(GMInstance.neighbourToConnectTo > 0 && numberOfConnectionsToMolecules < 4)
         {
-            switch(GameMaster.Instance.neighbourToConnectTo)
+            switch(GMInstance.neighbourToConnectTo)
             {
                 case 1:
-                    SetMoleculeAndHydrogenForDoubleConnection("Connection1", "Connection3", topMolecule);
-                    break;
+                    if (topMolecule == null)
+                    {
+                        GMInstance.currentErrorState = ErrorState.illegalDoubleConnection;
+                        break;
+                    }
+                    else
+                        SetMoleculeAndHydrogenForDoubleConnection("Connection1", "Connection3", topMolecule);
+                       break;
                 case 2:
-                    SetMoleculeAndHydrogenForDoubleConnection("Connection2", "Connection4", rightMolecule);
-                    break;
+                    if (rightMolecule == null)
+                    {
+                        GMInstance.currentErrorState = ErrorState.illegalDoubleConnection;
+                        break;
+                    }
+                    else
+                        SetMoleculeAndHydrogenForDoubleConnection("Connection2", "Connection4", rightMolecule);
+                       break;
                 case 3:
-                    SetMoleculeAndHydrogenForDoubleConnection("Connection3", "Connection1", bottomMolecule);
+                    if (bottomMolecule == null)
+                    {
+                        GMInstance.currentErrorState = ErrorState.illegalDoubleConnection;
+                        break;
+                    }
+                    else
+                        SetMoleculeAndHydrogenForDoubleConnection("Connection3", "Connection1", bottomMolecule);
                     break;
                 case 4:
-                    SetMoleculeAndHydrogenForDoubleConnection("Connection4", "Connection2", leftMolecule);
+                    if (leftMolecule == null)
+                    {
+                        GMInstance.currentErrorState = ErrorState.illegalDoubleConnection;
+                        break;
+                    }
+                    else
+                        SetMoleculeAndHydrogenForDoubleConnection("Connection4", "Connection2", leftMolecule);
                     break;
                 default:
                     break;
@@ -124,16 +149,18 @@ public class Carbon : MonoBehaviour
 
     public void SetMoleculeAndHydrogenForDoubleConnection(string choosenMoleculeConnection, string moleculeToConnectConnection, GameObject moleculeToconnectTo)
     {
+        GameMaster.Instance.currentErrorState = ErrorState.blankBoard;
+        Debug.Log("Setting double connection");
         GameMaster.Instance.numberDecisionBoard.SetActive(false);
         Carbon carbonComponentOfMoleculeToConnect = moleculeToconnectTo.GetComponent<Carbon>();
         if (carbonComponentOfMoleculeToConnect.numberOfConnectionsToMolecules > 3)
         {
             GameMaster.Instance.currentErrorState = ErrorState.illegalDoubleConnection;
-            //Debug.Log("Not possible to create double connection here.");
             return;
         }
-        string[] choosenMoleculeAttributeArray = GetHydrogenToDeleteForDoubleConnection(hydrogenBoolValues);
-        string[] moleculeToConnectAttributeArray = carbonComponentOfMoleculeToConnect.GetHydrogenToDeleteForDoubleConnection(carbonComponentOfMoleculeToConnect.hydrogenBoolValues);
+        GameMaster.Instance.currentErrorState = ErrorState.blankBoard;
+        string[] choosenMoleculeAttributeArray = GetFreeHydrogenAndConnectionForNewConnection(hydrogenBoolValues);
+        string[] moleculeToConnectAttributeArray = carbonComponentOfMoleculeToConnect.GetFreeHydrogenAndConnectionForNewConnection(carbonComponentOfMoleculeToConnect.hydrogenBoolValues);
 
         //Increase connected molecule's counter of both gameobjects
         numberOfConnectionsToMolecules++;
@@ -158,12 +185,15 @@ public class Carbon : MonoBehaviour
         {
             //Changing the position of the connections of the choosen molecule
             MOC1.transform.position = new Vector3(MOC2.transform.position.x, MOC2.transform.position.y + 0.01f, MOC2.transform.position.z);
-            MOC1.transform.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
+            if (MOC1.CompareTag("Connection1") || MOC1.CompareTag("Connection3"))
+                MOC1.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 90.0f);
+            //For else we do not need a rotation since all of them have 0,0,0
             MOC2.transform.position = new Vector3(MOC2.transform.position.x, MOC2.transform.position.y - 0.01f, MOC2.transform.position.z);
 
             //Changing the positon of the connections of the neighbouring molecule
             MTC1.transform.position = new Vector3(MTC2.transform.position.x, MTC2.transform.position.y + 0.01f, MTC2.transform.position.z);
-            MTC1.transform.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
+            if (MTC1.CompareTag("Connection1") || MTC1.CompareTag("Connection3"))
+                MTC1.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 90.0f);
             MTC2.transform.position = new Vector3(MTC2.transform.position.x, MTC2.transform.position.y - 0.01f, MTC2.transform.position.z);
         }
         else
@@ -171,12 +201,14 @@ public class Carbon : MonoBehaviour
 
             //Changing the position of the connections of the choosen molecule
             MOC1.transform.position = new Vector3(MOC2.transform.position.x + 0.01f, MOC2.transform.position.y, MOC2.transform.position.z);
-            MOC1.transform.rotation = MOC2.transform.rotation;
+            if (MOC1.CompareTag("Connection2") || MOC2.CompareTag("Connection4"))
+                MOC1.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 90.0f);
             MOC2.transform.position = new Vector3(MOC2.transform.position.x - 0.01f, MOC2.transform.position.y, MOC2.transform.position.z);
 
-            //Changing the positon of the connections of the neighbourign molecule
+            //Changing the positon of the connections of the neighbouring molecule
             MTC1.transform.position = new Vector3(MTC2.transform.position.x + 0.01f, MTC2.transform.position.y, MTC2.transform.position.z);
-            MTC1.transform.rotation = MTC2.transform.rotation;
+            if (MTC1.CompareTag("Connection2") || MTC1.CompareTag("Connection4"))
+                MTC1.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 90.0f);
             MTC2.transform.position = new Vector3(MTC2.transform.position.x - 0.01f, MTC2.transform.position.y , MTC2.transform.position.z);
         }
     }

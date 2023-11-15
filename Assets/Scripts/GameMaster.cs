@@ -30,11 +30,13 @@ public class GameMaster : MonoBehaviour
     private GameObject moleculeToInstantiate;
 
     public int currentOrientationForConnection = 0; //1 = Top, 2 = Right, 3 = Bottom, 4 = Left
+    public bool currentorientationForMoleculeRing = true;
     public GameObject carbon;
     public GameObject oxygen;
     public GameObject nitrogen;
     public GameObject sulfur;
     public GameObject benzene;
+    public GameObject benzeneVertical;
 
     public State currentState = State.start;
     public ErrorState currentErrorState = ErrorState.blankBoard;
@@ -140,25 +142,21 @@ public class GameMaster : MonoBehaviour
 
     public void SettingMoleculesPlacesOnWhiteboard(GameObject instantiatedMolecule, int posX, int posY)
     {
-
         switch(instantiatedMolecule.tag)
         {
-            case "Benzene":
-                {
-                    currentWhiteboard[posX, posY] = instantiatedMolecule.gameObject.transform.Find("Carbon1").gameObject;
-                    break;
-                }
-            case "Carbon":
-                {
-                    currentWhiteboard[posX, posY] = instantiatedMolecule;
-                    break;
-                }
+            case "Benzene": currentWhiteboard[posX, posY] = instantiatedMolecule.gameObject.transform.Find("Carbon1").gameObject; break;
+            case "Carbon": currentWhiteboard[posX, posY] = instantiatedMolecule; break;
         }
     }
 
     public string SpawnNewMolecule(Transform molculeTransform, Quaternion moleculeQuaternion, int positionOfPlateX, int positionOfPlateY)
     {
         moleculeToInstantiate = SwitchSpawnMolecule();
+        if (moleculeToInstantiate.CompareTag("Benzene") && !currentorientationForMoleculeRing)
+        {
+            moleculeToInstantiate = benzeneVertical;
+            moleculeQuaternion = Quaternion.Euler(90.0f, 90.0f, 0.0f);
+        }
         instantiatedMolecule = Instantiate(moleculeToInstantiate, molculeTransform.position, moleculeQuaternion);
         instantiatedMolecule.name = currentState.ToString() + " " + counter;
         SettingMoleculesPlacesOnWhiteboard(instantiatedMolecule, positionOfPlateX, positionOfPlateY);
@@ -173,6 +171,8 @@ public class GameMaster : MonoBehaviour
         {
             instantiatedMolecule = currentWhiteboard[posX, posY].gameObject;
         }
+        
+        //TODO: Check if neighbour has not the correct hydrogen or connection, to find another free hydrogen and connection to connect to
         //Check for top neighbour
         if(!currentWhiteboard[posX, posY + 1].gameObject.CompareTag("SpawnPlate") && currentOrientationForConnection == 1)
         {
@@ -211,14 +211,45 @@ public class GameMaster : MonoBehaviour
             //Disabling Hydrogens
             rightCarbon.Hydrogen4.SetActive(false);
             rightCarbon.vrHydrogen4 = false;
-            instantiatedCarbon.Hydrogen2.SetActive(false);
-            instantiatedCarbon.vrHydrogen2 = false;
+
+            string[] hydrogenAndConnection = instantiatedCarbon.GetFreeHydrogenAndConnectionForNewConnection(instantiatedCarbon.hydrogenBoolValues);
+            instantiatedCarbon.transform.Find(hydrogenAndConnection[0]).gameObject.SetActive(false);
+            switch(hydrogenAndConnection[0])
+            {
+                case "H1":
+                    {
+                        instantiatedCarbon.vrHydrogen1 = false;
+                        Transform connection1 = instantiatedCarbon.Connection1.gameObject.transform;
+                        connection1.position = new Vector3(0.01f, connection1.position.y + 0.01000f, connection1.position.z + 0.01000f);
+                        connection1.rotation = Quaternion.Euler(90.0f, 0.0f, 0.0f);
+                        break;
+                    }
+                case "H2":
+                    {
+                        instantiatedCarbon.vrHydrogen2 = false;
+                        //Transform connection2 = instantiatedCarbon.Connection2.gameObject.transform;
+                        //connection2.position = new Vector3(connection2.position.x + 0.012f, connection2.position.y, connection2.position.z);
+                        break;
+                    }
+                case "H3": instantiatedCarbon.vrHydrogen3 = false; break;
+                case "H4":
+                    {
+                        //connection1 needs to go to position of connection2
+                        instantiatedCarbon.vrHydrogen4 = false;
+                        //Transform connection1 = instantiatedCarbon.Connection1.gameObject.transform;
+                        //connection1.position = new Vector3(connection1.position.x, connection1.position.y + 0.012f, connection1.position.z);
+                        break;
+                    }
+            }
+            //instantiatedCarbon.transform.Find(hydrogenAndConnection[1]).gameObject.SetActive(false);
+            //instantiatedCarbon.Hydrogen2.SetActive(false);
+            //instantiatedCarbon.vrHydrogen2 = false;
 
             //Establishing connection by changing position of connections
             Transform connection4 = rightCarbon.Connection4.gameObject.transform;
             connection4.position = new Vector3(connection4.position.x - 0.012f, connection4.position.y, connection4.position.z);
-            Transform connection2 = instantiatedCarbon.Connection2.gameObject.transform;
-            connection2.position = new Vector3(connection2.position.x + 0.012f, connection2.position.y, connection2.position.z);
+            //Transform connection2 = instantiatedCarbon.Connection2.gameObject.transform;
+            //connection2.position = new Vector3(connection2.position.x + 0.012f, connection2.position.y, connection2.position.z);
 
             //Setting neighbours
             rightCarbon.leftMolecule = instantiatedMolecule;

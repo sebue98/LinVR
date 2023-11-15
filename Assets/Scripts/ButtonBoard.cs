@@ -22,7 +22,8 @@ public class ButtonBoard : MonoBehaviour
     public TextMeshProUGUI selectedModeTextMeshProComponent;
     public Button errorMessageButton;
     public TextMeshProUGUI errorMessageTextMeshProComponent;
-
+    public TextMeshProUGUI orientationButtonTextMeshProComponent;
+    
     private GameMaster GMInstance;
     private Color errorColorMaterial = new Color(255,82,90);
 
@@ -83,6 +84,17 @@ public class ButtonBoard : MonoBehaviour
                 }
         }
     }
+
+    public void SetOrientation()
+    {
+        //True = Horizontal, False = Vertical
+        GMInstance.currentorientationForMoleculeRing = !GMInstance.currentorientationForMoleculeRing;
+        if (GMInstance.currentorientationForMoleculeRing)
+            orientationButtonTextMeshProComponent.text = "Horizontal";
+        else
+            orientationButtonTextMeshProComponent.text = "Vertical";
+    }
+
 
     public void TempFunction()
     {
