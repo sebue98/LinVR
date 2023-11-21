@@ -23,6 +23,9 @@ public class ButtonBoard : MonoBehaviour
     public Button errorMessageButton;
     public TextMeshProUGUI errorMessageTextMeshProComponent;
     public TextMeshProUGUI orientationButtonTextMeshProComponent;
+
+    public Slider benzeneConnectionSlider;
+    public TextMeshProUGUI benzeneConnectionNumberHolder;
     
     private GameMaster GMInstance;
     private Color errorColorMaterial = new Color(255,82,90);
@@ -38,6 +41,8 @@ public class ButtonBoard : MonoBehaviour
     {
         selectedModeTextMeshProComponent.text = changeCurrentMode();
         errorMessageTextMeshProComponent.text = changeErrorMessage();
+        benzeneConnectionNumberHolder.text = GMInstance.currentChoosenBenzeneCarbonForConnection.ToString();
+        benzeneConnectionSlider.value = GMInstance.currentChoosenBenzeneCarbonForConnection;
     }
 
     public string changeCurrentMode()
@@ -163,5 +168,8 @@ public class ButtonBoard : MonoBehaviour
         GameMaster.Instance.currentState = State.benzene;
     }
 
-
+    public void SetBenzeneCarbonToConnectToMolecule()
+    {
+        GMInstance.currentChoosenBenzeneCarbonForConnection = (int)benzeneConnectionSlider.value;
+    }
 }
