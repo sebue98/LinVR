@@ -72,7 +72,12 @@ public class MoleculePlacer : MonoBehaviour
                 || tempInstance.spawnablePlates.Count == 0)
             {
                 GameMaster.Instance.currentErrorState = ErrorState.blankBoard;
-                string moleculeTag = tempInstance.SpawnNewMolecule(gameObject.transform, Quaternion.Euler(0.0f, 0.0f, 0.0f), positionOfPlateX, positionOfPlateY);
+                if(!tempInstance.SpawnNewMolecule(gameObject.transform, Quaternion.Euler(0.0f, 0.0f, 0.0f), positionOfPlateX, positionOfPlateY))
+                {
+                    GameMaster.Instance.currentErrorState = ErrorState.illegalSpawnPlace;
+                    Debug.Log("Cannot place a molecule here");
+                    return;
+                }
                 Destroy(gameObject);
             }
             else

@@ -91,7 +91,7 @@ MonoBehaviour:
   vrConnection4: 0
   hydrogenBoolValues: 00000100
   hydrogenConnectionValues: 00000100
-  numberOfConnectionsToMolecules: 0
+  numberOfConnectionsToMolecules: 3
 --- !u!114 &6879148339516500933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1139,7 +1139,7 @@ MonoBehaviour:
   vrConnection4: 0
   hydrogenBoolValues: 00010000
   hydrogenConnectionValues: 00010000
-  numberOfConnectionsToMolecules: 0
+  numberOfConnectionsToMolecules: 3
 --- !u!114 &8154064098046012352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2187,7 +2187,7 @@ MonoBehaviour:
   vrConnection4: 1
   hydrogenBoolValues: 00000001
   hydrogenConnectionValues: 00000001
-  numberOfConnectionsToMolecules: 0
+  numberOfConnectionsToMolecules: 3
 --- !u!114 &35098438302600183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2481,7 +2481,7 @@ MonoBehaviour:
   vrConnection4: 0
   hydrogenBoolValues: 01000000
   hydrogenConnectionValues: 01000000
-  numberOfConnectionsToMolecules: 0
+  numberOfConnectionsToMolecules: 3
 --- !u!114 &4481438885188567642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3415,7 +3415,7 @@ MonoBehaviour:
   vrConnection4: 0
   hydrogenBoolValues: 00010000
   hydrogenConnectionValues: 00010000
-  numberOfConnectionsToMolecules: 0
+  numberOfConnectionsToMolecules: 3
 --- !u!114 &542508939737990209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3626,7 +3626,7 @@ MonoBehaviour:
   vrConnection4: 1
   hydrogenBoolValues: 00000001
   hydrogenConnectionValues: 00000001
-  numberOfConnectionsToMolecules: 0
+  numberOfConnectionsToMolecules: 3
 --- !u!114 &7364160422211651685
 MonoBehaviour:
   m_ObjectHideFlags: 0

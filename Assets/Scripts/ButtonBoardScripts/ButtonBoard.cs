@@ -39,10 +39,25 @@ public class ButtonBoard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Activating Benzene Decision Board
+        if(GMInstance.currentState == State.benzene && GMInstance.setBenzeneBoardActive)
+        {
+            if (GMInstance.currentorientationForMoleculeRing)
+            {
+                GMInstance.benzeneConnectionButtonBoardVertical.SetActive(false);
+                GMInstance.benzeneConnectionButtonBoardHorizontal.SetActive(true);
+            }
+            else
+            {
+                GMInstance.benzeneConnectionButtonBoardHorizontal.SetActive(false);
+                GMInstance.benzeneConnectionButtonBoardVertical.SetActive(true);
+            }
+
+        }
+
+        //Setting Text of different display buttons
         selectedModeTextMeshProComponent.text = changeCurrentMode();
         errorMessageTextMeshProComponent.text = changeErrorMessage();
-        benzeneConnectionNumberHolder.text = GMInstance.currentChoosenBenzeneCarbonForConnection.ToString();
-        benzeneConnectionSlider.value = GMInstance.currentChoosenBenzeneCarbonForConnection;
     }
 
     public string changeCurrentMode()
@@ -53,6 +68,8 @@ public class ButtonBoard : MonoBehaviour
                 return "Current Mode: Carbon";
             case "oxygen":
                 return "Current Mode: Oxygen";
+            case "benzene":
+                return "Current Mode: Benzene";
             case "nitrogen":
                 return "Current Mode: Nitrogen";
             case "sulfur":
@@ -98,6 +115,11 @@ public class ButtonBoard : MonoBehaviour
             orientationButtonTextMeshProComponent.text = "Horizontal";
         else
             orientationButtonTextMeshProComponent.text = "Vertical";
+    }
+
+    public void SetBenzeneCarbonToConnectToMolecule(int choosenCarbon)
+    {
+        GMInstance.currentChoosenBenzeneCarbonForConnection = choosenCarbon;
     }
 
 
@@ -166,10 +188,7 @@ public class ButtonBoard : MonoBehaviour
     public void SetBenzene()
     {
         GameMaster.Instance.currentState = State.benzene;
+        GMInstance.setBenzeneBoardActive = true;
     }
 
-    public void SetBenzeneCarbonToConnectToMolecule()
-    {
-        GMInstance.currentChoosenBenzeneCarbonForConnection = (int)benzeneConnectionSlider.value;
-    }
 }

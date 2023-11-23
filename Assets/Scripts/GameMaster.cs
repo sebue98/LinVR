@@ -31,6 +31,7 @@ public class GameMaster : MonoBehaviour
     private GameObject moleculeToInstantiate;
     private float gameObjectSizeFactor = 0.55000000000000247500000000001114f;
 
+    public bool setBenzeneBoardActive = false;
     public int currentChoosenBenzeneCarbonForConnection = 1;
     public int currentOrientationForConnection = 0; //1 = Top, 2 = Right, 3 = Bottom, 4 = Left
     public bool currentorientationForMoleculeRing = true; //true = horizontal, false = vertical
@@ -55,7 +56,10 @@ public class GameMaster : MonoBehaviour
     public State currentState = State.start;
     public ErrorState currentErrorState = ErrorState.blankBoard;
     public List<int> spawnablePlates;
+
     public GameObject numberDecisionBoard;
+    public GameObject benzeneConnectionButtonBoardHorizontal;
+    public GameObject benzeneConnectionButtonBoardVertical;
 
     public GameObject instantiatedMolecule;
 
@@ -88,6 +92,8 @@ public class GameMaster : MonoBehaviour
             Destroy(gameObject);
         }
         numberDecisionBoard.SetActive(false);
+        benzeneConnectionButtonBoardHorizontal.SetActive(false);
+        benzeneConnectionButtonBoardVertical.SetActive(false);
     }
 
     public void Update()
@@ -176,11 +182,46 @@ public class GameMaster : MonoBehaviour
         currentChoosenBenzeneCarbonForConnection = 1;
     }
 
-    public string SpawnNewMolecule(Transform molculeTransform, Quaternion moleculeQuaternion, int positionOfPlateX, int positionOfPlateY)
+    public bool CheckIfBenzenePositionFitsGameBoard(int posX, int posY)
     {
+        if(!currentorientationForMoleculeRing)
+        {
+            switch (currentChoosenBenzeneCarbonForConnection)
+            {
+                case 1: return (posY > 2 && (posX > 0 && posX < 19));
+                case 2: return ((posY > 1 && posY < 9) && posX > 1);
+                case 3: return ((posY > 0 && posY < 8) && posX > 1);
+                case 4: return (posY < 7 && (posX > 0 && posX < 19));
+                case 5: return ((posY > 0 && posY < 8) && posX < 18);
+                case 6: return ((posY > 1 && posY < 9) && posX < 18);
+            }
+        }
+        else
+        {
+            switch(currentChoosenBenzeneCarbonForConnection)
+            {
+                case 1: return ((posY > 0 && posY < 9) && posX < 17);
+                case 2: return (posY > 2 && (posX > 0 && posX < 18));
+                case 3: return (posY > 2 && (posX > 1 && posX < 19));
+                case 4: return ((posY > 0 && posY < 9) && posX > 2);
+                case 5: return (posY < 8 && (posX > 1 && posX < 19));
+                case 6: return (posY < 9 && (posX > 0 && posX < 18));
+            }
+        }
+
+        return true;
+    }
+
+    public bool SpawnNewMolecule(Transform molculeTransform, Quaternion moleculeQuaternion, int positionOfPlateX, int positionOfPlateY)
+    {
+        setBenzeneBoardActive = false;
+        benzeneConnectionButtonBoardHorizontal.SetActive(false);
+        benzeneConnectionButtonBoardVertical.SetActive(false);
         moleculeToInstantiate = SwitchSpawnMolecule();
         if (moleculeToInstantiate.CompareTag("Benzene"))// && !currentorientationForMoleculeRing)
         {
+            if (!CheckIfBenzenePositionFitsGameBoard(positionOfPlateX, positionOfPlateY))
+                return false;
             moleculeToInstantiate = SwitchBenzeneRingToSpawn();
         }
         instantiatedMolecule = Instantiate(moleculeToInstantiate, molculeTransform.position, moleculeQuaternion);
@@ -188,7 +229,7 @@ public class GameMaster : MonoBehaviour
         SettingMoleculesPlacesOnWhiteboard(instantiatedMolecule, positionOfPlateX, positionOfPlateY);
         CheckForNeighbourAndEstablishConnection(instantiatedMolecule, positionOfPlateX, positionOfPlateY);
         counter++;
-        return instantiatedMolecule.tag;
+        return true;
     }
 
     public void ConnectionChangerDependingOnOrientation(Carbon instantiatedCarbon, Transform connection, bool orientationChange)
@@ -272,7 +313,7 @@ public class GameMaster : MonoBehaviour
         
         //TODO: Check if neighbour has not the correct hydrogen or connection, to find another free hydrogen and connection to connect to
         //Check for top neighbour
-        if(!currentWhiteboard[posX, posY + 1].gameObject.CompareTag("SpawnPlate") && currentOrientationForConnection == 1)
+        if(posY < 9 && !currentWhiteboard[posX, posY + 1].gameObject.CompareTag("SpawnPlate") && currentOrientationForConnection == 1)
         {
             GameObject topNeighbour = currentWhiteboard[posX, posY + 1].gameObject;
             Carbon topCarbon = topNeighbour.GetComponent<Carbon>();
@@ -311,7 +352,7 @@ public class GameMaster : MonoBehaviour
         }
 
         //Check for right neighbour
-        if (!currentWhiteboard[posX+1, posY].gameObject.CompareTag("SpawnPlate") && currentOrientationForConnection == 2)
+        if (posX < 19 && !currentWhiteboard[posX+1, posY].gameObject.CompareTag("SpawnPlate") && currentOrientationForConnection == 2)
         {
             GameObject rightNeighbour = currentWhiteboard[posX + 1, posY].gameObject;
             Carbon rightCarbon = rightNeighbour.GetComponent<Carbon>();
@@ -347,7 +388,7 @@ public class GameMaster : MonoBehaviour
         }
 
         //Check for bottom neighbour
-        if (!currentWhiteboard[posX, posY - 1].gameObject.CompareTag("SpawnPlate") && currentOrientationForConnection == 3)
+        if (posY > 0 && !currentWhiteboard[posX, posY - 1].gameObject.CompareTag("SpawnPlate") && currentOrientationForConnection == 3)
         {
             GameObject bottomNeighbour = currentWhiteboard[posX, posY-1].gameObject;
             Carbon bottomCarbon = bottomNeighbour.GetComponent<Carbon>();
@@ -383,7 +424,7 @@ public class GameMaster : MonoBehaviour
         }
 
         //Check for left neighbour
-        if (!currentWhiteboard[posX - 1, posY].gameObject.CompareTag("SpawnPlate") && currentOrientationForConnection == 4)
+        if (posX > 0 && !currentWhiteboard[posX - 1, posY].gameObject.CompareTag("SpawnPlate") && currentOrientationForConnection == 4)
         {
             GameObject leftNeighbour = currentWhiteboard[posX - 1, posY].gameObject;
             Carbon leftCarbon = leftNeighbour.GetComponent<Carbon>();
