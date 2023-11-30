@@ -73,6 +73,8 @@ public class GameMaster : MonoBehaviour
     public GameObject lastMoleculeConnectedTo;
     public GameObject[,] currentWhiteboard = new GameObject[20,10];
 
+    public IUPACAlgorithm iupac;
+
     public static GameMaster Instance
     {
         get { return _instance; }
@@ -126,7 +128,11 @@ public class GameMaster : MonoBehaviour
         }
 
         if (showDebug)
-            printWhiteboard();
+        {
+            //printWhiteboard();
+            //Debug.Log("Longest chain found:" + iupac.FindLongestChain(currentWhiteboard));
+            iupac.FindLongestChain(currentWhiteboard);
+        }
 
     }
 
