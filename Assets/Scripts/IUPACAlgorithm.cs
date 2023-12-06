@@ -6,7 +6,9 @@ using UnityEngine;
 
 public class IUPACAlgorithm : MonoBehaviour
 {
-    public static List<GameObject> longestChainElements = new List<GameObject>();
+    public List<GameObject> longestChainElements = new List<GameObject>();
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,32 @@ public class IUPACAlgorithm : MonoBehaviour
     public int[,] directions = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 } };
 
     public List<GameObject> longestChainGlobal = new List<GameObject>();
+    public List<List<GameObject>> neighboringChainsElements = new List<List<GameObject>>();
+
+    public String CreateIUPACName(int lengthOfChain, int typeOfConnectionSDT)
+    {
+        string[] startMolecules = { "Methan", "Ethan", "Propan", "Butan", "Pentan", "Hexan", "Heptan", "Octan", "Nonan", "Decan", "Undecan", "Duodecan",
+        "Tridecan", "Tetradecan", "Pentadecan", "Hexadecan", "Heptadecan", "Octadecan", "Nonadecan", "Eicosan", "Heneicosan"};
+        string[] prefixes = { "Hen", "Do", "Tri", "Tetra", "Penta", "Hexa", "Hepta", "Octa", "Nona" }; //Will only be used for molecules with size > 21
+        string[] suffixes = { "an", "en", "in" }; //single connection, double connection, triple connection
+        string[] middlePart = { "dec", "cos", "triacont", "tetracont", "pentacont", "hexacont", "heptacont", "octacont", "nonacont"};
+
+        if(lengthOfChain < 22)
+        {
+            return startMolecules[lengthOfChain - 1];
+        }
+        else
+        {
+            int tensPlace = (lengthOfChain / 10) % 10;
+            int onesPlace = lengthOfChain % 10;
+
+            string tempString = "";
+            tempString += prefixes[onesPlace-1];
+            tempString += middlePart[tensPlace-1];
+
+            return tempString + suffixes[typeOfConnectionSDT];
+        }
+    }
 
     public  List<GameObject> FindLongestChain(GameObject[,] grid)
     {
@@ -47,7 +75,7 @@ public class IUPACAlgorithm : MonoBehaviour
                 }
             }
         }
-        Debug.Log("Current Longest Chain: " + longestChain.Count);
+        //Debug.Log("Current Longest Chain: " + longestChain.Count);
         longestChainGlobal = longestChain;
         return longestChain;
     }
@@ -83,67 +111,44 @@ public class IUPACAlgorithm : MonoBehaviour
         return currentPath;
     }
 
-    /*
-    public int FindLongestChain(GameObject[,] grid)
+    public List<GameObject> GetConnectedChain(GameObject[,] grid, int startX, int startY, int neighborX, int neighborY, HashSet<(int, int)> visited)
     {
-        int maxChainLength = 0;
-        int rows = grid.GetLength(0);
-        int cols = grid.GetLength(1);
+        List<GameObject> connectedChain = new List<GameObject>();
+        int[,] directions = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 } };
 
-        for (int i = 0; i < rows; i++)
+        // Determine the direction between start and neighbor coordinates
+        int dirX = neighborX - startX;
+        int dirY = neighborY - startY;
+
+        int dirIndex = -1;
+
+        for (int i = 0; i < 4; i++)
         {
-            for (int j = 0; j < cols; j++)
+            if (directions[i, 0] == dirX && directions[i, 1] == dirY)
             {
-                if (grid[i, j].gameObject.CompareTag("Carbon"))
-                {
-                    List<GameObject> tempChain = new List<GameObject>();
-                    int length = DFS(grid, i, j, rows, cols, tempChain);
-                    Debug.Log("Current length: " + length + "Current tempchain length: " + tempChain.Count);
-                    //maxChainLength = Math.Max(maxChainLength, length);
-                    if (length > maxChainLength)
-                    {
-                        maxChainLength = length;
-                        Debug.Log("Temp Chain Length: " + tempChain.Count); // Debug output
-                        longestChain.Clear();
-                        longestChain.AddRange(tempChain);
-                        Debug.Log("Longest Chain Lenth: " + longestChain.Count);
-                    }
-                }
+                dirIndex = i;
+                break;
             }
         }
 
-        return maxChainLength;
+        if (dirIndex != -1)
+        {
+            int newX = startX + directions[dirIndex, 0];
+            int newY = startY + directions[dirIndex, 1];
+
+            if (newX >= 0 && newX < 20 && newY >= 0 && newY < 10 && grid[newX, newY].gameObject.CompareTag("Carbon") && !visited.Contains((newX, newY)))
+            {
+                visited.Add((newX, newY));
+                connectedChain.Add(grid[newX, newY].gameObject);
+
+                //connectedChain.AddRange(GetConnectedChain(grid, newX, newY, startX, startY, visited));
+                List<GameObject> recursiveChain = GetConnectedChain(grid, newX, newY, startX, startY, visited);
+                connectedChain.AddRange(recursiveChain);
+            }
+        }
+        if(connectedChain.Count != 0)
+            GameMaster.Instance.tempNeighbourObjects.Add(connectedChain);
+        return connectedChain;
     }
 
-    public int DFS(GameObject[,] grid, int i, int j, int rows, int cols, List<GameObject> currentChain)
-    {
-        if (i < 0 || i >= rows || j < 0 || j >= cols || !grid[i, j].gameObject.CompareTag("Carbon"))
-        {
-            return 0;
-        }
-
-        grid[i, j].gameObject.tag = "Visited";
-        currentChain.Add(grid[i, j].gameObject);
-        Debug.Log("Current State of currentChain in DFS function: " + currentChain.Count);
-
-        int maxLength = 0;
-
-        for (int k = 0; k < directions.GetLength(0); k++)
-        {
-            int newX = i + directions[k, 0];
-            int newY = j + directions[k, 1];
-
-            // Check if the new coordinates are within bounds
-            if (newX >= 0 && newX < rows && newY >= 0 && newY < cols)
-            {
-                int length = DFS(grid, newX, newY, rows, cols, currentChain);
-                maxLength = Math.Max(maxLength, length);
-            }
-        }
-
-        grid[i, j].gameObject.tag = "Carbon"; // Restore the cell to its original state
-        currentChain.RemoveAt(currentChain.Count - 1);
-
-        return maxLength + 1;
-    }*/
 }

@@ -22,6 +22,9 @@ public class Carbon : MonoBehaviour
     public GameObject Connection3;
     public GameObject Connection4;
 
+    public int positionXOnWhiteboard;
+    public int positionYOnWhiteboard;
+
     //Properties
     public bool vrHydrogen1;
     public bool vrHydrogen2;

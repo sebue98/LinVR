@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR;
@@ -69,6 +70,9 @@ public class GameMaster : MonoBehaviour
     public bool showDebug = false;
     public List<Carbon> carbons;
     public List<GameObject> carbonGameObjects;
+    public List<List<GameObject>> tempNeighbourObjects = new List<List<GameObject>>();
+
+    public TextMeshProUGUI IUPACName;
 
     public GameObject lastMoleculeConnectedTo;
     public GameObject[,] currentWhiteboard = new GameObject[20,10];
@@ -131,7 +135,58 @@ public class GameMaster : MonoBehaviour
         {
             //printWhiteboard();
             //Debug.Log("Longest chain found:" + iupac.FindLongestChain(currentWhiteboard));
-            iupac.FindLongestChain(currentWhiteboard);
+            List<GameObject> tempLongestChain = iupac.FindLongestChain(currentWhiteboard);
+            foreach(var carbon in tempLongestChain)
+            {
+                Carbon carbonComponent = carbon.GetComponent<Carbon>();
+                //Debug.Log("Looking for neighbors in molecule: " + carbon.name);
+                if(!tempLongestChain.Contains(carbonComponent.topMolecule) && carbonComponent.topMolecule != null) //Search in TopChain
+                {
+                    //Debug.Log("Top neighbour is new chain");
+                    HashSet<(int, int)> visited = new HashSet<(int, int)>();
+                    visited.Add((carbonComponent.positionXOnWhiteboard, carbonComponent.positionYOnWhiteboard));
+                    iupac.GetConnectedChain(currentWhiteboard, carbonComponent.positionXOnWhiteboard, carbonComponent.positionYOnWhiteboard,
+                        carbonComponent.topMolecule.GetComponent<Carbon>().positionXOnWhiteboard, carbonComponent.topMolecule.GetComponent<Carbon>().positionYOnWhiteboard, visited);
+                }
+                if (!tempLongestChain.Contains(carbonComponent.rightMolecule) && carbonComponent.rightMolecule != null) //Search in TopChain
+                {
+                    //Debug.Log("Right neighbour is new chain");
+                    HashSet<(int, int)> visited = new HashSet<(int, int)>();
+                    visited.Add((carbonComponent.positionXOnWhiteboard, carbonComponent.positionYOnWhiteboard));
+                    iupac.GetConnectedChain(currentWhiteboard, carbonComponent.positionXOnWhiteboard, carbonComponent.positionYOnWhiteboard,
+                    carbonComponent.rightMolecule.GetComponent<Carbon>().positionXOnWhiteboard, carbonComponent.rightMolecule.GetComponent<Carbon>().positionYOnWhiteboard, visited);
+                }
+                if (!tempLongestChain.Contains(carbonComponent.bottomMolecule) && carbonComponent.bottomMolecule != null) //Search in TopChain
+                {
+                    //Debug.Log("Bottom neighbour is new chain");
+                    HashSet<(int, int)> visited = new HashSet<(int, int)>();
+                    visited.Add((carbonComponent.positionXOnWhiteboard, carbonComponent.positionYOnWhiteboard));
+                    iupac.GetConnectedChain(currentWhiteboard, carbonComponent.positionXOnWhiteboard, carbonComponent.positionYOnWhiteboard,
+                    carbonComponent.bottomMolecule.GetComponent<Carbon>().positionXOnWhiteboard, carbonComponent.bottomMolecule.GetComponent<Carbon>().positionYOnWhiteboard, visited);
+                }
+                if (!tempLongestChain.Contains(carbonComponent.leftMolecule) && carbonComponent.leftMolecule != null) //Search in TopChain
+                {
+                    //Debug.Log("Left neighbour is new chain");
+                    HashSet<(int, int)> visited = new HashSet<(int, int)>();
+                    visited.Add((carbonComponent.positionXOnWhiteboard, carbonComponent.positionYOnWhiteboard));
+                    iupac.GetConnectedChain(currentWhiteboard, carbonComponent.positionXOnWhiteboard, carbonComponent.positionYOnWhiteboard,
+                    carbonComponent.leftMolecule.GetComponent<Carbon>().positionXOnWhiteboard, carbonComponent.leftMolecule.GetComponent<Carbon>().positionYOnWhiteboard, visited);
+                }
+            }
+            
+            /*
+            for(int i = 0; i < tempNeighbourObjects.Count; i++)
+            {
+                Debug.Log("Carbon neighbour objects Liste an Position: " + i);
+                {
+                    for(int j = 0; j < tempNeighbourObjects[i].Count; j++)
+                    {
+                        Debug.Log(tempNeighbourObjects[i][j].gameObject.name);
+                    }
+                }
+            }*/
+
+            IUPACName.text = iupac.CreateIUPACName(tempLongestChain.Count, 0);
         }
 
     }
@@ -174,16 +229,58 @@ public class GameMaster : MonoBehaviour
                 {
                     switch(currentChoosenBenzeneCarbonForConnection)
                     {
-                        case 1: currentWhiteboard[posX, posY] = instantiatedMolecule.gameObject.transform.Find("Carbon1").gameObject; break;
-                        case 2: currentWhiteboard[posX, posY] = instantiatedMolecule.gameObject.transform.Find("Carbon2").gameObject; break;
-                        case 3: currentWhiteboard[posX, posY] = instantiatedMolecule.gameObject.transform.Find("Carbon3").gameObject; break;
-                        case 4: currentWhiteboard[posX, posY] = instantiatedMolecule.gameObject.transform.Find("Carbon4").gameObject; break;
-                        case 5: currentWhiteboard[posX, posY] = instantiatedMolecule.gameObject.transform.Find("Carbon5").gameObject; break;
-                        case 6: currentWhiteboard[posX, posY] = instantiatedMolecule.gameObject.transform.Find("Carbon6").gameObject; break;
+                        case 1:
+                            {
+                                currentWhiteboard[posX, posY] = instantiatedMolecule.gameObject.transform.Find("Carbon1").gameObject;
+                                instantiatedMolecule.gameObject.transform.Find("Carbon1").gameObject.GetComponent<Carbon>().positionXOnWhiteboard = posX;
+                                instantiatedMolecule.gameObject.transform.Find("Carbon1").gameObject.GetComponent<Carbon>().positionYOnWhiteboard = posY;
+                                break;
+                            } 
+                        case 2:
+                            {
+                                currentWhiteboard[posX, posY] = instantiatedMolecule.gameObject.transform.Find("Carbon2").gameObject;
+                                instantiatedMolecule.gameObject.transform.Find("Carbon2").gameObject.GetComponent<Carbon>().positionXOnWhiteboard = posX;
+                                instantiatedMolecule.gameObject.transform.Find("Carbon2").gameObject.GetComponent<Carbon>().positionYOnWhiteboard = posY;
+                                break;
+                            }
+                        case 3:
+                            {
+                                currentWhiteboard[posX, posY] = instantiatedMolecule.gameObject.transform.Find("Carbon3").gameObject;
+                                instantiatedMolecule.gameObject.transform.Find("Carbon3").gameObject.GetComponent<Carbon>().positionXOnWhiteboard = posX;
+                                instantiatedMolecule.gameObject.transform.Find("Carbon3").gameObject.GetComponent<Carbon>().positionYOnWhiteboard = posY;
+                                break;
+                            }
+                        case 4:
+                            {
+                                currentWhiteboard[posX, posY] = instantiatedMolecule.gameObject.transform.Find("Carbon4").gameObject;
+                                instantiatedMolecule.gameObject.transform.Find("Carbon4").gameObject.GetComponent<Carbon>().positionXOnWhiteboard = posX;
+                                instantiatedMolecule.gameObject.transform.Find("Carbon4").gameObject.GetComponent<Carbon>().positionYOnWhiteboard = posY;
+                                break;
+                            }
+                        case 5:
+                            {
+                                currentWhiteboard[posX, posY] = instantiatedMolecule.gameObject.transform.Find("Carbon5").gameObject;
+                                instantiatedMolecule.gameObject.transform.Find("Carbon5").gameObject.GetComponent<Carbon>().positionXOnWhiteboard = posX;
+                                instantiatedMolecule.gameObject.transform.Find("Carbon5").gameObject.GetComponent<Carbon>().positionYOnWhiteboard = posY;
+                                break;
+                            }
+                        case 6:
+                            {
+                                currentWhiteboard[posX, posY] = instantiatedMolecule.gameObject.transform.Find("Carbon6").gameObject;
+                                instantiatedMolecule.gameObject.transform.Find("Carbon6").gameObject.GetComponent<Carbon>().positionXOnWhiteboard = posX;
+                                instantiatedMolecule.gameObject.transform.Find("Carbon6").gameObject.GetComponent<Carbon>().positionYOnWhiteboard = posY;
+                                break;
+                            }
                     }
                     break;
                 }
-            case "Carbon": currentWhiteboard[posX, posY] = instantiatedMolecule; break;
+            case "Carbon":
+                {
+                    currentWhiteboard[posX, posY] = instantiatedMolecule;
+                    instantiatedMolecule.GetComponent<Carbon>().positionXOnWhiteboard = posX;
+                    instantiatedMolecule.GetComponent<Carbon>().positionYOnWhiteboard = posY;
+                    break;
+                }
         }
         currentChoosenBenzeneCarbonForConnection = 1;
     }
