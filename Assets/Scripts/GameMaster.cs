@@ -331,6 +331,7 @@ public class GameMaster : MonoBehaviour
         moleculeToInstantiate = SwitchSpawnMolecule();
         if (moleculeToInstantiate.CompareTag("Benzene"))// && !currentorientationForMoleculeRing)
         {
+            noRingsInChain = false;
             if (!CheckIfBenzenePositionFitsGameBoard(positionOfPlateX, positionOfPlateY))
                 return false;
             moleculeToInstantiate = SwitchBenzeneRingToSpawn();
