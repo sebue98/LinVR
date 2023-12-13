@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -65,9 +66,12 @@ public class GameMaster : MonoBehaviour
     public GameObject instantiatedMolecule;
 
     public int counter = 0;
+    public int numberOfVerticesInTree = 0;
     public int neighbourToConnectTo = 0;
     public bool moleculeCanSpawn = false;
     public bool showDebug = false;
+    public bool noRingsInChain = true;
+    public bool setShown = true;
     public List<Carbon> carbons;
     public List<GameObject> carbonGameObjects;
     public List<List<GameObject>> tempNeighbourObjects = new List<List<GameObject>>();
@@ -76,6 +80,7 @@ public class GameMaster : MonoBehaviour
 
     public GameObject lastMoleculeConnectedTo;
     public GameObject[,] currentWhiteboard = new GameObject[20,10];
+    public UndirectedGraph currentMoleculeGraph = new UndirectedGraph();
 
     public IUPACAlgorithm iupac;
 
@@ -131,8 +136,11 @@ public class GameMaster : MonoBehaviour
             currentOrientationForConnection = 4;
         }
 
-        if (showDebug)
+        if (showDebug && !setShown)
         {
+            IUPACName.text = iupac.CreateIUPACName(currentMoleculeGraph.longestPathLength(), 0);
+            setShown = true;
+            /*
             //printWhiteboard();
             //Debug.Log("Longest chain found:" + iupac.FindLongestChain(currentWhiteboard));
             List<GameObject> tempLongestChain = iupac.FindLongestChain(currentWhiteboard);
@@ -185,11 +193,11 @@ public class GameMaster : MonoBehaviour
                     }
                 }
             }*/
-
-            IUPACName.text = iupac.CreateIUPACName(tempLongestChain.Count, 0);
         }
 
     }
+
+
 
     public void printWhiteboard()
     {
@@ -328,7 +336,14 @@ public class GameMaster : MonoBehaviour
             moleculeToInstantiate = SwitchBenzeneRingToSpawn();
         }
         instantiatedMolecule = Instantiate(moleculeToInstantiate, molculeTransform.position, moleculeQuaternion);
+        if (noRingsInChain && currentMoleculeGraph != null)
+        {
+            instantiatedMolecule.GetComponent<Carbon>().numberInUndirectedTree = numberOfVerticesInTree;
+            currentMoleculeGraph.AddVertex(numberOfVerticesInTree);
+            numberOfVerticesInTree++;
+        }
         instantiatedMolecule.name = currentState.ToString() + " " + counter;
+        setShown = false;
         SettingMoleculesPlacesOnWhiteboard(instantiatedMolecule, positionOfPlateX, positionOfPlateY);
         CheckForNeighbourAndEstablishConnection(instantiatedMolecule, positionOfPlateX, positionOfPlateY);
         counter++;
@@ -448,6 +463,11 @@ public class GameMaster : MonoBehaviour
             //Setting neighbours
             topCarbon.bottomMolecule = instantiatedMolecule;
             instantiatedCarbon.topMolecule = topNeighbour;
+            if(noRingsInChain)
+            {
+                currentMoleculeGraph.AddEdge(topCarbon.numberInUndirectedTree, instantiatedCarbon.numberInUndirectedTree);
+                currentMoleculeGraph.AddEdge(instantiatedCarbon.numberInUndirectedTree, topCarbon.numberInUndirectedTree);
+            }
 
             //Increasing number of connections
             topCarbon.numberOfConnectionsToMolecules++;
@@ -484,6 +504,11 @@ public class GameMaster : MonoBehaviour
             //Setting neighbours
             rightCarbon.leftMolecule = instantiatedMolecule;
             instantiatedCarbon.rightMolecule = rightNeighbour;
+            if(noRingsInChain)
+            {
+                currentMoleculeGraph.AddEdge(rightCarbon.numberInUndirectedTree, instantiatedCarbon.numberInUndirectedTree);
+                currentMoleculeGraph.AddEdge(instantiatedCarbon.numberInUndirectedTree, rightCarbon.numberInUndirectedTree);
+            }
 
             //Increasing number of connections
             rightCarbon.numberOfConnectionsToMolecules++;
@@ -520,6 +545,11 @@ public class GameMaster : MonoBehaviour
             //Setting neighbours
             bottomCarbon.topMolecule = instantiatedMolecule;
             instantiatedCarbon.bottomMolecule = bottomNeighbour;
+            if(noRingsInChain)
+            {
+                currentMoleculeGraph.AddEdge(bottomCarbon.numberInUndirectedTree, instantiatedCarbon.numberInUndirectedTree);
+                currentMoleculeGraph.AddEdge(instantiatedCarbon.numberInUndirectedTree, bottomCarbon.numberInUndirectedTree);
+            }
 
             //Increasing number of connections
             bottomCarbon.numberOfConnectionsToMolecules++;
@@ -557,6 +587,11 @@ public class GameMaster : MonoBehaviour
             //Setting neighbours
             leftCarbon.rightMolecule = instantiatedMolecule;
             instantiatedCarbon.leftMolecule = leftNeighbour;
+            if(noRingsInChain)
+            {
+                currentMoleculeGraph.AddEdge(leftCarbon.numberInUndirectedTree, instantiatedCarbon.numberInUndirectedTree);
+                currentMoleculeGraph.AddEdge(instantiatedCarbon.numberInUndirectedTree, leftCarbon.numberInUndirectedTree);
+            }
 
             //Increasing number of connections
             leftCarbon.numberOfConnectionsToMolecules++;

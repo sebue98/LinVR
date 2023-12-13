@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
+
 public class IUPACAlgorithm : MonoBehaviour
 {
     public List<GameObject> longestChainElements = new List<GameObject>();
@@ -31,13 +32,24 @@ public class IUPACAlgorithm : MonoBehaviour
     {
         string[] startMolecules = { "Methan", "Ethan", "Propan", "Butan", "Pentan", "Hexan", "Heptan", "Octan", "Nonan", "Decan", "Undecan", "Duodecan",
         "Tridecan", "Tetradecan", "Pentadecan", "Hexadecan", "Heptadecan", "Octadecan", "Nonadecan", "Eicosan", "Heneicosan"};
-        string[] prefixes = { "Hen", "Do", "Tri", "Tetra", "Penta", "Hexa", "Hepta", "Octa", "Nona" }; //Will only be used for molecules with size > 21
-        string[] suffixes = { "an", "en", "in" }; //single connection, double connection, triple connection
-        string[] middlePart = { "dec", "cos", "triacont", "tetracont", "pentacont", "hexacont", "heptacont", "octacont", "nonacont"};
+        string[] prefixes = {"", "Hen", "Do", "Tri", "Tetra", "Penta", "Hexa", "Hepta", "Octa", "Nona" }; //Will only be used for molecules with size > 21
+        string[] suffixes = { "n", "en", "in" }; //single connection, double connection, triple connection
+        string[] middlePart = {"", "deca", "cosa", "triaconta", "tetraconta", "pentaconta", "hexaconta", "heptaconta", "octaconta", "nonaconta"};
 
         if(lengthOfChain < 22)
         {
             return startMolecules[lengthOfChain - 1];
+        }
+        else if(lengthOfChain >= 22 && lengthOfChain < 100)
+        {
+            int tensPlace = (lengthOfChain / 10) % 10;
+            int onesPlace = lengthOfChain % 10;
+
+            string tempString = "";
+            tempString += prefixes[onesPlace];
+            tempString += middlePart[tensPlace];
+
+            return tempString + suffixes[typeOfConnectionSDT];
         }
         else
         {
@@ -45,10 +57,10 @@ public class IUPACAlgorithm : MonoBehaviour
             int onesPlace = lengthOfChain % 10;
 
             string tempString = "";
-            tempString += prefixes[onesPlace-1];
-            tempString += middlePart[tensPlace-1];
+            tempString += prefixes[onesPlace];
+            tempString += middlePart[tensPlace];
 
-            return tempString + suffixes[typeOfConnectionSDT];
+            return tempString + "hecta" + suffixes[typeOfConnectionSDT];
         }
     }
 

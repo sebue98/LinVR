@@ -1143,13 +1143,16 @@ MonoBehaviour:
   benzeneConnectionButtonBoardVertical: {fileID: 1505522957}
   instantiatedMolecule: {fileID: 0}
   counter: 0
+  numberOfVerticesInTree: 0
   neighbourToConnectTo: 0
   moleculeCanSpawn: 0
   showDebug: 0
+  noRingsInChain: 1
   carbons: []
   carbonGameObjects: []
   IUPACName: {fileID: 869427431}
   lastMoleculeConnectedTo: {fileID: 0}
+  currentMoleculeGraph: {fileID: 0}
   iupac: {fileID: 924236364}
 --- !u!1 &290920936
 GameObject:

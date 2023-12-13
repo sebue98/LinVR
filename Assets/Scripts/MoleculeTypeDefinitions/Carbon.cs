@@ -24,6 +24,7 @@ public class Carbon : MonoBehaviour
 
     public int positionXOnWhiteboard;
     public int positionYOnWhiteboard;
+    public int numberInUndirectedTree;
 
     //Properties
     public bool vrHydrogen1;
