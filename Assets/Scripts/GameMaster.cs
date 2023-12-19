@@ -140,59 +140,6 @@ public class GameMaster : MonoBehaviour
         {
             IUPACName.text = iupac.CreateIUPACName(currentMoleculeGraph.longestPathLength(), 0);
             setShown = true;
-            /*
-            //printWhiteboard();
-            //Debug.Log("Longest chain found:" + iupac.FindLongestChain(currentWhiteboard));
-            List<GameObject> tempLongestChain = iupac.FindLongestChain(currentWhiteboard);
-            foreach(var carbon in tempLongestChain)
-            {
-                Carbon carbonComponent = carbon.GetComponent<Carbon>();
-                //Debug.Log("Looking for neighbors in molecule: " + carbon.name);
-                if(!tempLongestChain.Contains(carbonComponent.topMolecule) && carbonComponent.topMolecule != null) //Search in TopChain
-                {
-                    //Debug.Log("Top neighbour is new chain");
-                    HashSet<(int, int)> visited = new HashSet<(int, int)>();
-                    visited.Add((carbonComponent.positionXOnWhiteboard, carbonComponent.positionYOnWhiteboard));
-                    iupac.GetConnectedChain(currentWhiteboard, carbonComponent.positionXOnWhiteboard, carbonComponent.positionYOnWhiteboard,
-                        carbonComponent.topMolecule.GetComponent<Carbon>().positionXOnWhiteboard, carbonComponent.topMolecule.GetComponent<Carbon>().positionYOnWhiteboard, visited);
-                }
-                if (!tempLongestChain.Contains(carbonComponent.rightMolecule) && carbonComponent.rightMolecule != null) //Search in TopChain
-                {
-                    //Debug.Log("Right neighbour is new chain");
-                    HashSet<(int, int)> visited = new HashSet<(int, int)>();
-                    visited.Add((carbonComponent.positionXOnWhiteboard, carbonComponent.positionYOnWhiteboard));
-                    iupac.GetConnectedChain(currentWhiteboard, carbonComponent.positionXOnWhiteboard, carbonComponent.positionYOnWhiteboard,
-                    carbonComponent.rightMolecule.GetComponent<Carbon>().positionXOnWhiteboard, carbonComponent.rightMolecule.GetComponent<Carbon>().positionYOnWhiteboard, visited);
-                }
-                if (!tempLongestChain.Contains(carbonComponent.bottomMolecule) && carbonComponent.bottomMolecule != null) //Search in TopChain
-                {
-                    //Debug.Log("Bottom neighbour is new chain");
-                    HashSet<(int, int)> visited = new HashSet<(int, int)>();
-                    visited.Add((carbonComponent.positionXOnWhiteboard, carbonComponent.positionYOnWhiteboard));
-                    iupac.GetConnectedChain(currentWhiteboard, carbonComponent.positionXOnWhiteboard, carbonComponent.positionYOnWhiteboard,
-                    carbonComponent.bottomMolecule.GetComponent<Carbon>().positionXOnWhiteboard, carbonComponent.bottomMolecule.GetComponent<Carbon>().positionYOnWhiteboard, visited);
-                }
-                if (!tempLongestChain.Contains(carbonComponent.leftMolecule) && carbonComponent.leftMolecule != null) //Search in TopChain
-                {
-                    //Debug.Log("Left neighbour is new chain");
-                    HashSet<(int, int)> visited = new HashSet<(int, int)>();
-                    visited.Add((carbonComponent.positionXOnWhiteboard, carbonComponent.positionYOnWhiteboard));
-                    iupac.GetConnectedChain(currentWhiteboard, carbonComponent.positionXOnWhiteboard, carbonComponent.positionYOnWhiteboard,
-                    carbonComponent.leftMolecule.GetComponent<Carbon>().positionXOnWhiteboard, carbonComponent.leftMolecule.GetComponent<Carbon>().positionYOnWhiteboard, visited);
-                }
-            }
-            
-            /*
-            for(int i = 0; i < tempNeighbourObjects.Count; i++)
-            {
-                Debug.Log("Carbon neighbour objects Liste an Position: " + i);
-                {
-                    for(int j = 0; j < tempNeighbourObjects[i].Count; j++)
-                    {
-                        Debug.Log(tempNeighbourObjects[i][j].gameObject.name);
-                    }
-                }
-            }*/
         }
 
     }
@@ -341,6 +288,7 @@ public class GameMaster : MonoBehaviour
         {
             instantiatedMolecule.GetComponent<Carbon>().numberInUndirectedTree = numberOfVerticesInTree;
             currentMoleculeGraph.AddVertex(numberOfVerticesInTree);
+            carbonGameObjects.Add(instantiatedMolecule);
             numberOfVerticesInTree++;
         }
         instantiatedMolecule.name = currentState.ToString() + " " + counter;
