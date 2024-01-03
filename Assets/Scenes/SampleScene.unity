@@ -1148,11 +1148,11 @@ MonoBehaviour:
   moleculeCanSpawn: 0
   showDebug: 0
   noRingsInChain: 1
+  setShown: 1
   carbons: []
   carbonGameObjects: []
   IUPACName: {fileID: 869427431}
   lastMoleculeConnectedTo: {fileID: 0}
-  currentMoleculeGraph: {fileID: 0}
   iupac: {fileID: 924236364}
 --- !u!1 &290920936
 GameObject:
@@ -3171,7 +3171,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

@@ -27,7 +27,7 @@ public class IUPACAlgorithm : MonoBehaviour
 
     public List<GameObject> longestChainGlobal = new List<GameObject>();
     public List<List<GameObject>> neighboringChainsElements = new List<List<GameObject>>();
-
+ 
     public String CreateIUPACName(int lengthOfChain, int typeOfConnectionSDT)
     {
         string[] startMolecules = { "Methan", "Ethan", "Propan", "Butan", "Pentan", "Hexan", "Heptan", "Octan", "Nonan", "Decan", "Undecan", "Duodecan",

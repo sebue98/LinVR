@@ -118,27 +118,28 @@ public class GameMaster : MonoBehaviour
         if(posR.y > 0.5f  && (- 0.5f < posR.x && posR.x < 0.5f))
         {
             //Debug.Log("Top");
-            currentOrientationForConnection = 1;
+            currentOrientationForConnection = 3;
         }
         else if(posR.x > 0.5f && (-0.5f < posR.y && posR.y < 0.5f))
         {
             //Debug.Log("Right");
-            currentOrientationForConnection = 2;
+            currentOrientationForConnection = 4;
         }
         else if(posR.y < -0.5f && (-0.5f < posR.x && posR.x < 0.5f))
         {
             //Debug.Log("Bottom");
-            currentOrientationForConnection = 3;
+            currentOrientationForConnection = 1;
         }
         else if(posR.x < -0.5f && (-0.5f < posR.y && posR.y < 0.5f))
         {
             //Debug.Log("Left");
-            currentOrientationForConnection = 4;
+            currentOrientationForConnection = 2;
         }
 
         if (showDebug && !setShown)
         {
             IUPACName.text = iupac.CreateIUPACName(currentMoleculeGraph.longestPathLength(), 0);
+            currentMoleculeGraph.findPathLengthsForIUPACName();
             setShown = true;
         }
 
@@ -415,7 +416,7 @@ public class GameMaster : MonoBehaviour
             if(noRingsInChain)
             {
                 currentMoleculeGraph.AddEdge(topCarbon.numberInUndirectedTree, instantiatedCarbon.numberInUndirectedTree);
-                currentMoleculeGraph.AddEdge(instantiatedCarbon.numberInUndirectedTree, topCarbon.numberInUndirectedTree);
+                //currentMoleculeGraph.AddEdge(instantiatedCarbon.numberInUndirectedTree, topCarbon.numberInUndirectedTree);
             }
 
             //Increasing number of connections
@@ -456,7 +457,7 @@ public class GameMaster : MonoBehaviour
             if(noRingsInChain)
             {
                 currentMoleculeGraph.AddEdge(rightCarbon.numberInUndirectedTree, instantiatedCarbon.numberInUndirectedTree);
-                currentMoleculeGraph.AddEdge(instantiatedCarbon.numberInUndirectedTree, rightCarbon.numberInUndirectedTree);
+                //currentMoleculeGraph.AddEdge(instantiatedCarbon.numberInUndirectedTree, rightCarbon.numberInUndirectedTree);
             }
 
             //Increasing number of connections
@@ -497,7 +498,7 @@ public class GameMaster : MonoBehaviour
             if(noRingsInChain)
             {
                 currentMoleculeGraph.AddEdge(bottomCarbon.numberInUndirectedTree, instantiatedCarbon.numberInUndirectedTree);
-                currentMoleculeGraph.AddEdge(instantiatedCarbon.numberInUndirectedTree, bottomCarbon.numberInUndirectedTree);
+                //currentMoleculeGraph.AddEdge(instantiatedCarbon.numberInUndirectedTree, bottomCarbon.numberInUndirectedTree);
             }
 
             //Increasing number of connections
@@ -539,7 +540,7 @@ public class GameMaster : MonoBehaviour
             if(noRingsInChain)
             {
                 currentMoleculeGraph.AddEdge(leftCarbon.numberInUndirectedTree, instantiatedCarbon.numberInUndirectedTree);
-                currentMoleculeGraph.AddEdge(instantiatedCarbon.numberInUndirectedTree, leftCarbon.numberInUndirectedTree);
+                //currentMoleculeGraph.AddEdge(instantiatedCarbon.numberInUndirectedTree, leftCarbon.numberInUndirectedTree);
             }
 
             //Increasing number of connections
