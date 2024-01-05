@@ -26,6 +26,34 @@ public enum ErrorState
     blankBoard
 }
 
+public class IUPACNameStructureElement
+{
+    public int lenghtOfChain;
+    public List<LengthAndListAndParentNodePair> subtreeList;
+    public List<int> longestChainList;
+
+    public IUPACNameStructureElement(int first, List<LengthAndListAndParentNodePair> second, List<int> third)
+    {
+        this.lenghtOfChain = first;
+        this.subtreeList = second;
+        this.longestChainList = third;
+    }
+}
+
+public class LengthAndListAndParentNodePair
+{
+    public int length;
+    public int parentNode;
+    public List<int> nodeList;
+
+    public LengthAndListAndParentNodePair(int first, int second, List<int> third)
+    {
+        this.length = first;
+        this.parentNode = second;
+        this.nodeList = third ?? new List<int>();
+    }
+}
+
 public class GameMaster : MonoBehaviour
 {
     
@@ -138,8 +166,8 @@ public class GameMaster : MonoBehaviour
 
         if (showDebug && !setShown)
         {
-            IUPACName.text = iupac.CreateIUPACName(currentMoleculeGraph.longestPathLength(), 0);
-            currentMoleculeGraph.findPathLengthsForIUPACName();
+            IUPACName.text = iupac.CreateIUPACName(0, currentMoleculeGraph.findPathLengthsForIUPACName());
+            //currentMoleculeGraph.findPathLengthsForIUPACName();
             setShown = true;
         }
 

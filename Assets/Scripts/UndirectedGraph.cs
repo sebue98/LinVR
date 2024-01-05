@@ -165,30 +165,6 @@ public class UndirectedGraph
             this.list = list ?? new Dictionary<int, List<int>>();
         }
     }
-    /*
-    public class CorrespondingNodePair
-    {
-        public int renumberedNode;
-        public int originalNode;
-
-        public CorrespondingNodePair(int renumbered, int original)
-        {
-            this.renumberedNode = renumbered;
-            this.originalNode = original;
-        }
-    }*/
-
-    public class LengthAndNodePair
-    {
-        public int length;
-        public int correspondingNode;
-
-        public LengthAndNodePair(int first, int second)
-        {
-            this.length = first;
-            this.correspondingNode = second;
-        }
-    }
 
 
 
@@ -281,7 +257,7 @@ public class UndirectedGraph
         return new Pair<int, int, List<int>>(nodeIdx, maxDis, path);
     }
 
-    public List<int> findPathLengthsForIUPACName()
+    public IUPACNameStructureElement findPathLengthsForIUPACName()
     {
         //List<CorrespondingNodePair> orderedLongestPathList = new List<CorrespondingNodePair>(); //Used to name the longest path from 1-n
         List<int> namingList = new List<int>(); //Used for the IUPAC name
@@ -293,34 +269,30 @@ public class UndirectedGraph
         t2.second++;
         namingList.Add(t2.second);
         t2.path.Reverse(); //Makes the list so it is from left to right numbered
-        /*
-        for(int i = 1; i <= t2.second; i++)
-        {
-            orderedLongestPathList.Add(new CorrespondingNodePair(i, t2.path[i-1]));
-        }*/
 
         //Check neighbouring trees of longest path
         List<NeighbourChain> tempList = new List<NeighbourChain>();
         findNeighbouringSubtrees(t2.path, tempList);
 
-        List<LengthAndNodePair> lengthAndNodePairList = new List<LengthAndNodePair>();
+        List<LengthAndListAndParentNodePair> lengthAndNodePairList = new List<LengthAndListAndParentNodePair>();
         foreach(var pair in tempList)
         {
             if(pair.list.Count == 1)
             {
-                lengthAndNodePairList.Add(new LengthAndNodePair(1, pair.parentNode));
+                lengthAndNodePairList.Add(new LengthAndListAndParentNodePair(1, pair.parentNode, new List<int>(1) { pair.list.ElementAt(0).Key }));
             }
             else if(pair.list.Count > 1)
             {
                 Pair<int, int, List<int>> f1, f2;
                 f1 = BFS2(pair.list.ElementAt(0).Key, pair.list);
                 f2 = BFS2(f1.first, pair.list);
+                f2.path.Reverse();
                 f2.second++;
-                lengthAndNodePairList.Add(new LengthAndNodePair(f2.second, pair.parentNode));
+                lengthAndNodePairList.Add(new LengthAndListAndParentNodePair(f2.second, pair.parentNode, f2.path));
             }
         }
 
-        return null;
+        return new IUPACNameStructureElement(t2.second, lengthAndNodePairList, t2.path);
     }
 
 
@@ -368,45 +340,6 @@ public class UndirectedGraph
             }
         }
     }
-    /*
-    public Dictionary<int, List<int>> GetSubtreeOfNonLongestChainNeighbors(int nodeFromLongestChain, List<int> longestChain)
-    {
-        HashSet<int> longestChainSet = new HashSet<int>(longestChain);
-        Dictionary<int, List<int>> subtree = new Dictionary<int, List<int>>();
-
-        Queue<int> queue = new Queue<int>();
-        HashSet<int> visited = new HashSet<int>();
-
-        //We add the startnode since we are sure, that it is in the new subtree
-
-
-        visited.Add(nodeFromLongestChain);
-        queue.Enqueue(nodeFromLongestChain);
-
-        while (queue.Count > 0)
-        {
-            int currentNode = queue.Dequeue();
-            List<int> currentNeighbors = new List<int>();
-
-            // Check neighbors of the current node
-            foreach (var neighbor in adjacencyList[currentNode])
-            {
-                if (!visited.Contains(neighbor))
-                {
-                    visited.Add(neighbor);
-
-                    // If the neighbor is not part of the longest chain, add it to the subtree
-                    if (!longestChainSet.Contains(neighbor))
-                    {
-                        currentNeighbors.Add(neighbor);
-                        queue.Enqueue(neighbor);
-                    }
-                }
-            }
-            subtree[currentNode] = currentNeighbors;
-        }
-        return subtree;
-    }*/
 
     public Dictionary<int, List<int>> GetSubtreeOfNonLongestChainNeighborsNew(int nodeFromLongestChain, List<int> longestChain)
     {
