@@ -45,7 +45,7 @@ public class MoleculePlacer : MonoBehaviour
 
     private bool CheckIfCurrentOrientationForConnectionIsValid(GameMaster tempInstance)
     {
-        if (tempInstance.counter == 0)
+        if (tempInstance.namingCounter == 0)
             return true;
 
         int offsetX = 0;
@@ -67,7 +67,7 @@ public class MoleculePlacer : MonoBehaviour
         GameMaster tempInstance = GameMaster.Instance;
         if(!(tempInstance.currentState == State.start))
         {
-            if (tempInstance.spawnablePlates.Contains(int.Parse(gameObject.name)) && tempInstance.counter > 0 
+            if (tempInstance.spawnablePlates.Contains(int.Parse(gameObject.name)) && tempInstance.namingCounter > 0 
                 && (tempInstance.currentOrientationForConnection != 0 && CheckIfCurrentOrientationForConnectionIsValid(tempInstance))
                 || tempInstance.spawnablePlates.Count == 0)
             {

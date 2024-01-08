@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR;
+using System.Linq;
 
 public enum State
 {
@@ -54,6 +55,27 @@ public class LengthAndListAndParentNodePair
     }
 }
 
+public class BenzeneObject
+{
+    public int firstNode;
+    public int secondNode;
+    public int thirdNode;
+    public int fourthNode;
+    public int fiftNode;
+    public int sixtNode;
+    public int parentNodeInChain;
+
+    public BenzeneObject(int first, int second, int third, int fourth, int fifth, int sixt)
+    {
+        this.firstNode = first;
+        this.secondNode = second;
+        this.thirdNode = third;
+        this.fourthNode = fourth;
+        this.fiftNode = fifth;
+        this.sixtNode = sixt;
+    }
+}
+
 public class GameMaster : MonoBehaviour
 {
     
@@ -93,7 +115,7 @@ public class GameMaster : MonoBehaviour
 
     public GameObject instantiatedMolecule;
 
-    public int counter = 0;
+    public int namingCounter = 0;
     public int numberOfVerticesInTree = 0;
     public int neighbourToConnectTo = 0;
     public bool moleculeCanSpawn = false;
@@ -111,7 +133,11 @@ public class GameMaster : MonoBehaviour
     public UndirectedGraph currentMoleculeGraph = new UndirectedGraph();
 
     public IUPACAlgorithm iupac;
+    public List<BenzeneObject> benzenObjectsInTree = new List<BenzeneObject>();
+    public List<int> nodeNumbersOfBenzeneRings = new List<int>();
+    public int benzeneRingIndexCounter = -1;
 
+    
     public static GameMaster Instance
     {
         get { return _instance; }
@@ -123,7 +149,7 @@ public class GameMaster : MonoBehaviour
         {
             currentState = State.start;
             _instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -166,8 +192,23 @@ public class GameMaster : MonoBehaviour
 
         if (showDebug && !setShown)
         {
-            IUPACName.text = iupac.CreateIUPACName(0, currentMoleculeGraph.findPathLengthsForIUPACName());
-            //currentMoleculeGraph.findPathLengthsForIUPACName();
+            if(!noRingsInChain)
+            {
+                IUPACNameStructureElement tempElement = currentMoleculeGraph.findNamingForCycloAlkanes();
+                if(tempElement.lenghtOfChain > 6)
+                {
+                    IUPACName.text = iupac.CreateIUPACName(0, currentMoleculeGraph.findPathLengthsForIUPACName());
+                }
+                else
+                {
+                    IUPACName.text = iupac.CreateCycloName(tempElement);
+                }
+
+            }
+            else
+            {
+                IUPACName.text = iupac.CreateIUPACName(0, currentMoleculeGraph.findPathLengthsForIUPACName());
+            }
             setShown = true;
         }
 
@@ -304,6 +345,7 @@ public class GameMaster : MonoBehaviour
         setBenzeneBoardActive = false;
         benzeneConnectionButtonBoardHorizontal.SetActive(false);
         benzeneConnectionButtonBoardVertical.SetActive(false);
+        bool BenzeneCreated = false;
         moleculeToInstantiate = SwitchSpawnMolecule();
         if (moleculeToInstantiate.CompareTag("Benzene"))// && !currentorientationForMoleculeRing)
         {
@@ -311,20 +353,48 @@ public class GameMaster : MonoBehaviour
             if (!CheckIfBenzenePositionFitsGameBoard(positionOfPlateX, positionOfPlateY))
                 return false;
             moleculeToInstantiate = SwitchBenzeneRingToSpawn();
+            instantiatedMolecule = Instantiate(moleculeToInstantiate, molculeTransform.position, moleculeQuaternion);
+            namingCounter += 6;
+            BenzeneObject newBenzeneRing = new BenzeneObject(0, 0, 0, 0, 0, 0);
+            int counter = 0;
+            foreach (Transform child in instantiatedMolecule.transform)
+            {
+                switch (counter)
+                {
+                    case 0: newBenzeneRing.firstNode = numberOfVerticesInTree; break;
+                    case 1: newBenzeneRing.secondNode = numberOfVerticesInTree; break;
+                    case 2: newBenzeneRing.thirdNode = numberOfVerticesInTree; break;
+                    case 3: newBenzeneRing.fourthNode = numberOfVerticesInTree; break;
+                    case 4: newBenzeneRing.fiftNode = numberOfVerticesInTree; break;
+                    case 5: newBenzeneRing.sixtNode = numberOfVerticesInTree; break;
+                }
+                child.GetComponent<Carbon>().numberInUndirectedTree = numberOfVerticesInTree;
+                nodeNumbersOfBenzeneRings.Add(numberOfVerticesInTree);
+                //child.name = "Carbon " + namingCounter;
+                nodeNumbersOfBenzeneRings.Add(numberOfVerticesInTree);
+                //currentMoleculeGraph.AddVertex(numberOfVerticesInTree);
+                carbonGameObjects.Add(child.gameObject);
+                numberOfVerticesInTree++;
+                counter++;
+            }
+            benzenObjectsInTree.Add(newBenzeneRing);
+            BenzeneCreated = true;
+            benzeneRingIndexCounter++;
         }
-        instantiatedMolecule = Instantiate(moleculeToInstantiate, molculeTransform.position, moleculeQuaternion);
-        if (noRingsInChain && currentMoleculeGraph != null)
+
+        if (moleculeToInstantiate.CompareTag("Carbon"))//noRingsInChain && currentMoleculeGraph != null)
         {
+            instantiatedMolecule = Instantiate(moleculeToInstantiate, molculeTransform.position, moleculeQuaternion);
             instantiatedMolecule.GetComponent<Carbon>().numberInUndirectedTree = numberOfVerticesInTree;
             currentMoleculeGraph.AddVertex(numberOfVerticesInTree);
             carbonGameObjects.Add(instantiatedMolecule);
             numberOfVerticesInTree++;
         }
-        instantiatedMolecule.name = currentState.ToString() + " " + counter;
+        instantiatedMolecule.name = currentState.ToString() + " " + namingCounter;
         setShown = false;
         SettingMoleculesPlacesOnWhiteboard(instantiatedMolecule, positionOfPlateX, positionOfPlateY);
-        CheckForNeighbourAndEstablishConnection(instantiatedMolecule, positionOfPlateX, positionOfPlateY);
-        counter++;
+        CheckForNeighbourAndEstablishConnection(instantiatedMolecule, positionOfPlateX, positionOfPlateY, BenzeneCreated);
+        namingCounter++;
         return true;
     }
 
@@ -398,7 +468,7 @@ public class GameMaster : MonoBehaviour
         }
     }
 
-    public void CheckForNeighbourAndEstablishConnection(GameObject instantiatedMolecule, int posX, int posY)
+    public void CheckForNeighbourAndEstablishConnection(GameObject instantiatedMolecule, int posX, int posY, bool benzeneCreatedThisRound)
     {
         bool benzeneInstantiated = false;
         if(instantiatedMolecule.CompareTag("Benzene"))
@@ -441,10 +511,25 @@ public class GameMaster : MonoBehaviour
             //Setting neighbours
             topCarbon.bottomMolecule = instantiatedMolecule;
             instantiatedCarbon.topMolecule = topNeighbour;
-            if(noRingsInChain)
+            if (nodeNumbersOfBenzeneRings.Contains(topCarbon.numberInUndirectedTree))
             {
-                currentMoleculeGraph.AddEdge(topCarbon.numberInUndirectedTree, instantiatedCarbon.numberInUndirectedTree);
-                //currentMoleculeGraph.AddEdge(instantiatedCarbon.numberInUndirectedTree, topCarbon.numberInUndirectedTree);
+                foreach (var benzene in benzenObjectsInTree)
+                {
+                    if (new[]
+                    { benzene.firstNode, benzene.secondNode,benzene.thirdNode,benzene.fourthNode,benzene.fiftNode,benzene.sixtNode}.Any(node => node == topCarbon.numberInUndirectedTree))
+                    {
+                        benzene.parentNodeInChain = instantiatedCarbon.numberInUndirectedTree;
+                    }
+                }
+            }
+            if (benzeneCreatedThisRound)
+            {
+                benzenObjectsInTree[benzeneRingIndexCounter].parentNodeInChain = topCarbon.numberInUndirectedTree;
+            }
+            if(noRingsInChain || moleculeToInstantiate.CompareTag("Carbon"))
+            {
+                if(!nodeNumbersOfBenzeneRings.Contains(topCarbon.numberInUndirectedTree))
+                    currentMoleculeGraph.AddEdge(topCarbon.numberInUndirectedTree, instantiatedCarbon.numberInUndirectedTree);
             }
 
             //Increasing number of connections
@@ -482,10 +567,25 @@ public class GameMaster : MonoBehaviour
             //Setting neighbours
             rightCarbon.leftMolecule = instantiatedMolecule;
             instantiatedCarbon.rightMolecule = rightNeighbour;
-            if(noRingsInChain)
+            if (nodeNumbersOfBenzeneRings.Contains(rightCarbon.numberInUndirectedTree))
             {
-                currentMoleculeGraph.AddEdge(rightCarbon.numberInUndirectedTree, instantiatedCarbon.numberInUndirectedTree);
-                //currentMoleculeGraph.AddEdge(instantiatedCarbon.numberInUndirectedTree, rightCarbon.numberInUndirectedTree);
+                foreach (var benzene in benzenObjectsInTree)
+                {
+                    if (new[]
+                    { benzene.firstNode, benzene.secondNode,benzene.thirdNode,benzene.fourthNode,benzene.fiftNode,benzene.sixtNode}.Any(node => node == rightCarbon.numberInUndirectedTree))
+                    {
+                        benzene.parentNodeInChain = instantiatedCarbon.numberInUndirectedTree;
+                    }
+                }
+            }
+            if (benzeneCreatedThisRound)
+            {
+                benzenObjectsInTree[benzeneRingIndexCounter].parentNodeInChain = rightCarbon.numberInUndirectedTree;
+            }
+            if (noRingsInChain || moleculeToInstantiate.CompareTag("Carbon"))
+            {
+                if (!nodeNumbersOfBenzeneRings.Contains(rightCarbon.numberInUndirectedTree))
+                    currentMoleculeGraph.AddEdge(rightCarbon.numberInUndirectedTree, instantiatedCarbon.numberInUndirectedTree);
             }
 
             //Increasing number of connections
@@ -523,10 +623,25 @@ public class GameMaster : MonoBehaviour
             //Setting neighbours
             bottomCarbon.topMolecule = instantiatedMolecule;
             instantiatedCarbon.bottomMolecule = bottomNeighbour;
-            if(noRingsInChain)
+            if (nodeNumbersOfBenzeneRings.Contains(bottomCarbon.numberInUndirectedTree))
             {
-                currentMoleculeGraph.AddEdge(bottomCarbon.numberInUndirectedTree, instantiatedCarbon.numberInUndirectedTree);
-                //currentMoleculeGraph.AddEdge(instantiatedCarbon.numberInUndirectedTree, bottomCarbon.numberInUndirectedTree);
+                foreach (var benzene in benzenObjectsInTree)
+                {
+                    if (new[]
+                    { benzene.firstNode, benzene.secondNode,benzene.thirdNode,benzene.fourthNode,benzene.fiftNode,benzene.sixtNode}.Any(node => node == bottomCarbon.numberInUndirectedTree))
+                    {
+                        benzene.parentNodeInChain = instantiatedCarbon.numberInUndirectedTree;
+                    }
+                }
+            }
+            if (benzeneCreatedThisRound)
+            {
+                benzenObjectsInTree[benzeneRingIndexCounter].parentNodeInChain = bottomCarbon.numberInUndirectedTree;
+            }
+            if (noRingsInChain || moleculeToInstantiate.CompareTag("Carbon"))
+            {
+                if (!nodeNumbersOfBenzeneRings.Contains(bottomCarbon.numberInUndirectedTree))
+                    currentMoleculeGraph.AddEdge(bottomCarbon.numberInUndirectedTree, instantiatedCarbon.numberInUndirectedTree);
             }
 
             //Increasing number of connections
@@ -565,10 +680,25 @@ public class GameMaster : MonoBehaviour
             //Setting neighbours
             leftCarbon.rightMolecule = instantiatedMolecule;
             instantiatedCarbon.leftMolecule = leftNeighbour;
-            if(noRingsInChain)
+            if (nodeNumbersOfBenzeneRings.Contains(leftCarbon.numberInUndirectedTree))
             {
-                currentMoleculeGraph.AddEdge(leftCarbon.numberInUndirectedTree, instantiatedCarbon.numberInUndirectedTree);
-                //currentMoleculeGraph.AddEdge(instantiatedCarbon.numberInUndirectedTree, leftCarbon.numberInUndirectedTree);
+                foreach (var benzene in benzenObjectsInTree)
+                {
+                    if (new[]
+                    { benzene.firstNode, benzene.secondNode,benzene.thirdNode,benzene.fourthNode,benzene.fiftNode,benzene.sixtNode}.Any(node => node == leftCarbon.numberInUndirectedTree))
+                    {
+                        benzene.parentNodeInChain = instantiatedCarbon.numberInUndirectedTree;
+                    }
+                }
+            }
+            if (benzeneCreatedThisRound)
+            {
+                benzenObjectsInTree[benzeneRingIndexCounter].parentNodeInChain = leftCarbon.numberInUndirectedTree;
+            }
+            if (noRingsInChain || moleculeToInstantiate.CompareTag("Carbon"))
+            {
+                if (!nodeNumbersOfBenzeneRings.Contains(leftCarbon.numberInUndirectedTree))
+                    currentMoleculeGraph.AddEdge(leftCarbon.numberInUndirectedTree, instantiatedCarbon.numberInUndirectedTree);
             }
 
             //Increasing number of connections

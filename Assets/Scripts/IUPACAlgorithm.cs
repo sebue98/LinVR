@@ -7,21 +7,34 @@ using UnityEngine;
 
 public class IUPACAlgorithm : MonoBehaviour
 {
-    public List<GameObject> longestChainElements = new List<GameObject>();
-
-    public List<int> longestChainNodes = new List<int>();
-
     public int[,] directions = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 } };
 
     public List<GameObject> longestChainGlobal = new List<GameObject>();
     public List<List<GameObject>> neighboringChainsElements = new List<List<GameObject>>();
+
+    public String CreateCycloName(IUPACNameStructureElement namingElement)
+    {
+        List<LengthAndListAndParentNodePair> subtreeList = namingElement.subtreeList;
+        List<int> nodesOfCycloRings = namingElement.longestChainList;
+        List<string> subTreeNames = CalculateSubNames(subtreeList, nodesOfCycloRings, true);
+        string returnString = "";
+
+        foreach(string name in subTreeNames)
+        {
+            returnString += name + "-";
+        }
+        if(subTreeNames.Count != 0)
+            returnString.Substring(returnString.Length - 2);
+        returnString += "Cyclohexane";
+        return returnString;
+    }
 
     public String CreateIUPACName(int typeOfConnectionSDT, IUPACNameStructureElement namingElement)
     {
         int lengthOfChain = namingElement.lenghtOfChain;
         List<LengthAndListAndParentNodePair> subtreeList = namingElement.subtreeList;
         List<int> longestChainList = namingElement.longestChainList;
-        List<string> subtreeNames = CalculateSubNames(subtreeList, longestChainList);
+        List<string> subtreeNames = CalculateSubNames(subtreeList, longestChainList, false);
 
 
         string[] startMolecules = { "Methan", "Ethan", "Propan", "Butan", "Pentan", "Hexan", "Heptan", "Octan", "Nonan", "Decan", "Undecan", "Duodecan",
@@ -80,7 +93,7 @@ public class IUPACAlgorithm : MonoBehaviour
         return result;
     }
 
-    public List<string> CalculateSubNames(List<LengthAndListAndParentNodePair> subtreeList, List<int> longestChainList)
+    public List<string> CalculateSubNames(List<LengthAndListAndParentNodePair> subtreeList, List<int> longestChainList, bool CycloOnly)
     {
         string[] branchedChainNames = {"", "Methyl", "Ethyl", "Propyl", "Butyl", "Pentyl", "Hexyl", "Heptyl", "Octyl", "Nonyl" };
         string[] prefixesForSubstituents = { "", "", "Di", "Tri", "Tetra", "Penta", "Hexa", "Hepta", "Octa", "Nona", "Deca", "Undeca", "Duodeca" };
@@ -136,6 +149,24 @@ public class IUPACAlgorithm : MonoBehaviour
                 }
             }
 
+            if(GameMaster.Instance.benzenObjectsInTree.Count > 0 && !CycloOnly)
+            {
+                foreach(var benzene in GameMaster.Instance.benzenObjectsInTree)
+                {
+                    int numberForNaming = integersForNamingList[longestChainList.IndexOf(benzene.parentNodeInChain)];
+                    if (!nameAndPositionsOfSubstituent.ContainsKey("Cyclohexyl"))
+                    {
+                        nameAndPositionsOfSubstituent["Cyclohexyl"] = new List<int>() { numberForNaming };
+                        nameAndPositionsOfSubstituent["Cyclohexyl"].Sort();
+                    }
+                    else
+                    {
+                        nameAndPositionsOfSubstituent["Cyclohexyl"].Add(numberForNaming);
+                        nameAndPositionsOfSubstituent["Cyclohexyl"].Sort();
+                    }
+                }
+            }
+
             foreach (var substituent in nameAndPositionsOfSubstituent)
             {
                 if (substituent.Value.Count > 1)
@@ -158,7 +189,6 @@ public class IUPACAlgorithm : MonoBehaviour
         else //Else the number is uneven and we have a concrete middle point
         {
             int midPoint = (lengthOfChain / 2) + 1;
-            //int midPointNode = longestChainList[midPoint - 1];
             int numberToDepictNamingReversing = 0; //If <=0, naming will not be reversed, if >=1, naming will be reversed
 
             foreach(var subtree in subtreeList)
@@ -185,6 +215,24 @@ public class IUPACAlgorithm : MonoBehaviour
                 {
                     nameAndPositionsOfSubstituent[branchedChainNames[subtree.length]].Add(numberForNaming);
                     nameAndPositionsOfSubstituent[branchedChainNames[subtree.length]].Sort();
+                }
+            }
+
+            if (GameMaster.Instance.benzenObjectsInTree.Count > 0 && !CycloOnly)
+            {
+                foreach (var benzene in GameMaster.Instance.benzenObjectsInTree)
+                {
+                    int numberForNaming = integersForNamingList[longestChainList.IndexOf(benzene.parentNodeInChain)];
+                    if (!nameAndPositionsOfSubstituent.ContainsKey("Cyclohexyl"))
+                    {
+                        nameAndPositionsOfSubstituent["Cyclohexyl"] = new List<int>() { numberForNaming };
+                        nameAndPositionsOfSubstituent["Cyclohexyl"].Sort();
+                    }
+                    else
+                    {
+                        nameAndPositionsOfSubstituent["Cyclohexyl"].Add(numberForNaming);
+                        nameAndPositionsOfSubstituent["Cyclohexyl"].Sort();
+                    }
                 }
             }
 

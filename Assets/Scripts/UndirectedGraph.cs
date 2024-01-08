@@ -87,6 +87,7 @@ public class UndirectedGraph
             // loop for all adjacent nodes of node-t 
             foreach (var v in adjacencyList[t])
             {
+                
                 // push node into queue only if 
                 // it is not visited already 
                 if (dis[v] == -1)
@@ -152,6 +153,7 @@ public class UndirectedGraph
     /// ////////////////////////////////////////////////////////////////////////////////////////////////
     /// </summary>
     /// 
+
 
     public class NeighbourChain
     {
@@ -264,7 +266,8 @@ public class UndirectedGraph
         Pair<int, int, List<int>> t1, t2;
 
         //First run to find longest path
-        t1 = BFS(0);
+        //t1 = BFS(0);
+        t1 = BFS(adjacencyList.ElementAt(0).Key);
         t2 = BFS(t1.first);
         t2.second++;
         namingList.Add(t2.second);
@@ -317,22 +320,26 @@ public class UndirectedGraph
             Carbon tempCarbonComponent = carbon.GetComponent<Carbon>();
             if (longestChain.Contains(tempCarbonComponent.numberInUndirectedTree) && tempCarbonComponent.numberOfConnectionsToMolecules > 2)
             {
-                if (tempCarbonComponent.topMolecule != null && !longestChain.Contains(tempCarbonComponent.topMolecule.GetComponent<Carbon>().numberInUndirectedTree))
+                if (tempCarbonComponent.topMolecule != null && !longestChain.Contains(tempCarbonComponent.topMolecule.GetComponent<Carbon>().numberInUndirectedTree) &&
+                    !GameMaster.Instance.nodeNumbersOfBenzeneRings.Contains(tempCarbonComponent.topMolecule.GetComponent<Carbon>().numberInUndirectedTree))
                 {
                     tempList.Add(new NeighbourChain(tempCarbonComponent.numberInUndirectedTree, GetSubtreeOfNonLongestChainNeighborsNew(tempCarbonComponent.topMolecule.GetComponent<Carbon>().numberInUndirectedTree,
                          longestChain)));
                 }
-                if (tempCarbonComponent.rightMolecule != null && !longestChain.Contains(tempCarbonComponent.rightMolecule.GetComponent<Carbon>().numberInUndirectedTree))
+                if (tempCarbonComponent.rightMolecule != null && !longestChain.Contains(tempCarbonComponent.rightMolecule.GetComponent<Carbon>().numberInUndirectedTree) &&
+                    !GameMaster.Instance.nodeNumbersOfBenzeneRings.Contains(tempCarbonComponent.rightMolecule.GetComponent<Carbon>().numberInUndirectedTree))
                 {
                     tempList.Add(new NeighbourChain(tempCarbonComponent.numberInUndirectedTree, GetSubtreeOfNonLongestChainNeighborsNew(tempCarbonComponent.rightMolecule.GetComponent<Carbon>().numberInUndirectedTree,
                          longestChain)));
                 }
-                if (tempCarbonComponent.bottomMolecule != null && !longestChain.Contains(tempCarbonComponent.bottomMolecule.GetComponent<Carbon>().numberInUndirectedTree))
+                if (tempCarbonComponent.bottomMolecule != null && !longestChain.Contains(tempCarbonComponent.bottomMolecule.GetComponent<Carbon>().numberInUndirectedTree) &&
+                    !GameMaster.Instance.nodeNumbersOfBenzeneRings.Contains(tempCarbonComponent.bottomMolecule.GetComponent<Carbon>().numberInUndirectedTree))
                 {
                     tempList.Add(new NeighbourChain(tempCarbonComponent.numberInUndirectedTree, GetSubtreeOfNonLongestChainNeighborsNew(tempCarbonComponent.bottomMolecule.GetComponent<Carbon>().numberInUndirectedTree,
                          longestChain)));
                 }
-                if (tempCarbonComponent.leftMolecule != null && !longestChain.Contains(tempCarbonComponent.leftMolecule.GetComponent<Carbon>().numberInUndirectedTree))
+                if (tempCarbonComponent.leftMolecule != null && !longestChain.Contains(tempCarbonComponent.leftMolecule.GetComponent<Carbon>().numberInUndirectedTree) &&
+                    !GameMaster.Instance.nodeNumbersOfBenzeneRings.Contains(tempCarbonComponent.leftMolecule.GetComponent<Carbon>().numberInUndirectedTree))
                 {
                     tempList.Add(new NeighbourChain(tempCarbonComponent.numberInUndirectedTree, GetSubtreeOfNonLongestChainNeighborsNew(tempCarbonComponent.leftMolecule.GetComponent<Carbon>().numberInUndirectedTree,
                          longestChain)));
@@ -389,4 +396,38 @@ public class UndirectedGraph
     }
 
 
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///Naming for CycloAlkanes
+    ///
+
+    public IUPACNameStructureElement findNamingForCycloAlkanes()
+    {
+        List<int> nodeNumbersOfCycloAlkanes = GameMaster.Instance.nodeNumbersOfBenzeneRings;
+        List<NeighbourChain> chainsOfCycloAlkanes = new List<NeighbourChain>();
+        List<LengthAndListAndParentNodePair> tempList = new List<LengthAndListAndParentNodePair>();
+        findNeighbouringSubtrees(nodeNumbersOfCycloAlkanes, chainsOfCycloAlkanes);
+
+        List<LengthAndListAndParentNodePair> lengthAndNodePairList = new List<LengthAndListAndParentNodePair>();
+        foreach (var pair in chainsOfCycloAlkanes)
+        {
+            if (pair.list.Count == 1)
+            {
+                lengthAndNodePairList.Add(new LengthAndListAndParentNodePair(1, pair.parentNode, new List<int>(1) { pair.list.ElementAt(0).Key }));
+            }
+            else if (pair.list.Count > 1)
+            {
+                Pair<int, int, List<int>> f1, f2;
+                f1 = BFS2(pair.list.ElementAt(0).Key, pair.list);
+                f2 = BFS2(f1.first, pair.list);
+                f2.path.Reverse();
+                f2.second++;
+                if (f2.second > 6)
+                    return new IUPACNameStructureElement(7, null, null);
+                lengthAndNodePairList.Add(new LengthAndListAndParentNodePair(f2.second, pair.parentNode, f2.path));
+            }
+        }
+
+        return new IUPACNameStructureElement(0, lengthAndNodePairList, nodeNumbersOfCycloAlkanes);
+    }
 }

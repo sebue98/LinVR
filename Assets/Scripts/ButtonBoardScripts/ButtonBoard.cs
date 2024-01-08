@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ButtonBoard : MonoBehaviour
@@ -182,6 +183,8 @@ public class ButtonBoard : MonoBehaviour
 
     public void SetDeleteMolecule()
     {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
         GameMaster.Instance.currentState = State.Delete;
     }
 
