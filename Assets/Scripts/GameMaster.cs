@@ -41,13 +41,6 @@ public class IUPACNameStructureElement
     }
 }
 
-public class CoordinatePair
-{
-    public int X;
-    public int Y;
-
-}
-
 public class LengthAndListAndParentNodePair
 {
     public int length;
@@ -319,8 +312,24 @@ public class GameMaster : MonoBehaviour
 
     public bool CheckIfBenzenePositionFitsGameBoard(int posX, int posY)
     {
-        if(!currentorientationForMoleculeRing)
+
+        if (!currentorientationForMoleculeRing)
         {
+            List<(int, int)> verticalPosition1 = new List<(int, int)>() { (1, -1), (1, -2), (0, -3), (-1, -2), (-1, -1) };
+            List<(int, int)> verticalPosition2 = new List<(int, int)>() { (0, -1), (-1, -2), (-2, -1), (-2, 0), (-1, 1) };
+            List<(int, int)> verticalPosition3 = new List<(int, int)>() { (-1, -1), (-2, 0), (-2, 1), (-1, 2), (0, 1) };
+            List<(int, int)> verticalPosition4 = new List<(int, int)>() { (-1, 1), (-1, 2), (0, 3), (1, 2), (1, 1) };
+            List<(int, int)> verticalPosition5 = new List<(int, int)>() { (0, 1), (1, 2), (2, 1), (2, 0), (1, -1) };
+            List<(int, int)> verticalPosition6 = new List<(int, int)>() { (1, 1), (2, 0), (2, -1), (1, -2), (0, -1) };
+            List<List<(int, int)>> verticalPositionList = new List<List<(int, int)>>()
+            { verticalPosition1, verticalPosition2, verticalPosition3, verticalPosition4, verticalPosition5, verticalPosition6};
+
+            foreach (var tuple in verticalPositionList[currentChoosenBenzeneCarbonForConnection - 1])
+            {
+                if (!currentWhiteboard[posX + tuple.Item1, posY + tuple.Item2].gameObject.CompareTag("SpawnPlate"))
+                    return false;
+            }
+            //vertical
             switch (currentChoosenBenzeneCarbonForConnection)
             {
                 case 1: return (posY > 2 && (posX > 0 && posX < 19));
@@ -333,7 +342,22 @@ public class GameMaster : MonoBehaviour
         }
         else
         {
-            switch(currentChoosenBenzeneCarbonForConnection)
+            List<(int, int)> horizontalPosition1 = new List<(int, int)>() { (1, 1), (2, 1), (3, 0), (2, -1), (1, -1) };
+            List<(int, int)> horizontalPosition2 = new List<(int, int)>() { (1, 0), (2, -1), (1, -2), (0, -2), (-1, -1) };
+            List<(int, int)> horizontalPosition3 = new List<(int, int)>() { (1, -1), (0, -2), (-1, -2), (-2, -1), (-1, 0) };
+            List<(int, int)> horizontalPosition4 = new List<(int, int)>() { (-1, -1), (-2, 1), (-3, 0), (-2, 1), (-1, 1) };
+            List<(int, int)> horizontalPosition5 = new List<(int, int)>() { (-1, 0), (-2, 1), (-1, 2), (0, 2), (1, 1) };
+            List<(int, int)> horizontalPosition6 = new List<(int, int)>() { (1, 1), (0, 2), (1, 2), (2, 1), (1, 0) };
+            List<List<(int, int)>> horizontalPositionList = new List<List<(int, int)>>()
+            { horizontalPosition1, horizontalPosition2, horizontalPosition3, horizontalPosition4, horizontalPosition5, horizontalPosition6 };
+
+            foreach (var tuple in horizontalPositionList[currentChoosenBenzeneCarbonForConnection - 1])
+            {
+                if (!currentWhiteboard[posX + tuple.Item1, posY + tuple.Item2].gameObject.CompareTag("SpawnPlate"))
+                    return false;
+            }
+            //horizontal
+            switch (currentChoosenBenzeneCarbonForConnection)
             {
                 case 1: return ((posY > 0 && posY < 9) && posX < 17);
                 case 2: return (posY > 2 && (posX > 0 && posX < 18));
@@ -343,6 +367,7 @@ public class GameMaster : MonoBehaviour
                 case 6: return (posY < 9 && (posX > 0 && posX < 18));
             }
         }
+
 
         return true;
     }

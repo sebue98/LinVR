@@ -200,7 +200,7 @@ public class IUPACAlgorithm : MonoBehaviour
         }
 
 
-        return new List<string>();
+        return iupacSubtreeNames;
     }
 
     public List<string> CalculateSubNames(List<LengthAndListAndParentNodePair> subtreeList, List<int> longestChainList, bool CycloOnly)
