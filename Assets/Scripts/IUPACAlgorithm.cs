@@ -4,6 +4,17 @@ using System;
 using System.Linq;
 using UnityEngine;
 
+public class SortingElementForCycles
+{
+    public int lengthOfSubstituent;
+    public int positionOfSubstituentInRing;
+
+    public SortingElementForCycles(int first, int second)
+    {
+        this.lengthOfSubstituent = first;
+        this.positionOfSubstituentInRing = second;
+    }
+}
 
 public class IUPACAlgorithm : MonoBehaviour
 {
@@ -16,7 +27,8 @@ public class IUPACAlgorithm : MonoBehaviour
     {
         List<LengthAndListAndParentNodePair> subtreeList = namingElement.subtreeList;
         List<int> nodesOfCycloRings = namingElement.longestChainList;
-        List<string> subTreeNames = CalculateSubNames(subtreeList, nodesOfCycloRings, true);
+        //List<string> subTreeNames = CalculateSubNamesForCycles(subtreeList, nodesOfCycloRings, true);
+        List<string> subTreeNames = CalculateSubNamesForCycles(subtreeList, nodesOfCycloRings, true);
         string returnString = "";
 
         foreach(string name in subTreeNames)
@@ -93,6 +105,104 @@ public class IUPACAlgorithm : MonoBehaviour
         return result;
     }
 
+    public List<string> CalculateSubNamesForCycles(List<LengthAndListAndParentNodePair> subtreeList, List<int> longestChainList, bool CycloOnly)
+    {
+        string[] branchedChainNames = { "", "Methyl", "Ethyl", "Propyl", "Butyl", "Pentyl", "Hexyl", "Heptyl", "Octyl", "Nonyl" };
+        string[] prefixesForSubstituents = { "", "", "Di", "Tri", "Tetra", "Penta", "Hexa", "Hepta", "Octa", "Nona", "Deca", "Undeca", "Duodeca" };
+        List<int> integersForNamingList = CreateList(longestChainList.Count());
+        List<string> iupacSubtreeNames = new List<string>();
+        SortedDictionary<string, List<int>> nameAndPositionsOfSubstituent = new SortedDictionary<string, List<int>>();
+        List<SortingElementForCycles> cycleSortingList = new List<SortingElementForCycles>()
+        {
+             new SortingElementForCycles(0,0), new SortingElementForCycles(0,0), new SortingElementForCycles(0,0),
+             new SortingElementForCycles(0,0), new SortingElementForCycles(0,0), new SortingElementForCycles(0,0)
+        };
+        //Max amount = 21
+
+        foreach(var subtree in subtreeList)
+        {
+            cycleSortingList[subtree.parentNode].positionOfSubstituentInRing = subtree.parentNode;
+            cycleSortingList[subtree.parentNode].lengthOfSubstituent = subtree.length;
+        }
+
+        int maxNumber = 21;
+        List<SortingElementForCycles> sortingListForNaming = new List<SortingElementForCycles>()
+                    {
+             new SortingElementForCycles(0,0), new SortingElementForCycles(0,0), new SortingElementForCycles(0,0),
+             new SortingElementForCycles(0,0), new SortingElementForCycles(0,0), new SortingElementForCycles(0,0)
+        };
+        //int bestPositionToStart = 0;
+        //Calculating length
+        for (int i = 0; i < 12; i++)
+        {
+            //Calculating a round of numbers
+            int currentPositionNumbering = 0;
+            for(int sub = 1; sub < 7; sub++)
+            {
+                if(cycleSortingList[sub-1].lengthOfSubstituent > 0)
+                {
+                    currentPositionNumbering += sub;
+                }
+            }
+
+            //Resetting value if numbering is smaller
+            if (currentPositionNumbering < maxNumber)
+            {
+                maxNumber = currentPositionNumbering;
+                for(int j = 0; j < 6; j++)
+                {
+                    sortingListForNaming[j] = cycleSortingList[j];
+                }
+            }
+
+            //Moving elements one position so we can redo everything
+            SortingElementForCycles temp = cycleSortingList.ElementAt(0);
+            cycleSortingList.RemoveAt(0);
+            cycleSortingList.Add(temp);
+
+            if (i == 5)
+                cycleSortingList.Reverse();
+        }
+
+        for(int index = 1; index < 7; index++)
+        {
+            if (sortingListForNaming[index-1].lengthOfSubstituent == 0)
+                continue;
+            if(!nameAndPositionsOfSubstituent.ContainsKey(branchedChainNames[sortingListForNaming[index-1].lengthOfSubstituent]))
+            {
+                nameAndPositionsOfSubstituent[branchedChainNames[sortingListForNaming[index-1].lengthOfSubstituent]] = new List<int>() {index};
+                nameAndPositionsOfSubstituent[branchedChainNames[sortingListForNaming[index-1].lengthOfSubstituent]].Sort();
+            }
+            else
+            {
+                nameAndPositionsOfSubstituent[branchedChainNames[sortingListForNaming[index-1].lengthOfSubstituent]].Add(index);
+                nameAndPositionsOfSubstituent[branchedChainNames[sortingListForNaming[index-1].lengthOfSubstituent]].Sort();
+            }
+        }
+
+        foreach (var substituent in nameAndPositionsOfSubstituent)
+        {
+            if (substituent.Value.Count > 1)
+            {
+                string numbers = "";
+                foreach (var number in substituent.Value)
+                {
+                    numbers += number.ToString() + ",";
+                }
+                iupacSubtreeNames.Add(numbers + "-" + prefixesForSubstituents[substituent.Value.Count] + substituent.Key.ToString());
+            }
+            else
+            {
+                foreach (var number in substituent.Value)
+                    iupacSubtreeNames.Add(number + "-" + substituent.Key.ToString());
+            }
+
+        }
+
+
+        return new List<string>();
+    }
+
     public List<string> CalculateSubNames(List<LengthAndListAndParentNodePair> subtreeList, List<int> longestChainList, bool CycloOnly)
     {
         string[] branchedChainNames = {"", "Methyl", "Ethyl", "Propyl", "Butyl", "Pentyl", "Hexyl", "Heptyl", "Octyl", "Nonyl" };
@@ -104,13 +214,11 @@ public class IUPACAlgorithm : MonoBehaviour
 
         //Get the subtree with the longest path and its index
         int maxSubLength = 0;
-        int indexOfLongestSubtree = 0;
         for(int i = 0; i < subtreeList.Count; i++)
         {
             if(subtreeList[i].length > maxSubLength)
             {
                 maxSubLength = subtreeList[i].length;
-                indexOfLongestSubtree = i;
             }
         }
 

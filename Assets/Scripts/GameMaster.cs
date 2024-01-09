@@ -41,6 +41,13 @@ public class IUPACNameStructureElement
     }
 }
 
+public class CoordinatePair
+{
+    public int X;
+    public int Y;
+
+}
+
 public class LengthAndListAndParentNodePair
 {
     public int length;
@@ -370,9 +377,6 @@ public class GameMaster : MonoBehaviour
                 }
                 child.GetComponent<Carbon>().numberInUndirectedTree = numberOfVerticesInTree;
                 nodeNumbersOfBenzeneRings.Add(numberOfVerticesInTree);
-                //child.name = "Carbon " + namingCounter;
-                nodeNumbersOfBenzeneRings.Add(numberOfVerticesInTree);
-                //currentMoleculeGraph.AddVertex(numberOfVerticesInTree);
                 carbonGameObjects.Add(child.gameObject);
                 numberOfVerticesInTree++;
                 counter++;
