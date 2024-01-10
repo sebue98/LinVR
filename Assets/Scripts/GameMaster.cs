@@ -112,6 +112,7 @@ public class GameMaster : MonoBehaviour
     public GameObject numberDecisionBoard;
     public GameObject benzeneConnectionButtonBoardHorizontal;
     public GameObject benzeneConnectionButtonBoardVertical;
+    public GameObject Instuctionboard;
 
     public GameObject instantiatedMolecule;
 
@@ -122,6 +123,7 @@ public class GameMaster : MonoBehaviour
     public bool showDebug = false;
     public bool noRingsInChain = true;
     public bool setShown = true;
+    public bool toggleInstructionboard = false;
     public List<Carbon> carbons;
     public List<GameObject> carbonGameObjects;
     public List<List<GameObject>> tempNeighbourObjects = new List<List<GameObject>>();
@@ -136,6 +138,7 @@ public class GameMaster : MonoBehaviour
     public List<BenzeneObject> benzenObjectsInTree = new List<BenzeneObject>();
     public List<int> nodeNumbersOfBenzeneRings = new List<int>();
     public int benzeneRingIndexCounter = -1;
+    public (int, int) platesToRemove = (-1,-1);
 
     
     public static GameMaster Instance
@@ -156,10 +159,12 @@ public class GameMaster : MonoBehaviour
             // Destroy this instance if another one already exists
             Destroy(gameObject);
         }
+        Instuctionboard.SetActive(false);
         numberDecisionBoard.SetActive(false);
         benzeneConnectionButtonBoardHorizontal.SetActive(false);
         benzeneConnectionButtonBoardVertical.SetActive(false);
     }
+
 
     public void Update()
     {
@@ -168,6 +173,12 @@ public class GameMaster : MonoBehaviour
         handRDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out bool value);
         showDebug = value;
         handRDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out Vector2 posR);
+        handRDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out bool pressed);
+
+        if (pressed)
+        {
+            Instuctionboard.SetActive(true);
+        }
         //Top Condition
         if(posR.y > 0.5f  && (- 0.5f < posR.x && posR.x < 0.5f))
         {
@@ -339,6 +350,7 @@ public class GameMaster : MonoBehaviour
                 case 5: return ((posY > 0 && posY < 8) && posX < 18);
                 case 6: return ((posY > 1 && posY < 9) && posX < 18);
             }
+
         }
         else
         {
@@ -368,6 +380,7 @@ public class GameMaster : MonoBehaviour
             }
         }
 
+        
 
         return true;
     }

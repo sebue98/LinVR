@@ -20,6 +20,7 @@ public class ButtonBoard : MonoBehaviour
     public Button setBottomButton;
     public Button setLeftButton;
     public Button showCurrentModeButton;
+    public Button closeInfoTextButton;
     public TextMeshProUGUI selectedModeTextMeshProComponent;
     public Button errorMessageButton;
     public TextMeshProUGUI errorMessageTextMeshProComponent;
@@ -192,6 +193,11 @@ public class ButtonBoard : MonoBehaviour
     {
         GameMaster.Instance.currentState = State.benzene;
         GMInstance.setBenzeneBoardActive = true;
+    }
+
+    public void CloseInfoText()
+    {
+        GameMaster.Instance.Instuctionboard.SetActive(false);
     }
 
 }

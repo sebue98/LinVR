@@ -21,6 +21,7 @@ TagManager:
   - Carbon
   - Benzene
   - Visited
+  - Instructionboard
   layers:
   - Default
   - TransparentFX
