@@ -126,29 +126,6 @@ public class UndirectedGraph
         return new Pair<int, int, List<int>>(nodeIdx, maxDis, path);
     }
 
-    public int longestPathLength()
-    {
-        Pair<int, int, List<int>> t1, t2;
-
-        // first bfs to find one end point of 
-        // longest path 
-        t1 = BFS(0);
-
-        // second bfs to find actual longest path 
-        t2 = BFS(t1.first);
-        t2.second++; //Needs +1 since it starts counting from 0
-
-        Debug.Log("longest path is from " + t1.first +
-                " to " + t2.first + " of length " + t2.second);
-
-        Debug.Log("Nodes in the longest path:");
-        foreach (var node in t2.path)
-        {
-            Debug.Log(node + " ");
-        }
-        return t2.second;
-    }
-
     /// <summary>
     /// ////////////////////////////////////////////////////////////////////////////////////////////////
     /// </summary>
@@ -296,21 +273,6 @@ public class UndirectedGraph
         }
 
         return new IUPACNameStructureElement(t2.second, lengthAndNodePairList, t2.path);
-    }
-
-
-    // Function to print the adjacency list representation of the graph
-    public void PrintGraph()
-    {
-        foreach (var kvp in adjacencyList)
-        {
-            Debug.Log ($"Vertex {kvp.Key}: ");
-            foreach (var neighbor in kvp.Value)
-            {
-                Debug.Log($"{neighbor} ");
-            }
-            Debug.Log(" ");
-        }
     }
 
     public void findNeighbouringSubtrees(List<int> longestChain, List<NeighbourChain> tempList)

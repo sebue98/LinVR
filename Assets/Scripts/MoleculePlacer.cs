@@ -9,18 +9,6 @@ public class MoleculePlacer : MonoBehaviour
     public GameObject moleculeToPlace;
     public int positionOfPlateX;
     public int positionOfPlateY;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
 
     private void OnCollisionEnter(Collision collision)
     {

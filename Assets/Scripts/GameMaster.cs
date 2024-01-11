@@ -225,38 +225,6 @@ public class GameMaster : MonoBehaviour
 
     }
 
-
-
-    public void printWhiteboard()
-    {
-        for(int y = 9; y >= 0; y--)
-        {
-            string currentLine = "";
-            for(int x = 0; x < 20; x++)
-            {
-                if(currentWhiteboard[x,y] == null)
-                {
-                    currentLine += "X   ";
-                    continue;
-                }
-                if(currentWhiteboard[x,y].gameObject.CompareTag("Carbon"))
-                {
-                    currentLine += "C   ";
-                    continue;
-                }
-                currentLine += ".   ";
-            }
-            Debug.Log(currentLine);
-        }
-    }
-
-
-    public GameObject FindObjectByName(string objectName)
-    {
-        GameObject foundObject = carbonGameObjects.Find(obj => obj.name == objectName);
-        return foundObject;
-    }
-
     public void SettingMoleculesPlacesOnWhiteboard(GameObject instantiatedMolecule, int posX, int posY)
     {
         switch(instantiatedMolecule.tag)

@@ -68,14 +68,8 @@ public class ButtonBoard : MonoBehaviour
         {
             case "carbon":
                 return "Current Mode: Carbon";
-            case "oxygen":
-                return "Current Mode: Oxygen";
             case "benzene":
                 return "Current Mode: Benzene";
-            case "nitrogen":
-                return "Current Mode: Nitrogen";
-            case "sulfur":
-                return "Current Mode: Sulfur";
             case "Delete":
                 return "Current Mode: Delete Molecule";
             case "DoubleConnection":
@@ -124,12 +118,6 @@ public class ButtonBoard : MonoBehaviour
         GMInstance.currentChoosenBenzeneCarbonForConnection = choosenCarbon;
     }
 
-
-    public void TempFunction()
-    {
-        Debug.Log("Spawning molecule mode");
-    }
-
     public void SetDoubleConnection()
     {
         GameMaster.Instance.currentState = State.DoubleConnection;
@@ -165,21 +153,6 @@ public class ButtonBoard : MonoBehaviour
     public void SetCarbon()
     {
         GameMaster.Instance.currentState = State.carbon;
-    }
-
-    public void SetOxygen()
-    {
-        GameMaster.Instance.currentState = State.oxygen;
-    }
-
-    public void SetNitrogen()
-    {
-        GameMaster.Instance.currentState = State.nitrogen;
-    }
-
-    public void SetSulfur()
-    {
-        GameMaster.Instance.currentState = State.sulfur;
     }
 
     public void SetDeleteMolecule()
