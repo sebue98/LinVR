@@ -351,7 +351,6 @@ GameObject:
   - component: {fileID: 197175477}
   - component: {fileID: 197175476}
   - component: {fileID: 197175475}
-  - component: {fileID: 197175474}
   m_Layer: 0
   m_Name: Three
   m_TagString: Untagged
@@ -379,18 +378,6 @@ RectTransform:
   m_AnchoredPosition: {x: 447, y: -20}
   m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &197175474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 197175472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f48a23b04f851c4c9e2d55bc7cb3d56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &197175475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -435,9 +422,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 197175474}
-        m_TargetAssemblyTypeName: ButtonScript, Assembly-CSharp
-        m_MethodName: OnButtonClick
+      - m_Target: {fileID: 1624547070}
+        m_TargetAssemblyTypeName: ButtonBoard, Assembly-CSharp
+        m_MethodName: SetChoosenBenzeneForConnectionToThree
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -612,7 +599,6 @@ GameObject:
   - component: {fileID: 224681222}
   - component: {fileID: 224681221}
   - component: {fileID: 224681220}
-  - component: {fileID: 224681219}
   m_Layer: 0
   m_Name: Six
   m_TagString: Untagged
@@ -640,18 +626,6 @@ RectTransform:
   m_AnchoredPosition: {x: 448.2, y: -220}
   m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &224681219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 224681217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f48a23b04f851c4c9e2d55bc7cb3d56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &224681220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -696,9 +670,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 224681219}
-        m_TargetAssemblyTypeName: ButtonScript, Assembly-CSharp
-        m_MethodName: OnButtonClick
+      - m_Target: {fileID: 1624547070}
+        m_TargetAssemblyTypeName: ButtonBoard, Assembly-CSharp
+        m_MethodName: SetChoosenBenzeneForConnectionToSix
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1887,7 +1861,6 @@ GameObject:
   - component: {fileID: 618881185}
   - component: {fileID: 618881184}
   - component: {fileID: 618881183}
-  - component: {fileID: 618881182}
   m_Layer: 0
   m_Name: Two
   m_TagString: Untagged
@@ -1915,18 +1888,6 @@ RectTransform:
   m_AnchoredPosition: {x: 344.6, y: -22}
   m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &618881182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 618881180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f48a23b04f851c4c9e2d55bc7cb3d56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &618881183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1971,9 +1932,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 618881182}
-        m_TargetAssemblyTypeName: ButtonScript, Assembly-CSharp
-        m_MethodName: OnButtonClick
+      - m_Target: {fileID: 1624547070}
+        m_TargetAssemblyTypeName: ButtonBoard, Assembly-CSharp
+        m_MethodName: SetChoosenBenzeneForConnectionToTwo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3918,7 +3879,6 @@ GameObject:
   - component: {fileID: 1088423428}
   - component: {fileID: 1088423427}
   - component: {fileID: 1088423426}
-  - component: {fileID: 1088423425}
   m_Layer: 0
   m_Name: One
   m_TagString: Untagged
@@ -3946,18 +3906,6 @@ RectTransform:
   m_AnchoredPosition: {x: 240.1, y: -21}
   m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1088423425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1088423423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f48a23b04f851c4c9e2d55bc7cb3d56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1088423426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4002,9 +3950,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1088423425}
-        m_TargetAssemblyTypeName: ButtonScript, Assembly-CSharp
-        m_MethodName: OnButtonClick
+      - m_Target: {fileID: 1624547070}
+        m_TargetAssemblyTypeName: ButtonBoard, Assembly-CSharp
+        m_MethodName: SetChoosenBenzeneForConnectionToOne
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4740,7 +4688,6 @@ GameObject:
   - component: {fileID: 1166897820}
   - component: {fileID: 1166897819}
   - component: {fileID: 1166897818}
-  - component: {fileID: 1166897821}
   m_Layer: 0
   m_Name: Five
   m_TagString: Untagged
@@ -4812,9 +4759,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1166897821}
-        m_TargetAssemblyTypeName: ButtonScript, Assembly-CSharp
-        m_MethodName: OnButtonClick
+      - m_Target: {fileID: 1624547070}
+        m_TargetAssemblyTypeName: ButtonBoard, Assembly-CSharp
+        m_MethodName: SetChoosenBenzeneForConnectionToFive
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4862,18 +4809,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1166897816}
   m_CullTransparentMesh: 1
---- !u!114 &1166897821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1166897816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f48a23b04f851c4c9e2d55bc7cb3d56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1179669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -5658,7 +5593,6 @@ GameObject:
   - component: {fileID: 1363247842}
   - component: {fileID: 1363247841}
   - component: {fileID: 1363247840}
-  - component: {fileID: 1363247843}
   m_Layer: 0
   m_Name: Six
   m_TagString: Untagged
@@ -5730,9 +5664,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1363247843}
-        m_TargetAssemblyTypeName: ButtonScript, Assembly-CSharp
-        m_MethodName: OnButtonClick
+      - m_Target: {fileID: 1624547070}
+        m_TargetAssemblyTypeName: ButtonBoard, Assembly-CSharp
+        m_MethodName: SetChoosenBenzeneForConnectionToSix
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5780,18 +5714,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1363247838}
   m_CullTransparentMesh: 1
---- !u!114 &1363247843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1363247838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f48a23b04f851c4c9e2d55bc7cb3d56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1374352882
 GameObject:
   m_ObjectHideFlags: 0
@@ -6282,8 +6204,8 @@ RectTransform:
   m_Father: {fileID: 690131067}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.40076703}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6614,7 +6536,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &1460084028
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8337,7 +8259,6 @@ GameObject:
   - component: {fileID: 1600415805}
   - component: {fileID: 1600415804}
   - component: {fileID: 1600415803}
-  - component: {fileID: 1600415806}
   m_Layer: 0
   m_Name: Four
   m_TagString: Untagged
@@ -8409,9 +8330,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1600415806}
-        m_TargetAssemblyTypeName: ButtonScript, Assembly-CSharp
-        m_MethodName: OnButtonClick
+      - m_Target: {fileID: 1624547070}
+        m_TargetAssemblyTypeName: ButtonBoard, Assembly-CSharp
+        m_MethodName: SetChoosenBenzeneForConnectionToFour
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8459,18 +8380,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1600415801}
   m_CullTransparentMesh: 1
---- !u!114 &1600415806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1600415801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f48a23b04f851c4c9e2d55bc7cb3d56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1612284695
 GameObject:
   m_ObjectHideFlags: 0
@@ -8796,7 +8705,6 @@ GameObject:
   - component: {fileID: 1626285400}
   - component: {fileID: 1626285399}
   - component: {fileID: 1626285398}
-  - component: {fileID: 1626285397}
   m_Layer: 0
   m_Name: Four
   m_TagString: Untagged
@@ -8824,18 +8732,6 @@ RectTransform:
   m_AnchoredPosition: {x: 240.3, y: -220}
   m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1626285397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1626285395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f48a23b04f851c4c9e2d55bc7cb3d56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1626285398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8880,9 +8776,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1626285397}
-        m_TargetAssemblyTypeName: ButtonScript, Assembly-CSharp
-        m_MethodName: OnButtonClick
+      - m_Target: {fileID: 1624547070}
+        m_TargetAssemblyTypeName: ButtonBoard, Assembly-CSharp
+        m_MethodName: SetChoosenBenzeneForConnectionToFour
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8942,7 +8838,6 @@ GameObject:
   - component: {fileID: 1645268734}
   - component: {fileID: 1645268733}
   - component: {fileID: 1645268732}
-  - component: {fileID: 1645268731}
   m_Layer: 0
   m_Name: Five
   m_TagString: Untagged
@@ -8970,18 +8865,6 @@ RectTransform:
   m_AnchoredPosition: {x: 343.4, y: -220}
   m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1645268731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1645268729}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f48a23b04f851c4c9e2d55bc7cb3d56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1645268732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9026,9 +8909,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1645268731}
-        m_TargetAssemblyTypeName: ButtonScript, Assembly-CSharp
-        m_MethodName: OnButtonClick
+      - m_Target: {fileID: 1624547070}
+        m_TargetAssemblyTypeName: ButtonBoard, Assembly-CSharp
+        m_MethodName: SetChoosenBenzeneForConnectionToFive
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9223,7 +9106,6 @@ GameObject:
   - component: {fileID: 1706897220}
   - component: {fileID: 1706897219}
   - component: {fileID: 1706897218}
-  - component: {fileID: 1706897221}
   m_Layer: 0
   m_Name: Three
   m_TagString: Untagged
@@ -9295,9 +9177,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1706897221}
-        m_TargetAssemblyTypeName: ButtonScript, Assembly-CSharp
-        m_MethodName: OnButtonClick
+      - m_Target: {fileID: 1624547070}
+        m_TargetAssemblyTypeName: ButtonBoard, Assembly-CSharp
+        m_MethodName: SetChoosenBenzeneForConnectionToThree
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9345,18 +9227,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1706897216}
   m_CullTransparentMesh: 1
---- !u!114 &1706897221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1706897216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f48a23b04f851c4c9e2d55bc7cb3d56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1720786766
 GameObject:
   m_ObjectHideFlags: 0
@@ -9562,7 +9432,6 @@ GameObject:
   - component: {fileID: 1762961814}
   - component: {fileID: 1762961813}
   - component: {fileID: 1762961812}
-  - component: {fileID: 1762961815}
   m_Layer: 0
   m_Name: Two
   m_TagString: Untagged
@@ -9634,9 +9503,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1762961815}
-        m_TargetAssemblyTypeName: ButtonScript, Assembly-CSharp
-        m_MethodName: OnButtonClick
+      - m_Target: {fileID: 1624547070}
+        m_TargetAssemblyTypeName: ButtonBoard, Assembly-CSharp
+        m_MethodName: SetChoosenBenzeneForConnectionToTwo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9684,18 +9553,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1762961810}
   m_CullTransparentMesh: 1
---- !u!114 &1762961815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1762961810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f48a23b04f851c4c9e2d55bc7cb3d56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1765738324
 GameObject:
   m_ObjectHideFlags: 0
@@ -11457,7 +11314,6 @@ GameObject:
   - component: {fileID: 2057500112}
   - component: {fileID: 2057500111}
   - component: {fileID: 2057500110}
-  - component: {fileID: 2057500113}
   m_Layer: 0
   m_Name: One
   m_TagString: Untagged
@@ -11529,9 +11385,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonScript, Assembly-CSharp
-        m_MethodName: OnButtonClick
+      - m_Target: {fileID: 1624547070}
+        m_TargetAssemblyTypeName: ButtonBoard, Assembly-CSharp
+        m_MethodName: SetChoosenBenzeneForConnectionToOne
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11579,18 +11435,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2057500108}
   m_CullTransparentMesh: 1
---- !u!114 &2057500113
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2057500108}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f48a23b04f851c4c9e2d55bc7cb3d56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2060036768
 GameObject:
   m_ObjectHideFlags: 0
@@ -11761,9 +11605,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -7, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2068622303
 MonoBehaviour:
@@ -11853,7 +11697,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0.0000076293945}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 66.880005}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2074969618
 MonoBehaviour:

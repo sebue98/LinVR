@@ -118,6 +118,36 @@ public class ButtonBoard : MonoBehaviour
         GMInstance.currentChoosenBenzeneCarbonForConnection = choosenCarbon;
     }
 
+    public void SetChoosenBenzeneForConnectionToOne()
+    {
+        GMInstance.currentChoosenBenzeneCarbonForConnection = 1;
+    }
+
+    public void SetChoosenBenzeneForConnectionToTwo()
+    {
+        GMInstance.currentChoosenBenzeneCarbonForConnection = 2;
+    }
+
+    public void SetChoosenBenzeneForConnectionToThree()
+    {
+        GMInstance.currentChoosenBenzeneCarbonForConnection = 3;
+    }
+
+    public void SetChoosenBenzeneForConnectionToFour()
+    {
+        GMInstance.currentChoosenBenzeneCarbonForConnection = 4;
+    }
+
+    public void SetChoosenBenzeneForConnectionToFive()
+    {
+        GMInstance.currentChoosenBenzeneCarbonForConnection = 5;
+    }
+
+    public void SetChoosenBenzeneForConnectionToSix()
+    {
+        GMInstance.currentChoosenBenzeneCarbonForConnection = 6;
+    }
+
     public void SetDoubleConnection()
     {
         GameMaster.Instance.currentState = State.DoubleConnection;
