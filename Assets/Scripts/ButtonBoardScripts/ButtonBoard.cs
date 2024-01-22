@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
 
 public class ButtonBoard : MonoBehaviour
 {
@@ -25,12 +26,22 @@ public class ButtonBoard : MonoBehaviour
     public Button errorMessageButton;
     public TextMeshProUGUI errorMessageTextMeshProComponent;
     public TextMeshProUGUI orientationButtonTextMeshProComponent;
+    public TextMeshProUGUI taskDecisionBoardTextMeshProComponent;
+    public TextMeshProUGUI IUPACNameBoardTextMeshProComponent;
+    public Button easyTaskButton;
+    public Button mediumTaskButton;
+    public Button hardTaskButton;
+
 
     public Slider benzeneConnectionSlider;
     public TextMeshProUGUI benzeneConnectionNumberHolder;
     
     private GameMaster GMInstance;
     private Color errorColorMaterial = new Color(255,82,90);
+
+    public List<int> lastEasyTaskNumber;
+    public List<int> lastMediumTaskNumber;
+    public List<int> lastHardTaskNumber;
 
     // Start is called before the first frame update
     void Start()
@@ -187,6 +198,12 @@ public class ButtonBoard : MonoBehaviour
 
     public void SetDeleteMolecule()
     {
+        if(GameMaster.Instance.toggleTaskDecisionBoard)
+        {
+            GameMaster.Instance.easyTaskCounterTextMeshProComponent.text = GameMaster.Instance.easyTasksSolved.ToString()+ "/3";
+            GameMaster.Instance.mediumTaskCounterTextMeshProComponent.text = "0/3";
+            GameMaster.Instance.hardTaskCounterTextMeshProComponent.text = "0/3";
+        }
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
         GameMaster.Instance.currentState = State.Delete;
@@ -203,4 +220,46 @@ public class ButtonBoard : MonoBehaviour
         GameMaster.Instance.Instuctionboard.SetActive(false);
     }
 
+    //TaskDecisionBoardFunctions
+    public void ToggleTaskDecisionBoard()
+    {
+        GameMaster.Instance.toggleTaskDecisionBoard = !GameMaster.Instance.toggleTaskDecisionBoard;
+        GameMaster.Instance.taskDecisionBoard.SetActive(GameMaster.Instance.toggleTaskDecisionBoard);
+        if(GameMaster.Instance.toggleTaskDecisionBoard)
+        {
+            taskDecisionBoardTextMeshProComponent.text = "Hide Naming Task";
+        }
+        else
+        {
+            lastEasyTaskNumber.Clear();
+            lastMediumTaskNumber.Clear();
+            lastHardTaskNumber.Clear();
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(currentSceneIndex);
+            GameMaster.Instance.easyTaskCounterTextMeshProComponent.text = "0/3";
+            GameMaster.Instance.mediumTaskCounterTextMeshProComponent.text = "0/3";
+            GameMaster.Instance.hardTaskCounterTextMeshProComponent.text = "0/3";
+            GameMaster.Instance.currentState = State.Delete;
+        }
+    }
+
+    static int GetRandomIndex(int arrayLength)
+    {
+        System.Random random = new System.Random();
+        return random.Next(0, arrayLength);
+    }
+
+    public void SetEasyTask()
+    {
+        int easyNumber = GetRandomIndex(GameMaster.Instance.bla.Length);
+        while(lastEasyTaskNumber.Contains(easyNumber))
+            easyNumber = GetRandomIndex(GameMaster.Instance.bla.Length);
+
+        lastEasyTaskNumber.Add(easyNumber);
+        GameMaster.Instance.currentEasyTaskToSolve = GameMaster.Instance.bla[easyNumber];
+        Debug.Log(GameMaster.Instance.currentEasyTaskToSolve);
+        IUPACNameBoardTextMeshProComponent.text = GameMaster.Instance.currentEasyTaskToSolve;
+        GameMaster.Instance.onlyShowTaskName = true;
+        easyTaskButton.interactable = false;
+    }
 }

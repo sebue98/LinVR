@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SortingElementForCycles
 {
@@ -19,9 +20,15 @@ public class SortingElementForCycles
 public class IUPACAlgorithm : MonoBehaviour
 {
     public int[,] directions = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 } };
+    private GameMaster GMInstance;
 
     public List<GameObject> longestChainGlobal = new List<GameObject>();
     public List<List<GameObject>> neighboringChainsElements = new List<List<GameObject>>();
+
+    void Start()
+    {
+        GMInstance = GameMaster.Instance;
+    }
 
     public String CreateCycloName(IUPACNameStructureElement namingElement)
     {
@@ -41,6 +48,8 @@ public class IUPACAlgorithm : MonoBehaviour
         return returnString;
     }
 
+    
+
     public String CreateIUPACName(int typeOfConnectionSDT, IUPACNameStructureElement namingElement)
     {
         int lengthOfChain = namingElement.lenghtOfChain;
@@ -48,6 +57,7 @@ public class IUPACAlgorithm : MonoBehaviour
         List<int> longestChainList = namingElement.longestChainList;
         List<string> subtreeNames = CalculateSubNames(subtreeList, longestChainList, false);
 
+        // string[] easyTasks = {"Undecan", "Pentan"}......
 
         string[] startMolecules = { "Methan", "Ethan", "Propan", "Butan", "Pentan", "Hexan", "Heptan", "Octan", "Nonan", "Decan", "Undecan", "Duodecan",
         "Tridecan", "Tetradecan", "Pentadecan", "Hexadecan", "Heptadecan", "Octadecan", "Nonadecan", "Eicosan", "Heneicosan"};
@@ -67,7 +77,7 @@ public class IUPACAlgorithm : MonoBehaviour
 
         if(lengthOfChain < 22)
         {
-            return lengthName += startMolecules[lengthOfChain - 1];
+            lengthName += startMolecules[lengthOfChain - 1];
         }
         else if(lengthOfChain >= 22 && lengthOfChain < 100)
         {
@@ -90,7 +100,33 @@ public class IUPACAlgorithm : MonoBehaviour
             lengthName += "hecta" + suffixes[typeOfConnectionSDT];
         }
 
-        return lengthName;
+        if(GameMaster.Instance.onlyShowTaskName)
+        {
+            if(!lengthName.Equals(GameMaster.Instance.currentEasyTaskToSolve))
+            {
+                GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 82, 90, 255);
+                return GameMaster.Instance.currentEasyTaskToSolve;
+            }
+            else
+            {
+                GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+                GameMaster.Instance.easyTasksSolved++;
+                GameMaster.Instance.easyTaskCounterTextMeshProComponent.text = GameMaster.Instance.easyTasksSolved.ToString() + "/3";
+                if(GameMaster.Instance.easyTasksSolved == 3)
+                {
+                    GameMaster.Instance.easyTaskCounterButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+                    GMInstance.easyTaskButton.interactable = false;
+                }
+                GameMaster.Instance.easyTaskButton.interactable = true;
+                GameMaster.Instance.onlyShowTaskName = false;
+                PlayerPrefs.SetInt("easyTaskScore", GameMaster.Instance.easyTasksSolved);
+                return GameMaster.Instance.currentEasyTaskToSolve;
+            }
+        }
+        else
+        {
+            return lengthName;
+        }
     }
 
     static List<int> CreateList(int length)

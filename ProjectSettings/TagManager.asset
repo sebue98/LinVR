@@ -22,6 +22,7 @@ TagManager:
   - Benzene
   - Visited
   - Instructionboard
+  - TaskDecisionBoard
   layers:
   - Default
   - TransparentFX

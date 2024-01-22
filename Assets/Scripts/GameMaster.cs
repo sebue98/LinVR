@@ -113,6 +113,7 @@ public class GameMaster : MonoBehaviour
     public GameObject benzeneConnectionButtonBoardHorizontal;
     public GameObject benzeneConnectionButtonBoardVertical;
     public GameObject Instuctionboard;
+    public GameObject taskDecisionBoard;
 
     public GameObject instantiatedMolecule;
 
@@ -124,6 +125,8 @@ public class GameMaster : MonoBehaviour
     public bool noRingsInChain = true;
     public bool setShown = true;
     public bool toggleInstructionboard = false;
+    public bool toggleTaskDecisionBoard = false;
+    public bool onlyShowTaskName = false;
     public List<Carbon> carbons;
     public List<GameObject> carbonGameObjects;
     public List<List<GameObject>> tempNeighbourObjects = new List<List<GameObject>>();
@@ -140,14 +143,39 @@ public class GameMaster : MonoBehaviour
     public int benzeneRingIndexCounter = -1;
     public (int, int) platesToRemove = (-1,-1);
 
-    
+    //Definitions for Tasks
+    public Button IUPACNameBoardButton;
+    public bool easyButtonDisabled = false;
+    public bool mediumButtonDisabled = false;
+    public bool hardButtonDisabled = false;
+    public string currentEasyTaskToSolve = "";
+    public string currentMediumTaskToSolve = "";
+    public string currentHardTaskToSolve = "";
+    public int easyTasksSolved = 0;
+    public int mediumTasksSolved = 0;
+    public int hardTasksSolved = 0;
+    public TextMeshProUGUI easyTaskCounterTextMeshProComponent;
+    public TextMeshProUGUI mediumTaskCounterTextMeshProComponent;
+    public TextMeshProUGUI hardTaskCounterTextMeshProComponent;
+    public Button easyTaskButton;
+    public Button mediumTaskButton;
+    public Button hardTaskButton;
+    public Button easyTaskCounterButton;
+    public Button mediumTaskCounterButton;
+    public Button hardTaskCounterButton;
+    public string[] bla = { "Methan", "Ethan", "Propan" };
+    public bool testIfIamStupid = false;
+    //, "Butan", "Pentan", "Hexan", "Heptan", "Octan", "Nonan", "Decan", "Undecan", "Duodecan",
+        //"Tridecan", "Tetradecan", "Pentadecan", "Hexadecan", "Heptadecan", "Octadecan", "Nonadecan", "Eicosan", "Heneicosan"};
+
+
     public static GameMaster Instance
     {
         get { return _instance; }
     }
 
     void Awake()
-    {
+    { 
         if (_instance == null)
         {
             currentState = State.start;
@@ -159,8 +187,10 @@ public class GameMaster : MonoBehaviour
             // Destroy this instance if another one already exists
             Destroy(gameObject);
         }
+        easyTasksSolved = PlayerPrefs.GetInt("easyTaskScore");
         Instuctionboard.SetActive(false);
         numberDecisionBoard.SetActive(false);
+        taskDecisionBoard.SetActive(false);
         benzeneConnectionButtonBoardHorizontal.SetActive(false);
         benzeneConnectionButtonBoardVertical.SetActive(false);
     }
@@ -174,7 +204,6 @@ public class GameMaster : MonoBehaviour
         showDebug = value;
         handRDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out Vector2 posR);
         handRDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out bool pressed);
-
         if (pressed)
         {
             Instuctionboard.SetActive(true);
