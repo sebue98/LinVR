@@ -33,4 +33,37 @@ public class CustomGrid : MonoBehaviour
             gridPositionX = -1.3f;
         }
     }
+
+    public void RebuildGameBoard()
+    {
+        gridSizeY = 10;
+        gridSizeX = 20;
+        GameObject[,] whiteboard = GameMaster.Instance.currentWhiteboard;
+        for (int y = 0; y < gridSizeY; y++)
+        {
+            for (int x = 0; x < gridSizeX; x++)
+            {
+                Destroy(whiteboard[x, y].gameObject);
+            }
+        }
+        count = 0;
+        gridPositionX = -1.3f;
+        gridPositionY = 0.53f;
+        for (int y = 0; y < 10; y++)
+        {
+            for (int x = 0; x < 20; x++)
+            {
+                GameObject temp = Instantiate(spawnField, new Vector3((float)gridPositionX, (float)gridPositionY, 2.7f), Quaternion.identity);
+                temp.name = count.ToString();
+                temp.GetComponent<MoleculePlacer>().positionOfPlateX = x;
+                temp.GetComponent<MoleculePlacer>().positionOfPlateY = y;
+                whiteboard[x, y] = temp;
+                gridPositionX += size;
+                count++;
+            }
+            gridPositionY += size;
+            gridPositionX = -1.3f;
+        }
+    }
 }
+

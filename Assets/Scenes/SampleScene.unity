@@ -1350,6 +1350,7 @@ MonoBehaviour:
   IUPACName: {fileID: 869427431}
   lastMoleculeConnectedTo: {fileID: 0}
   iupac: {fileID: 924236364}
+  customGrid: {fileID: 162414369}
   nodeNumbersOfBenzeneRings: 
   benzeneRingIndexCounter: -1
   IUPACNameBoardButton: {fileID: 828828558}

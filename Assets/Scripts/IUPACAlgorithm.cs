@@ -112,14 +112,16 @@ public class IUPACAlgorithm : MonoBehaviour
                 GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
                 GameMaster.Instance.easyTasksSolved++;
                 GameMaster.Instance.easyTaskCounterTextMeshProComponent.text = GameMaster.Instance.easyTasksSolved.ToString() + "/3";
-                if(GameMaster.Instance.easyTasksSolved == 3)
-                {
-                    GameMaster.Instance.easyTaskCounterButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
-                    GMInstance.easyTaskButton.interactable = false;
-                }
                 GameMaster.Instance.easyTaskButton.interactable = true;
                 GameMaster.Instance.onlyShowTaskName = false;
-                PlayerPrefs.SetInt("easyTaskScore", GameMaster.Instance.easyTasksSolved);
+                if (GameMaster.Instance.easyTasksSolved == 3)
+                {
+                    GameMaster.Instance.easyTaskCounterButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+                    GameMaster.Instance.easyTaskButton.interactable = false;
+                }
+
+                //PlayerPrefs.SetInt("easyTaskScore", GameMaster.Instance.easyTasksSolved);
+                GameMaster.Instance.OnResetDrawingBoard();
                 return GameMaster.Instance.currentEasyTaskToSolve;
             }
         }

@@ -138,6 +138,7 @@ public class GameMaster : MonoBehaviour
     public UndirectedGraph currentMoleculeGraph = new UndirectedGraph();
 
     public IUPACAlgorithm iupac;
+    public CustomGrid customGrid;
     public List<BenzeneObject> benzenObjectsInTree = new List<BenzeneObject>();
     public List<int> nodeNumbersOfBenzeneRings = new List<int>();
     public int benzeneRingIndexCounter = -1;
@@ -164,10 +165,29 @@ public class GameMaster : MonoBehaviour
     public Button mediumTaskCounterButton;
     public Button hardTaskCounterButton;
     public string[] bla = { "Methan", "Ethan", "Propan" };
-    public bool testIfIamStupid = false;
+    public bool whiteBoardRefreshed = false;
     //, "Butan", "Pentan", "Hexan", "Heptan", "Octan", "Nonan", "Decan", "Undecan", "Duodecan",
         //"Tridecan", "Tetradecan", "Pentadecan", "Hexadecan", "Heptadecan", "Octadecan", "Nonadecan", "Eicosan", "Heneicosan"};
 
+
+    public void OnResetDrawingBoard()
+    {
+        namingCounter = 0;
+        numberOfVerticesInTree = 0;
+        spawnablePlates.Clear();
+        carbons.Clear();
+        carbonGameObjects.Clear();
+        tempNeighbourObjects.Clear();
+        currentMoleculeGraph = new UndirectedGraph();
+        benzenObjectsInTree.Clear();
+        nodeNumbersOfBenzeneRings.Clear();
+        customGrid.RebuildGameBoard();
+        benzeneRingIndexCounter = 0;
+        IUPACName.text = "";
+        noRingsInChain = true;
+        instantiatedMolecule = null;
+        whiteBoardRefreshed = true;
+    }
 
     public static GameMaster Instance
     {
@@ -384,6 +404,12 @@ public class GameMaster : MonoBehaviour
 
     public bool SpawnNewMolecule(Transform molculeTransform, Quaternion moleculeQuaternion, int positionOfPlateX, int positionOfPlateY)
     {
+        if(whiteBoardRefreshed)
+        {
+            IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            whiteBoardRefreshed = false;
+        }
+
         setBenzeneBoardActive = false;
         benzeneConnectionButtonBoardHorizontal.SetActive(false);
         benzeneConnectionButtonBoardVertical.SetActive(false);
