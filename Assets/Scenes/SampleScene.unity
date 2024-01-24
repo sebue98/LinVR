@@ -1354,9 +1354,9 @@ MonoBehaviour:
   nodeNumbersOfBenzeneRings: 
   benzeneRingIndexCounter: -1
   IUPACNameBoardButton: {fileID: 828828558}
-  easyButtonDisabled: 0
-  mediumButtonDisabled: 0
-  hardButtonDisabled: 0
+  easyTaskChoosen: 0
+  mediumTaskChoosen: 0
+  hardTaskChoosen: 0
   currentEasyTaskToSolve: 
   currentMediumTaskToSolve: 
   currentHardTaskToSolve: 
@@ -1372,11 +1372,13 @@ MonoBehaviour:
   easyTaskCounterButton: {fileID: 2041330897}
   mediumTaskCounterButton: {fileID: 573218070}
   hardTaskCounterButton: {fileID: 1164389970}
-  bla:
+  easyTasks:
   - Methan
   - Ethan
   - Propan
-  testIfIamStupid: 0
+  mediumTasks: []
+  hardTasks: []
+  whiteBoardRefreshed: 0
 --- !u!1 &288660142
 GameObject:
   m_ObjectHideFlags: 0
@@ -4342,6 +4344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   longestChainGlobal: []
+  breakForBenzeneCannotBeNamed: 0
 --- !u!4 &924236365
 Transform:
   m_ObjectHideFlags: 0
@@ -6558,7 +6561,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1624547070}
         m_TargetAssemblyTypeName: ButtonBoard, Assembly-CSharp
-        m_MethodName: SetNeighbourToConnectToOne
+        m_MethodName: SetMediumTask
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11391,7 +11394,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1624547070}
         m_TargetAssemblyTypeName: ButtonBoard, Assembly-CSharp
-        m_MethodName: SetNeighbourToConnectToOne
+        m_MethodName: SetHardTask
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

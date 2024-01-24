@@ -24,6 +24,7 @@ public class IUPACAlgorithm : MonoBehaviour
 
     public List<GameObject> longestChainGlobal = new List<GameObject>();
     public List<List<GameObject>> neighboringChainsElements = new List<List<GameObject>>();
+    public bool breakForBenzeneCannotBeNamed = false;
 
     void Start()
     {
@@ -102,28 +103,78 @@ public class IUPACAlgorithm : MonoBehaviour
 
         if(GameMaster.Instance.onlyShowTaskName)
         {
-            if(!lengthName.Equals(GameMaster.Instance.currentEasyTaskToSolve))
+            if(GameMaster.Instance.easyTaskChoosen)
             {
-                GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 82, 90, 255);
-                return GameMaster.Instance.currentEasyTaskToSolve;
-            }
-            else
-            {
-                GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
-                GameMaster.Instance.easyTasksSolved++;
-                GameMaster.Instance.easyTaskCounterTextMeshProComponent.text = GameMaster.Instance.easyTasksSolved.ToString() + "/3";
-                GameMaster.Instance.easyTaskButton.interactable = true;
-                GameMaster.Instance.onlyShowTaskName = false;
-                if (GameMaster.Instance.easyTasksSolved == 3)
+                if (!lengthName.Equals(GameMaster.Instance.currentEasyTaskToSolve))
                 {
-                    GameMaster.Instance.easyTaskCounterButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
-                    GameMaster.Instance.easyTaskButton.interactable = false;
+                    GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 82, 90, 255);
+                    return GameMaster.Instance.currentEasyTaskToSolve;
                 }
-
-                //PlayerPrefs.SetInt("easyTaskScore", GameMaster.Instance.easyTasksSolved);
-                GameMaster.Instance.OnResetDrawingBoard();
-                return GameMaster.Instance.currentEasyTaskToSolve;
+                else
+                {
+                    GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+                    GameMaster.Instance.easyTasksSolved++;
+                    GameMaster.Instance.easyTaskCounterTextMeshProComponent.text = GameMaster.Instance.easyTasksSolved.ToString() + "/3";
+                    GameMaster.Instance.easyTaskButton.interactable = true;
+                    GameMaster.Instance.onlyShowTaskName = false;
+                    if (GameMaster.Instance.easyTasksSolved == 3)
+                    {
+                        GameMaster.Instance.easyTaskCounterButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+                        GameMaster.Instance.easyTaskButton.interactable = false;
+                    }
+                    GameMaster.Instance.OnResetDrawingBoard();
+                    return GameMaster.Instance.currentEasyTaskToSolve;
+                }
             }
+
+            if(GameMaster.Instance.mediumTaskChoosen)
+            {
+                if (!lengthName.Equals(GameMaster.Instance.currentMediumTaskToSolve))
+                {
+                    GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 82, 90, 255);
+                    return GameMaster.Instance.currentMediumTaskToSolve;
+                }
+                else
+                {
+                    GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+                    GameMaster.Instance.mediumTasksSolved++;
+                    GameMaster.Instance.mediumTaskCounterTextMeshProComponent.text = GameMaster.Instance.mediumTasksSolved.ToString() + "/3";
+                    GameMaster.Instance.mediumTaskButton.interactable = true;
+                    GameMaster.Instance.onlyShowTaskName = false;
+                    if (GameMaster.Instance.mediumTasksSolved == 3)
+                    {
+                        GameMaster.Instance.mediumTaskCounterButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+                        GameMaster.Instance.mediumTaskButton.interactable = false;
+                    }
+                    GameMaster.Instance.OnResetDrawingBoard();
+                    return GameMaster.Instance.currentMediumTaskToSolve;
+                }
+            }
+
+            if(GameMaster.Instance.hardTaskChoosen)
+            {
+                if (!lengthName.Equals(GameMaster.Instance.currentHardTaskToSolve))
+                {
+                    GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 82, 90, 255);
+                    return GameMaster.Instance.currentHardTaskToSolve;
+                }
+                else
+                {
+                    GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+                    GameMaster.Instance.hardTasksSolved++;
+                    GameMaster.Instance.hardTaskCounterTextMeshProComponent.text = GameMaster.Instance.hardTasksSolved.ToString() + "/3";
+                    GameMaster.Instance.hardTaskButton.interactable = true;
+                    GameMaster.Instance.onlyShowTaskName = false;
+                    if (GameMaster.Instance.hardTasksSolved == 3)
+                    {
+                        GameMaster.Instance.hardTaskCounterButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+                        GameMaster.Instance.hardTaskButton.interactable = false;
+                    }
+                    GameMaster.Instance.OnResetDrawingBoard();
+                    return GameMaster.Instance.currentHardTaskToSolve;
+                }
+            }
+            return lengthName;
         }
         else
         {
@@ -299,6 +350,18 @@ public class IUPACAlgorithm : MonoBehaviour
             {
                 foreach(var benzene in GameMaster.Instance.benzenObjectsInTree)
                 {
+                    foreach (var subtree in subtreeList)
+                    {
+                        foreach (var node in subtree.nodeList)
+                        {
+                            if (node == benzene.parentNodeInChain)
+                            {
+                                breakForBenzeneCannotBeNamed = true;
+                            }
+                        }
+                    }
+                    if (breakForBenzeneCannotBeNamed)
+                        break;
                     int numberForNaming = integersForNamingList[longestChainList.IndexOf(benzene.parentNodeInChain)];
                     if (!nameAndPositionsOfSubstituent.ContainsKey("Cyclohexyl"))
                     {
@@ -312,7 +375,7 @@ public class IUPACAlgorithm : MonoBehaviour
                     }
                 }
             }
-
+            breakForBenzeneCannotBeNamed = false;
             foreach (var substituent in nameAndPositionsOfSubstituent)
             {
                 if (substituent.Value.Count > 1)
@@ -368,6 +431,18 @@ public class IUPACAlgorithm : MonoBehaviour
             {
                 foreach (var benzene in GameMaster.Instance.benzenObjectsInTree)
                 {
+                    foreach(var subtree in subtreeList)
+                    {
+                        foreach(var node in subtree.nodeList)
+                        {
+                            if(node == benzene.parentNodeInChain)
+                            {
+                                breakForBenzeneCannotBeNamed = true;
+                            }
+                        }
+                    }
+                    if (breakForBenzeneCannotBeNamed)
+                        break;
                     int numberForNaming = integersForNamingList[longestChainList.IndexOf(benzene.parentNodeInChain)];
                     if (!nameAndPositionsOfSubstituent.ContainsKey("Cyclohexyl"))
                     {
@@ -381,7 +456,7 @@ public class IUPACAlgorithm : MonoBehaviour
                     }
                 }
             }
-
+            breakForBenzeneCannotBeNamed = false;
             foreach (var substituent in nameAndPositionsOfSubstituent)
             {
                 if (substituent.Value.Count > 1)

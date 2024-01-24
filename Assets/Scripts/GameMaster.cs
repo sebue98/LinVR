@@ -146,9 +146,9 @@ public class GameMaster : MonoBehaviour
 
     //Definitions for Tasks
     public Button IUPACNameBoardButton;
-    public bool easyButtonDisabled = false;
-    public bool mediumButtonDisabled = false;
-    public bool hardButtonDisabled = false;
+    public bool easyTaskChoosen = false;
+    public bool mediumTaskChoosen = false;
+    public bool hardTaskChoosen = false;
     public string currentEasyTaskToSolve = "";
     public string currentMediumTaskToSolve = "";
     public string currentHardTaskToSolve = "";
@@ -164,7 +164,9 @@ public class GameMaster : MonoBehaviour
     public Button easyTaskCounterButton;
     public Button mediumTaskCounterButton;
     public Button hardTaskCounterButton;
-    public string[] bla = { "Methan", "Ethan", "Propan" };
+    public string[] easyTasks = { "Methan", "Ethan", "Propan" };
+    public string[] mediumTasks = { };
+    public string[] hardTasks = { };
     public bool whiteBoardRefreshed = false;
     //, "Butan", "Pentan", "Hexan", "Heptan", "Octan", "Nonan", "Decan", "Undecan", "Duodecan",
         //"Tridecan", "Tetradecan", "Pentadecan", "Hexadecan", "Heptadecan", "Octadecan", "Nonadecan", "Eicosan", "Heneicosan"};
@@ -408,6 +410,9 @@ public class GameMaster : MonoBehaviour
         {
             IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
             whiteBoardRefreshed = false;
+            easyTaskChoosen = false;
+            mediumTaskChoosen = false;
+            hardTaskChoosen = false;
         }
 
         setBenzeneBoardActive = false;
