@@ -46,6 +46,7 @@ public class IUPACAlgorithm : MonoBehaviour
         if(subTreeNames.Count != 0)
             returnString.Substring(returnString.Length - 2);
         returnString += "Cyclohexane";
+        GameMaster.Instance.namingStringsForTesting.Add(returnString);
         return returnString;
     }
 
@@ -58,8 +59,6 @@ public class IUPACAlgorithm : MonoBehaviour
         List<int> longestChainList = namingElement.longestChainList;
         List<string> subtreeNames = CalculateSubNames(subtreeList, longestChainList, false);
 
-        // string[] easyTasks = {"Undecan", "Pentan"}......
-
         string[] startMolecules = { "Methan", "Ethan", "Propan", "Butan", "Pentan", "Hexan", "Heptan", "Octan", "Nonan", "Decan", "Undecan", "Duodecan",
         "Tridecan", "Tetradecan", "Pentadecan", "Hexadecan", "Heptadecan", "Octadecan", "Nonadecan", "Eicosan", "Heneicosan"};
         string[] prefixes = {"", "Hen", "Do", "Tri", "Tetra", "Penta", "Hexa", "Hepta", "Octa", "Nona" }; //Will only be used for molecules with size > 21
@@ -69,11 +68,18 @@ public class IUPACAlgorithm : MonoBehaviour
         string lengthName = "";
         if(subtreeNames.Count > 0)
         {
+            for(int i = 0; i < subtreeNames.Count-1; i++)
+            {
+                lengthName += subtreeNames[i] + "-";
+            }
+            lengthName += subtreeNames[subtreeNames.Count - 1];
+            /*
             foreach (string name in subtreeNames)
             {
                 lengthName += name + "-";
             }
             lengthName.Substring(lengthName.Length - 2);
+            */
         }
 
         if(lengthOfChain < 22)
@@ -178,6 +184,7 @@ public class IUPACAlgorithm : MonoBehaviour
         }
         else
         {
+            GameMaster.Instance.namingStringsForTesting.Add(lengthName);
             return lengthName;
         }
     }

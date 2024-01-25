@@ -31,6 +31,7 @@ public class ButtonBoard : MonoBehaviour
     public Button easyTaskButton;
     public Button mediumTaskButton;
     public Button hardTaskButton;
+    public Button SkipTaskButton;
 
 
     public Slider benzeneConnectionSlider;
@@ -249,14 +250,14 @@ public class ButtonBoard : MonoBehaviour
 
     public void SetEasyTask()
     {
+        GameMaster.Instance.OnResetDrawingBoard();
         GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-        int easyNumber = GetRandomIndex(GameMaster.Instance.easyTasks.Length);
+        int easyNumber = GetRandomIndex(GameMaster.Instance.easyTasks.Count);
         while(lastEasyTaskNumber.Contains(easyNumber))
-            easyNumber = GetRandomIndex(GameMaster.Instance.easyTasks.Length);
+            easyNumber = GetRandomIndex(GameMaster.Instance.easyTasks.Count);
 
         lastEasyTaskNumber.Add(easyNumber);
         GameMaster.Instance.currentEasyTaskToSolve = GameMaster.Instance.easyTasks[easyNumber];
-        Debug.Log(GameMaster.Instance.currentEasyTaskToSolve);
         IUPACNameBoardTextMeshProComponent.text = GameMaster.Instance.currentEasyTaskToSolve;
         GameMaster.Instance.onlyShowTaskName = true;
         easyTaskButton.interactable = false;
@@ -264,14 +265,14 @@ public class ButtonBoard : MonoBehaviour
     }
     public void SetMediumTask()
     {
+        GameMaster.Instance.OnResetDrawingBoard();
         GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-        int mediumNumber = GetRandomIndex(GameMaster.Instance.mediumTasks.Length);
+        int mediumNumber = GetRandomIndex(GameMaster.Instance.mediumTasks.Count);
         while (lastMediumTaskNumber.Contains(mediumNumber))
-            mediumNumber = GetRandomIndex(GameMaster.Instance.mediumTasks.Length);
+            mediumNumber = GetRandomIndex(GameMaster.Instance.mediumTasks.Count);
 
         lastMediumTaskNumber.Add(mediumNumber);
         GameMaster.Instance.currentMediumTaskToSolve = GameMaster.Instance.mediumTasks[mediumNumber];
-        Debug.Log(GameMaster.Instance.currentMediumTaskToSolve);
         IUPACNameBoardTextMeshProComponent.text = GameMaster.Instance.currentMediumTaskToSolve;
         GameMaster.Instance.onlyShowTaskName = true;
         mediumTaskButton.interactable = false;
@@ -279,6 +280,7 @@ public class ButtonBoard : MonoBehaviour
     }
     public void SetHardTask()
     {
+        GameMaster.Instance.OnResetDrawingBoard();
         GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         int hardNumber = GetRandomIndex(GameMaster.Instance.hardTasks.Length);
         while (lastHardTaskNumber.Contains(hardNumber))
@@ -286,10 +288,54 @@ public class ButtonBoard : MonoBehaviour
 
         lastHardTaskNumber.Add(hardNumber);
         GameMaster.Instance.currentHardTaskToSolve = GameMaster.Instance.hardTasks[hardNumber];
-        Debug.Log(GameMaster.Instance.currentHardTaskToSolve);
         IUPACNameBoardTextMeshProComponent.text = GameMaster.Instance.currentHardTaskToSolve;
         GameMaster.Instance.onlyShowTaskName = true;
         hardTaskButton.interactable = false;
         GameMaster.Instance.hardTaskChoosen = true;
+    }
+
+    public void SkipTask()
+    {
+        if(GameMaster.Instance.easyTaskChoosen)
+        {
+            GameMaster.Instance.easyTasksSolved++;
+            GameMaster.Instance.easyTaskCounterTextMeshProComponent.text = GameMaster.Instance.easyTasksSolved.ToString() + "/3";
+            GameMaster.Instance.easyTaskButton.interactable = true;
+            GameMaster.Instance.onlyShowTaskName = false;
+            if (GameMaster.Instance.easyTasksSolved == 3)
+            {
+                GameMaster.Instance.easyTaskCounterButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+                GameMaster.Instance.easyTaskButton.interactable = false;
+            }
+        }
+        if (GameMaster.Instance.mediumTaskChoosen)
+        {
+            GameMaster.Instance.mediumTasksSolved++;
+            GameMaster.Instance.mediumTaskCounterTextMeshProComponent.text = GameMaster.Instance.mediumTasksSolved.ToString() + "/3";
+            GameMaster.Instance.mediumTaskButton.interactable = true;
+            GameMaster.Instance.onlyShowTaskName = false;
+            if (GameMaster.Instance.mediumTasksSolved == 3)
+            {
+                GameMaster.Instance.mediumTaskCounterButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+                GameMaster.Instance.mediumTaskButton.interactable = false;
+            }
+        }
+        if (GameMaster.Instance.hardTaskChoosen)
+        {
+            GameMaster.Instance.hardTasksSolved++;
+            GameMaster.Instance.hardTaskCounterTextMeshProComponent.text = GameMaster.Instance.hardTasksSolved.ToString() + "/3";
+            GameMaster.Instance.hardTaskButton.interactable = true;
+            GameMaster.Instance.onlyShowTaskName = false;
+            if (GameMaster.Instance.hardTasksSolved == 3)
+            {
+                GameMaster.Instance.hardTaskCounterButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+                GameMaster.Instance.hardTaskButton.interactable = false;
+            }
+        }
+        GameMaster.Instance.easyTaskChoosen = false;
+        GameMaster.Instance.mediumTaskChoosen = false;
+        GameMaster.Instance.hardTaskChoosen = false;
+        GameMaster.Instance.OnResetDrawingBoard();
+        GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
     }
 }

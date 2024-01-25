@@ -136,6 +136,7 @@ public class GameMaster : MonoBehaviour
     public GameObject lastMoleculeConnectedTo;
     public GameObject[,] currentWhiteboard = new GameObject[20,10];
     public UndirectedGraph currentMoleculeGraph = new UndirectedGraph();
+    public List<string> namingStringsForTesting = new List<string>();
 
     public IUPACAlgorithm iupac;
     public CustomGrid customGrid;
@@ -164,11 +165,13 @@ public class GameMaster : MonoBehaviour
     public Button easyTaskCounterButton;
     public Button mediumTaskCounterButton;
     public Button hardTaskCounterButton;
-    public string[] easyTasks = { "Methan", "Ethan", "Propan" };
-    public string[] mediumTasks = { };
+    public readonly List<string> easyTasks = new List<string>{"Methan", "Ethan", "Propan", "Butan", "Pentan", "Hexan", "Heptan", "Octan", "Nonan", "Decan", "Undecan", "Duodecan"};
+    public readonly List<string> mediumTasks = new List<string>{"2-MethylPropan" , "2-MethylButan", "2-MethylPentan" , "3-MethylPentan" , "3-EthylPentan" , "2-MethylHexan" , "3-MethylHexan", "3-EthylHexan" ,
+        "2-MethylHeptan", "3-MethylHeptan", "3-EthylHeptan", "4-MethylHeptan", "4-PropylHeptan", "2-MethylNonan", "3-MethylNonan", "3-EthylNonan", "4-MethylNonan",
+        "4-EthylNonan", "4-PropylNonan", "5-MethylNonan", "5-EthylNonan", "5-PropylNonan", "5-ButylNonan"};
     public string[] hardTasks = { };
     public bool whiteBoardRefreshed = false;
-    //, "Butan", "Pentan", "Hexan", "Heptan", "Octan", "Nonan", "Decan", "Undecan", "Duodecan",
+    //, 
         //"Tridecan", "Tetradecan", "Pentadecan", "Hexadecan", "Heptadecan", "Octadecan", "Nonadecan", "Eicosan", "Heneicosan"};
 
 
@@ -209,7 +212,6 @@ public class GameMaster : MonoBehaviour
             // Destroy this instance if another one already exists
             Destroy(gameObject);
         }
-        easyTasksSolved = PlayerPrefs.GetInt("easyTaskScore");
         Instuctionboard.SetActive(false);
         numberDecisionBoard.SetActive(false);
         taskDecisionBoard.SetActive(false);
