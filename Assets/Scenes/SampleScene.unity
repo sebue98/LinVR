@@ -190,6 +190,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Right Hand Model
       objectReference: {fileID: 0}
+    - target: {fileID: 5686134208192617028, guid: 1fd3a7c43c8190f4d8c167ebde694364,
+        type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 1ae9aefe37a62de429ddc2edd1ca36f3, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1fd3a7c43c8190f4d8c167ebde694364, type: 3}
 --- !u!1 &107408532
@@ -1374,13 +1379,7 @@ MonoBehaviour:
   easyTaskCounterButton: {fileID: 2041330897}
   mediumTaskCounterButton: {fileID: 573218070}
   hardTaskCounterButton: {fileID: 1164389970}
-  easyTasks:
-  - Methan
-  - Ethan
-  - Propan
-  mediumTasks: []
-  hardTasks: []
-  whiteBoardRefreshed: 0
+  refreshAfterSuccesfullTask: 0
 --- !u!1 &288660142
 GameObject:
   m_ObjectHideFlags: 0
@@ -4388,6 +4387,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 990518018}
     m_Modifications:
+    - target: {fileID: 109434732388006827, guid: 65847589f926b734d9eaed6e25f0046b,
+        type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 1ae9aefe37a62de429ddc2edd1ca36f3, type: 3}
     - target: {fileID: 109434732395284509, guid: 65847589f926b734d9eaed6e25f0046b,
         type: 3}
       propertyPath: m_Name
@@ -13745,24 +13749,110 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Here is a simple list of rules to follow to name the compounds you will
-    be given in this game:\r\n1)  Determine the longest carbon chain. This chain
-    is called the parent chain.\r\n\n2) Identify all substituents (groups attached
-    to the parent chain).\r\n\r\n3) Number the carbons of the parent chain from the
-    end that gives the substituents the lowest numbers. If two or more side chains
-    are in equivalent positions, the lowest number is assigned to the one that comes
-    first in the name.\r\n\r\n4) The position of each point at which the substituent
-    occurs is indicated. In addition, the number of occurrences of the substituent
-    group is indicated by a prefix - 2 - when positioned at the second carbon, 3
-    - when positioned at the third, etc.\r\n\r\n5) If there are two or more different
-    substituents, they are listed in alphabetical order using the base name (the
-    prefixes are ignored).\r\n\r\n6) If chains of the same length compete for selection
-    as the parent chain, the choice is made in order:\r\n\ta) the chain with the
-    greatest number of side chains.\r\n\tb) the chain whose substituents have the
-    smallest number.\r\n\tc) the chain with the largest number of carbon atoms in
-    the smaller side chain.\r\n\td) the chain with the least branched side chains.\r\n6)
-    A cyclic (ring-shaped) hydrocarbon is designated by the prefix cyclo-, which
-    is placed directly in front of the name. \r\n\r\n\r\nExample:\r\n\r\n"
+  m_text: '1) Naming Basic Carbon Chains:
+
+
+    - Identify the Longest Chain:
+
+    --
+    Find the longest continuous chain of carbon atoms in the molecule.
+
+
+    - Determine
+    the Parent Name:
+
+    -- Based on the number of carbon atoms in the longest chain,
+    assign the parent name using the root of the alkane series.
+
+    -- For example,
+    a 3-carbon chain is propane.
+
+
+    - Number the Chain:
+
+    -- Number the carbon
+    atoms in the chain consecutively, starting from the end that gives the substituents
+    the lowest possible numbers.
+
+
+    - Name Substituents:
+
+    -- If there are
+    any substituents (other functional groups or atoms), name and number them.
+
+    --
+    For example, a methyl group on the second carbon is 2-methyl.
+
+
+    - Compile
+    the Name:
+
+    -- Combine the parent name, substituent names, and numbers to
+    form the complete IUPAC name.
+
+
+    2) Naming Carbon Chains with Substituents:
+
+
+    -
+    Identify the Longest Chain:
+
+    -- Follow steps 1-3 for basic carbon chains.
+
+
+    -
+    Name and Number Substituents:
+
+    -- Identify and name any substituents attached
+    to the main chain.
+
+    -- Number the carbon chain to give the substituents the
+    lowest possible numbers.
+
+
+    - Compile the Name:
+
+    -- Combine the parent
+    name, substituent names, and numbers to form the complete IUPAC name.
+
+
+    3)
+    Naming Carbon Chains with Cyclo Hydrocarbons:
+
+
+    - Identify the Cyclo Chain:
+
+    --
+    Recognize the presence of a cycloalkane ring in the molecule.
+
+
+    - Determine
+    the Ring Size:
+
+    -- Identify the number of carbon atoms in the cycloalkane
+    ring.
+
+
+    - Name the Cycloalkane:
+
+    -- Name the cycloalkane as if it were
+    an open-chain alkane but using the prefix "cyclo."
+
+    -- For example, a cyclopropane
+    ring is a three-membered ring.
+
+
+    - Name and Number Substituents:
+
+    --
+    If there are substituents on the cycloalkane, name and number them as with basic
+    carbon chains.
+
+
+    - Compile the Name:
+
+    -- Combine the cycloalkane name,
+    substituent names, and numbers to form the complete IUPAC name.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

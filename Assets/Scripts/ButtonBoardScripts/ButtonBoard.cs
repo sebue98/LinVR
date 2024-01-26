@@ -199,18 +199,10 @@ public class ButtonBoard : MonoBehaviour
 
     public void SetDeleteMolecule()
     {
-        /*
-        if(GameMaster.Instance.toggleTaskDecisionBoard)
-        {
-            GameMaster.Instance.easyTaskCounterTextMeshProComponent.text = GameMaster.Instance.easyTasksSolved.ToString()+ "/3";
-            GameMaster.Instance.mediumTaskCounterTextMeshProComponent.text = "0/3";
-            GameMaster.Instance.hardTaskCounterTextMeshProComponent.text = "0/3";
-        } */
-        IUPACNameBoardTextMeshProComponent.text = "";
-        GameMaster.Instance.OnResetDrawingBoard();
-        //int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        //SceneManager.LoadScene(currentSceneIndex);
-        //GameMaster.Instance.currentState = State.Delete;
+        if (GameMaster.Instance.easyTaskChoosen || GameMaster.Instance.mediumTaskChoosen || GameMaster.Instance.hardTaskChoosen)
+            GameMaster.Instance.OnResetDrawingBoardWhenTaskActive();
+        else
+            GameMaster.Instance.OnResetDrawingBoard(true);
     }
 
     public void SetBenzene()
@@ -231,12 +223,12 @@ public class ButtonBoard : MonoBehaviour
         GameMaster.Instance.taskDecisionBoard.SetActive(GameMaster.Instance.toggleTaskDecisionBoard);
         if(GameMaster.Instance.toggleTaskDecisionBoard)
         {
-            taskDecisionBoardTextMeshProComponent.text = "Hide Naming Task";
+            taskDecisionBoardTextMeshProComponent.text = "Stop Naming Task";
         }
         else
         {
             taskDecisionBoardTextMeshProComponent.text = "Start Naming Task";
-            GameMaster.Instance.OnResetDrawingBoard();
+            GameMaster.Instance.OnResetDrawingBoard(true);
             IUPACNameBoardTextMeshProComponent.text = "";
             GameMaster.Instance.currentState = State.Delete;
         }
@@ -250,7 +242,10 @@ public class ButtonBoard : MonoBehaviour
 
     public void SetEasyTask()
     {
-        GameMaster.Instance.OnResetDrawingBoard();
+        if (GameMaster.Instance.mediumTaskChoosen || GameMaster.Instance.hardTaskChoosen)
+            GameMaster.Instance.OnResetDrawingBoardWhenOtherTaskActive();
+        else
+            GameMaster.Instance.OnResetDrawingBoardWhenTaskActive();
         GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         int easyNumber = GetRandomIndex(GameMaster.Instance.easyTasks.Count);
         while(lastEasyTaskNumber.Contains(easyNumber))
@@ -265,7 +260,11 @@ public class ButtonBoard : MonoBehaviour
     }
     public void SetMediumTask()
     {
-        GameMaster.Instance.OnResetDrawingBoard();
+        if (GameMaster.Instance.easyTaskChoosen || GameMaster.Instance.hardTaskChoosen)
+            GameMaster.Instance.OnResetDrawingBoardWhenOtherTaskActive();
+        else
+            GameMaster.Instance.OnResetDrawingBoardWhenTaskActive();
+        GameMaster.Instance.OnResetDrawingBoard(false);
         GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         int mediumNumber = GetRandomIndex(GameMaster.Instance.mediumTasks.Count);
         while (lastMediumTaskNumber.Contains(mediumNumber))
@@ -280,11 +279,15 @@ public class ButtonBoard : MonoBehaviour
     }
     public void SetHardTask()
     {
-        GameMaster.Instance.OnResetDrawingBoard();
+        if (GameMaster.Instance.mediumTaskChoosen || GameMaster.Instance.mediumTaskChoosen)
+            GameMaster.Instance.OnResetDrawingBoardWhenOtherTaskActive();
+        else
+            GameMaster.Instance.OnResetDrawingBoardWhenTaskActive();
+        GameMaster.Instance.OnResetDrawingBoard(false);
         GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-        int hardNumber = GetRandomIndex(GameMaster.Instance.hardTasks.Length);
+        int hardNumber = GetRandomIndex(GameMaster.Instance.hardTasks.Count);
         while (lastHardTaskNumber.Contains(hardNumber))
-            hardNumber = GetRandomIndex(GameMaster.Instance.hardTasks.Length);
+            hardNumber = GetRandomIndex(GameMaster.Instance.hardTasks.Count);
 
         lastHardTaskNumber.Add(hardNumber);
         GameMaster.Instance.currentHardTaskToSolve = GameMaster.Instance.hardTasks[hardNumber];
@@ -335,7 +338,7 @@ public class ButtonBoard : MonoBehaviour
         GameMaster.Instance.easyTaskChoosen = false;
         GameMaster.Instance.mediumTaskChoosen = false;
         GameMaster.Instance.hardTaskChoosen = false;
-        GameMaster.Instance.OnResetDrawingBoard();
+        GameMaster.Instance.OnResetDrawingBoard(true);
         GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
     }
 }

@@ -73,13 +73,6 @@ public class IUPACAlgorithm : MonoBehaviour
                 lengthName += subtreeNames[i] + "-";
             }
             lengthName += subtreeNames[subtreeNames.Count - 1];
-            /*
-            foreach (string name in subtreeNames)
-            {
-                lengthName += name + "-";
-            }
-            lengthName.Substring(lengthName.Length - 2);
-            */
         }
 
         if(lengthOfChain < 22)
@@ -128,7 +121,8 @@ public class IUPACAlgorithm : MonoBehaviour
                         GameMaster.Instance.easyTaskCounterButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
                         GameMaster.Instance.easyTaskButton.interactable = false;
                     }
-                    GameMaster.Instance.OnResetDrawingBoard();
+                    GameMaster.Instance.OnResetDrawingBoard(false);
+                    GameMaster.Instance.refreshAfterSuccesfullTask = true;
                     return GameMaster.Instance.currentEasyTaskToSolve;
                 }
             }
@@ -152,7 +146,8 @@ public class IUPACAlgorithm : MonoBehaviour
                         GameMaster.Instance.mediumTaskCounterButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
                         GameMaster.Instance.mediumTaskButton.interactable = false;
                     }
-                    GameMaster.Instance.OnResetDrawingBoard();
+                    GameMaster.Instance.OnResetDrawingBoard(false);
+                    GameMaster.Instance.refreshAfterSuccesfullTask = true;
                     return GameMaster.Instance.currentMediumTaskToSolve;
                 }
             }
@@ -176,11 +171,12 @@ public class IUPACAlgorithm : MonoBehaviour
                         GameMaster.Instance.hardTaskCounterButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
                         GameMaster.Instance.hardTaskButton.interactable = false;
                     }
-                    GameMaster.Instance.OnResetDrawingBoard();
+                    GameMaster.Instance.OnResetDrawingBoard(false);
+                    GameMaster.Instance.refreshAfterSuccesfullTask = true;
                     return GameMaster.Instance.currentHardTaskToSolve;
                 }
             }
-            return lengthName;
+            return "Funktion falsch abgebogen";
         }
         else
         {

@@ -169,13 +169,48 @@ public class GameMaster : MonoBehaviour
     public readonly List<string> mediumTasks = new List<string>{"2-MethylPropan" , "2-MethylButan", "2-MethylPentan" , "3-MethylPentan" , "3-EthylPentan" , "2-MethylHexan" , "3-MethylHexan", "3-EthylHexan" ,
         "2-MethylHeptan", "3-MethylHeptan", "3-EthylHeptan", "4-MethylHeptan", "4-PropylHeptan", "2-MethylNonan", "3-MethylNonan", "3-EthylNonan", "4-MethylNonan",
         "4-EthylNonan", "4-PropylNonan", "5-MethylNonan", "5-EthylNonan", "5-PropylNonan", "5-ButylNonan"};
-    public string[] hardTasks = { };
-    public bool whiteBoardRefreshed = false;
+    public readonly List<string> hardTasks = new List<string>{ "Cyclohexane", "1-Ethyl-Cyclohexane", "1,3,-DiEthyl-Cyclohexane", "1-Ethyl-4-Methyl-Cyclohexane", "3-Butyl-1-Pentyl-Cyclohexane", "3-Ethyl-5-PropylNonan",
+                "4-Ethyl-2-MethylHexan", "2,5,-DiMethylHexan", "3,5,-DiEthylHeptan", "3-Methyl-5-PropylOctan", "3,3,-DiEthylOctan", "5-Cyclohexyl-3-MethylOctan", "5-Cyclohexyl-4-EthylOctan"};
+    public bool refreshAfterSuccesfullTask = false;
     //, 
         //"Tridecan", "Tetradecan", "Pentadecan", "Hexadecan", "Heptadecan", "Octadecan", "Nonadecan", "Eicosan", "Heneicosan"};
 
+    public void OnResetDrawingBoardWhenOtherTaskActive()
+    {
+        if(easyTaskChoosen)
+        {
+            if(easyTasksSolved < 3)
+                easyTaskButton.interactable = true;
+            easyTaskChoosen = false;
+        }
+        if(mediumTaskChoosen)
+        {
+            if(mediumTasksSolved < 3)
+                mediumTaskButton.interactable = true;
+            mediumTaskChoosen = false;
+        }
+        if(hardTaskChoosen)
+        {
+            if(hardTasksSolved < 3)
+                hardTaskButton.interactable = true;
+            hardTaskChoosen = false;
+        }
 
-    public void OnResetDrawingBoard()
+        namingCounter = 0;
+        numberOfVerticesInTree = 0;
+        spawnablePlates.Clear();
+        carbons.Clear();
+        carbonGameObjects.Clear();
+        tempNeighbourObjects.Clear();
+        currentMoleculeGraph = new UndirectedGraph();
+        benzenObjectsInTree.Clear();
+        nodeNumbersOfBenzeneRings.Clear();
+        customGrid.RebuildGameBoard();
+        benzeneRingIndexCounter = -1;
+        noRingsInChain = true;
+        instantiatedMolecule = null;
+    }
+    public void OnResetDrawingBoardWhenTaskActive()
     {
         namingCounter = 0;
         numberOfVerticesInTree = 0;
@@ -187,11 +222,43 @@ public class GameMaster : MonoBehaviour
         benzenObjectsInTree.Clear();
         nodeNumbersOfBenzeneRings.Clear();
         customGrid.RebuildGameBoard();
-        benzeneRingIndexCounter = 0;
+        benzeneRingIndexCounter = -1;
+        noRingsInChain = true;
+        instantiatedMolecule = null;
+        IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+    }
+
+    public void OnResetDrawingBoard(bool whiteBoardRefresh)
+    {
+        namingCounter = 0;
+        numberOfVerticesInTree = 0;
+        spawnablePlates.Clear();
+        carbons.Clear();
+        carbonGameObjects.Clear();
+        tempNeighbourObjects.Clear();
+        currentMoleculeGraph = new UndirectedGraph();
+        benzenObjectsInTree.Clear();
+        nodeNumbersOfBenzeneRings.Clear();
+        customGrid.RebuildGameBoard();
+        benzeneRingIndexCounter = -1;
         IUPACName.text = "";
         noRingsInChain = true;
         instantiatedMolecule = null;
-        whiteBoardRefreshed = true;
+        easyTaskChoosen = false;
+        mediumTaskChoosen = false;
+        hardTaskChoosen = false;
+        if(easyTasksSolved < 3)
+            easyTaskButton.interactable = true;
+        if(mediumTasksSolved < 3)
+            mediumTaskButton.interactable = true;
+        if(hardTasksSolved < 3)
+            hardTaskButton.interactable = true;
+        onlyShowTaskName = false;
+        if (whiteBoardRefresh)
+        {
+            IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            //whiteBoardRefreshed = false;
+        }
     }
 
     public static GameMaster Instance
@@ -408,15 +475,11 @@ public class GameMaster : MonoBehaviour
 
     public bool SpawnNewMolecule(Transform molculeTransform, Quaternion moleculeQuaternion, int positionOfPlateX, int positionOfPlateY)
     {
-        if(whiteBoardRefreshed)
+        if (refreshAfterSuccesfullTask)
         {
             IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            whiteBoardRefreshed = false;
-            easyTaskChoosen = false;
-            mediumTaskChoosen = false;
-            hardTaskChoosen = false;
+            refreshAfterSuccesfullTask = false;
         }
-
         setBenzeneBoardActive = false;
         benzeneConnectionButtonBoardHorizontal.SetActive(false);
         benzeneConnectionButtonBoardVertical.SetActive(false);
