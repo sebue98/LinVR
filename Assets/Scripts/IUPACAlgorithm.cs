@@ -46,7 +46,36 @@ public class IUPACAlgorithm : MonoBehaviour
         if(subTreeNames.Count != 0)
             returnString.Substring(returnString.Length - 2);
         returnString += "Cyclohexane";
-        GameMaster.Instance.namingStringsForTesting.Add(returnString);
+        //GameMaster.Instance.namingStringsForTesting.Add(returnString);
+
+        if(GameMaster.Instance.onlyShowTaskName)
+        {
+            if (GameMaster.Instance.hardTaskChoosen)
+            {
+                if (!returnString.Equals(GameMaster.Instance.currentHardTaskToSolve))
+                {
+                    GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 82, 90, 255);
+                    return GameMaster.Instance.currentHardTaskToSolve;
+                }
+                else
+                {
+                    GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+                    GameMaster.Instance.hardTasksSolved++;
+                    GameMaster.Instance.hardTaskCounterTextMeshProComponent.text = GameMaster.Instance.hardTasksSolved.ToString() + "/3";
+                    GameMaster.Instance.hardTaskButton.interactable = true;
+                    GameMaster.Instance.onlyShowTaskName = false;
+                    if (GameMaster.Instance.hardTasksSolved == 3)
+                    {
+                        GameMaster.Instance.hardTaskCounterButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+                        GameMaster.Instance.hardTaskButton.interactable = false;
+                    }
+                    GameMaster.Instance.OnResetDrawingBoard(false);
+                    GameMaster.Instance.refreshAfterSuccesfullTask = true;
+                    return GameMaster.Instance.currentHardTaskToSolve;
+                }
+            }
+        }
+       
         return returnString;
     }
 

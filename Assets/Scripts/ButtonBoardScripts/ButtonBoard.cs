@@ -299,8 +299,11 @@ public class ButtonBoard : MonoBehaviour
 
     public void SkipTask()
     {
+        string taskToShow = "";
+        List<(int, int)> solutionToShow = new List<(int, int)>();
         if(GameMaster.Instance.easyTaskChoosen)
         {
+            taskToShow = GameMaster.Instance.currentEasyTaskToSolve;
             GameMaster.Instance.easyTasksSolved++;
             GameMaster.Instance.easyTaskCounterTextMeshProComponent.text = GameMaster.Instance.easyTasksSolved.ToString() + "/3";
             GameMaster.Instance.easyTaskButton.interactable = true;
@@ -339,6 +342,7 @@ public class ButtonBoard : MonoBehaviour
         GameMaster.Instance.mediumTaskChoosen = false;
         GameMaster.Instance.hardTaskChoosen = false;
         GameMaster.Instance.OnResetDrawingBoard(true);
+        GameMaster.Instance.ShowTaskSolution(solutionToShow, taskToShow);
         GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
     }
 }

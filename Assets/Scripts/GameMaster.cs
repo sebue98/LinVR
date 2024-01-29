@@ -78,7 +78,7 @@ public class BenzeneObject
 
 public class GameMaster : MonoBehaviour
 {
-    
+
     private static GameMaster _instance;
     private GameObject moleculeToInstantiate;
     private float gameObjectSizeFactor = 0.55000000000000247500000000001114f;
@@ -134,18 +134,21 @@ public class GameMaster : MonoBehaviour
     public TextMeshProUGUI IUPACName;
 
     public GameObject lastMoleculeConnectedTo;
-    public GameObject[,] currentWhiteboard = new GameObject[20,10];
+    public GameObject[,] currentWhiteboard = new GameObject[20, 10];
     public UndirectedGraph currentMoleculeGraph = new UndirectedGraph();
     public List<string> namingStringsForTesting = new List<string>();
 
     public IUPACAlgorithm iupac;
+    public SolutionsScript solutionScript;
     public CustomGrid customGrid;
     public List<BenzeneObject> benzenObjectsInTree = new List<BenzeneObject>();
     public List<int> nodeNumbersOfBenzeneRings = new List<int>();
     public int benzeneRingIndexCounter = -1;
-    public (int, int) platesToRemove = (-1,-1);
+    public (int, int) platesToRemove = (-1, -1);
 
     //Definitions for Tasks
+    public List<(int, int)> pairListForShowingTaskSolution = new List<(int, int)>{(7,5), (8,5), (9,5), (10,5)};
+    public int tempCountIterations = 0;
     public Button IUPACNameBoardButton;
     public bool easyTaskChoosen = false;
     public bool mediumTaskChoosen = false;
@@ -165,6 +168,7 @@ public class GameMaster : MonoBehaviour
     public Button easyTaskCounterButton;
     public Button mediumTaskCounterButton;
     public Button hardTaskCounterButton;
+    public GameObject instantiatedSolutionsGameObject;
     public readonly List<string> easyTasks = new List<string>{"Methan", "Ethan", "Propan", "Butan", "Pentan", "Hexan", "Heptan", "Octan", "Nonan", "Decan", "Undecan", "Duodecan"};
     public readonly List<string> mediumTasks = new List<string>{"2-MethylPropan" , "2-MethylButan", "2-MethylPentan" , "3-MethylPentan" , "3-EthylPentan" , "2-MethylHexan" , "3-MethylHexan", "3-EthylHexan" ,
         "2-MethylHeptan", "3-MethylHeptan", "3-EthylHeptan", "4-MethylHeptan", "4-PropylHeptan", "2-MethylNonan", "3-MethylNonan", "3-EthylNonan", "4-MethylNonan",
@@ -177,7 +181,8 @@ public class GameMaster : MonoBehaviour
 
     public void OnResetDrawingBoardWhenOtherTaskActive()
     {
-        if(easyTaskChoosen)
+        Destroy(instantiatedSolutionsGameObject);
+        if (easyTaskChoosen)
         {
             if(easyTasksSolved < 3)
                 easyTaskButton.interactable = true;
@@ -212,6 +217,7 @@ public class GameMaster : MonoBehaviour
     }
     public void OnResetDrawingBoardWhenTaskActive()
     {
+        Destroy(instantiatedSolutionsGameObject);
         namingCounter = 0;
         numberOfVerticesInTree = 0;
         spawnablePlates.Clear();
@@ -228,8 +234,20 @@ public class GameMaster : MonoBehaviour
         IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
     }
 
+    public void ShowTaskSolution(List<(int, int)> solutionList, string nameToShow)
+    {
+        if(!nameToShow.Equals(""))
+        {
+            IUPACName.text = nameToShow;
+            customGrid.ShowTaskSolutionOnGameBoard(solutionScript.pairListForShowingEasyTaskSolution[easyTasks.IndexOf(nameToShow)]);
+            instantiatedSolutionsGameObject = Instantiate(solutionScript.easySolutionGameObjects[easyTasks.IndexOf(nameToShow)]);
+            setShown = true;
+        }
+    }
+
     public void OnResetDrawingBoard(bool whiteBoardRefresh)
     {
+        Destroy(instantiatedSolutionsGameObject);
         namingCounter = 0;
         numberOfVerticesInTree = 0;
         spawnablePlates.Clear();
@@ -297,6 +315,14 @@ public class GameMaster : MonoBehaviour
         handRDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out bool pressed);
         if (pressed)
         {
+            if(tempCountIterations < carbonGameObjects.Count())
+            {
+                foreach (var carbon in carbonGameObjects)
+                {
+                    pairListForShowingTaskSolution.Add((carbon.GetComponent<Carbon>().positionXOnWhiteboard, carbon.GetComponent<Carbon>().positionYOnWhiteboard));
+                    tempCountIterations++;
+                }
+            }
             Instuctionboard.SetActive(true);
         }
         //Top Condition
