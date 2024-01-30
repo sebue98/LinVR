@@ -3920,7 +3920,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 819448299110662392}
-  - component: {fileID: 1324240995763377379}
   m_Layer: 0
   m_Name: BenzeneHC4
   m_TagString: Benzene
@@ -3949,24 +3948,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1324240995763377379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6808674412563295119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2f422c6637363a40ae8a7c2aecac31a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  carbon1: {fileID: 773677890474546164}
-  carbon2: {fileID: 3667649105769639605}
-  carbon3: {fileID: 7194704634623451975}
-  carbon4: {fileID: 1497454628092223523}
-  carbon5: {fileID: 6280918737486333244}
-  carbon6: {fileID: 3949856413857518590}
 --- !u!1 &6837810288679744531
 GameObject:
   m_ObjectHideFlags: 0

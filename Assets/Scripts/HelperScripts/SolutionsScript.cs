@@ -90,8 +90,50 @@ public class SolutionsScript : MonoBehaviour
     new List<(int, int)> {(5,5), (6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (13,5), (9,6), (9,7), (9,8), (9,9)}, //5-ButylNonan
     };
 
+    public GameObject OneEthylCyclohexane;
+    public GameObject OneThreeDiEthylCyclohexane;
+    public GameObject ThreeButylOnePentylCyclohexane;
+    public GameObject ThreeEthylFivePropylNonan;
+    public GameObject FourEthylTwoMethylHexane;
+    public GameObject TwoFiveDiMethylHexane;
+    public GameObject ThreeFiveDiEthylHeptane;
+    public GameObject ThreeMEthylFivePropylOctane;
+    public GameObject ThreeThreeDiEthylOctane;
+    public GameObject FiveCyclohexylThreeMethylOctane;
+    public GameObject FiveCyclohexylFourEthylOCtane;
+
+    public List<GameObject> hardSolutionGameObjects = new List<GameObject>();
+
+    public List<List<(int, int)>> pairListForShowingHardTaskSolution = new List<List<(int, int)>>
+    {
+        new List<(int, int)> {(9,5), (10,6), (10,4), (11,6), (11,4), (12,5), (8,5), (7,5)}, //1-Ethyl-Cyclohexane
+        new List<(int, int)> {(9,5), (10, 6), (10, 4), (11, 6), (11, 4), (12, 5),(8,5), (7,5), (11,7), (11,8)}, //1,3,-DiEthyl-Cyclohexane
+        new List<(int, int)> {(9,5), (10, 6), (10, 4), (11, 6), (11, 4), (12, 5), (8,5), (7,5), (11,7), (11,8), (6,5), (5,5), (4,5), (10,8), (9,8)}, //3-Butyl-1-Pentyl-Cyclohexane
+        new List<(int, int)> {(5,5), (6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (13,5), (7,4), (7,3), (9,6), (9,7), (9,8)}, //3-Ethyl-5PropylNonan
+        new List<(int, int)> {(6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (7,4), (9,6), (9,7)}, //4-Ethyl-2-MethylHexan
+        new List<(int, int)> {(6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (7,4), (10,6)}, //2,5,-DiMethylHexan
+        new List<(int, int)> {(6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (8,4), (8,3), (10,6), (10,7)}, //3,5,-DiEthylHeptan
+        new List<(int, int)> {(6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (13,5), (8,4), (10,6), (10,7), (10,8)}, //3-Methyl-5-PropylOctan
+        new List<(int, int)> {(6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (13,5), (8,4), (8,3), (8,6), (8,7) }, //3,3,-DiEthylOctan
+        new List<(int, int)> {(6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (13,5), (8,4), (9,7), (11,7), (10,9), (10,6), (9,8), (11,8)}, //5-Cyclohexyl-3-MethylOctan
+        new List<(int, int)> {(6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (13,5), (9,4), (9,3), (9,7), (11,7), (10,9), (10,6), (9,8), (11,8)}, //5-Cyclohexyl-4-EthylOctan
+    };
+
+
     private void Start()
     {
+        hardSolutionGameObjects.Add(OneEthylCyclohexane);
+        hardSolutionGameObjects.Add(OneThreeDiEthylCyclohexane);
+        hardSolutionGameObjects.Add(ThreeButylOnePentylCyclohexane);
+        hardSolutionGameObjects.Add(ThreeEthylFivePropylNonan);
+        hardSolutionGameObjects.Add(FourEthylTwoMethylHexane);
+        hardSolutionGameObjects.Add(TwoFiveDiMethylHexane);
+        hardSolutionGameObjects.Add(ThreeFiveDiEthylHeptane);
+        hardSolutionGameObjects.Add(ThreeMEthylFivePropylOctane);
+        hardSolutionGameObjects.Add(ThreeThreeDiEthylOctane);
+        hardSolutionGameObjects.Add(FiveCyclohexylThreeMethylOctane);
+        hardSolutionGameObjects.Add(FiveCyclohexylFourEthylOCtane);
+
         mediumSolutionGameObjects.Add(TwoMethylPropane);
         mediumSolutionGameObjects.Add(TwoMethylButane);
         mediumSolutionGameObjects.Add(TwoMethylPentane);

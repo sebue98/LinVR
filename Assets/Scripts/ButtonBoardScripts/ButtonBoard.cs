@@ -300,9 +300,11 @@ public class ButtonBoard : MonoBehaviour
     public void SkipTask()
     {
         string taskToShow = "";
+        int taskChooser = 0;
         List<(int, int)> solutionToShow = new List<(int, int)>();
         if(GameMaster.Instance.easyTaskChoosen)
         {
+            taskChooser = 1;
             taskToShow = GameMaster.Instance.currentEasyTaskToSolve;
             GameMaster.Instance.easyTasksSolved++;
             GameMaster.Instance.easyTaskCounterTextMeshProComponent.text = GameMaster.Instance.easyTasksSolved.ToString() + "/3";
@@ -316,6 +318,8 @@ public class ButtonBoard : MonoBehaviour
         }
         if (GameMaster.Instance.mediumTaskChoosen)
         {
+            taskChooser = 2;
+            taskToShow = GameMaster.Instance.currentMediumTaskToSolve;
             GameMaster.Instance.mediumTasksSolved++;
             GameMaster.Instance.mediumTaskCounterTextMeshProComponent.text = GameMaster.Instance.mediumTasksSolved.ToString() + "/3";
             GameMaster.Instance.mediumTaskButton.interactable = true;
@@ -328,6 +332,8 @@ public class ButtonBoard : MonoBehaviour
         }
         if (GameMaster.Instance.hardTaskChoosen)
         {
+            taskChooser = 3;
+            taskToShow = GameMaster.Instance.currentHardTaskToSolve;
             GameMaster.Instance.hardTasksSolved++;
             GameMaster.Instance.hardTaskCounterTextMeshProComponent.text = GameMaster.Instance.hardTasksSolved.ToString() + "/3";
             GameMaster.Instance.hardTaskButton.interactable = true;
@@ -342,7 +348,7 @@ public class ButtonBoard : MonoBehaviour
         GameMaster.Instance.mediumTaskChoosen = false;
         GameMaster.Instance.hardTaskChoosen = false;
         GameMaster.Instance.OnResetDrawingBoard(true);
-        GameMaster.Instance.ShowTaskSolution(solutionToShow, taskToShow);
+        GameMaster.Instance.ShowTaskSolution(solutionToShow, taskToShow, taskChooser);
         GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
     }
 }

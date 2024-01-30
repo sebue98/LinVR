@@ -198,10 +198,9 @@ public class GameMaster : MonoBehaviour
         "5-EthylNonan",
         "5-PropylNonan",
         "5-ButylNonan"};
-    public readonly List<string> hardTasks = new List<string>{ "Cyclohexane",
+    public readonly List<string> hardTasks = new List<string>{ 
         "1-Ethyl-Cyclohexane",
         "1,3,-DiEthyl-Cyclohexane",
-        "1-Ethyl-4-Methyl-Cyclohexane",
         "3-Butyl-1-Pentyl-Cyclohexane",
         "3-Ethyl-5-PropylNonan",
         "4-Ethyl-2-MethylHexan",
@@ -212,8 +211,7 @@ public class GameMaster : MonoBehaviour
         "5-Cyclohexyl-3-MethylOctan",
         "5-Cyclohexyl-4-EthylOctan"};
     public bool refreshAfterSuccesfullTask = false;
-    //, 
-        //"Tridecan", "Tetradecan", "Pentadecan", "Hexadecan", "Heptadecan", "Octadecan", "Nonadecan", "Eicosan", "Heneicosan"};
+
 
     public void OnResetDrawingBoardWhenOtherTaskActive()
     {
@@ -270,13 +268,29 @@ public class GameMaster : MonoBehaviour
         IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
     }
 
-    public void ShowTaskSolution(List<(int, int)> solutionList, string nameToShow)
+    public void ShowTaskSolution(List<(int, int)> solutionList, string nameToShow, int taskChoser)
     {
         if(!nameToShow.Equals(""))
         {
-            IUPACName.text = nameToShow;
-            customGrid.ShowTaskSolutionOnGameBoard(solutionScript.pairListForShowingEasyTaskSolution[easyTasks.IndexOf(nameToShow)]);
-            instantiatedSolutionsGameObject = Instantiate(solutionScript.easySolutionGameObjects[easyTasks.IndexOf(nameToShow)]);
+            if(taskChoser == 1)
+            {
+                IUPACName.text = nameToShow;
+                customGrid.ShowTaskSolutionOnGameBoard(solutionScript.pairListForShowingEasyTaskSolution[easyTasks.IndexOf(nameToShow)]);
+                instantiatedSolutionsGameObject = Instantiate(solutionScript.easySolutionGameObjects[easyTasks.IndexOf(nameToShow)]);
+            }
+            if(taskChoser == 2)
+            {
+                IUPACName.text = nameToShow;
+                customGrid.ShowTaskSolutionOnGameBoard(solutionScript.pairListForShowingMediumTaskSolution[mediumTasks.IndexOf(nameToShow)]);
+                instantiatedSolutionsGameObject = Instantiate(solutionScript.mediumSolutionGameObjects[mediumTasks.IndexOf(nameToShow)]);
+            }
+            if (taskChoser == 3)
+            {
+                IUPACName.text = nameToShow;
+                customGrid.ShowTaskSolutionOnGameBoard(solutionScript.pairListForShowingHardTaskSolution[hardTasks.IndexOf(nameToShow)]);
+                instantiatedSolutionsGameObject = Instantiate(solutionScript.hardSolutionGameObjects[hardTasks.IndexOf(nameToShow)]);
+            }
+
             setShown = true;
         }
     }

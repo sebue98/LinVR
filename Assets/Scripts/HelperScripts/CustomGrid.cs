@@ -59,10 +59,6 @@ public class CustomGrid : MonoBehaviour
             {
                 if(solutionList.Contains((x,y)))
                 {
-                    //GameObject temp = Instantiate(spawnField, new Vector3((float)gridPositionX, (float)gridPositionY, 2.7f), Quaternion.identity);
-                    //Transform trtemp = temp.transform;
-                    //Destroy(temp);
-                    //GameMaster.Instance.SpawnNewMolecule(trtemp, Quaternion.Euler(0.0f, 0.0f, 0.0f), x, y);
                     gridPositionX += size;
                     count++;
                 }
