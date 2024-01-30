@@ -283,6 +283,53 @@ MonoBehaviour:
   Duodecane: {fileID: 5322893195698860260, guid: ba78b7a70896c84488c145de69e3b89e,
     type: 3}
   easySolutionGameObjects: []
+  TwoMethylPropane: {fileID: 4529743358960043760, guid: 70a3c3bf56c29ee428c75403e52269ef,
+    type: 3}
+  TwoMethylButane: {fileID: 649110952568581160, guid: af52aa09ba4cb514aaf57f9ee0826d7c,
+    type: 3}
+  TwoMethylPentane: {fileID: 2559894001132813424, guid: fb7848ab98176a5468b04349fac8d74e,
+    type: 3}
+  ThreeMethylPentane: {fileID: 1958680492326952152, guid: 595863d50ce6d3047a0fc49e2e6f47d4,
+    type: 3}
+  ThreeEthylPentane: {fileID: 2881882702056281397, guid: 413b1f510198384459067b868461c196,
+    type: 3}
+  TwoMethylHexane: {fileID: 7205353652290550952, guid: a2300b209723a7747bebc32a35915c38,
+    type: 3}
+  ThreeMethylHexane: {fileID: 6877894398748244506, guid: 03d29c864fbd668478309cdea50bcc5b,
+    type: 3}
+  ThreeEthylHexane: {fileID: 2517936381626821522, guid: 2dbf70bd807589e47b93549c13a79065,
+    type: 3}
+  TwoMethylHeptane: {fileID: 4723695681276911584, guid: 7b01f14dc74c99646863acb18db574b1,
+    type: 3}
+  ThreeMethylHeptane: {fileID: 5448668772004937304, guid: 334fc8b6a08d0964898f901f88975356,
+    type: 3}
+  ThreeEthylHeptane: {fileID: 4447324842896748718, guid: 66f4a3b6bee07b94c9bde63f6e59a56b,
+    type: 3}
+  FourMethylHeptane: {fileID: 2394294801574995292, guid: 5bfb666b7b5fb7448bb65ca3cf9e19d3,
+    type: 3}
+  FourPropylHeptane: {fileID: 1222765797059063903, guid: f9923405cfe28284997e9d0a577cbacd,
+    type: 3}
+  TwoMethylNonane: {fileID: 8931518272535046733, guid: 20b546c9411733245bcfa093d49d07f1,
+    type: 3}
+  ThreeMethylNonane: {fileID: 5760544856883780151, guid: 31a7c44fdc0ee454f90ba1a534350f27,
+    type: 3}
+  ThreeEthylNonane: {fileID: 8236101857550050792, guid: d6c334b3b7433054fb1230024ed7fe2d,
+    type: 3}
+  FourMethylNonane: {fileID: 8048981564532021893, guid: 51fe9e82f113e9242979acd395614d63,
+    type: 3}
+  FourEthylNonane: {fileID: 8429475828302428953, guid: 896769bab18716740bbed871f2f5cff7,
+    type: 3}
+  FourPropylNonane: {fileID: 4191273332304662829, guid: 3f3372eb72b2d7242b728f973ea76c57,
+    type: 3}
+  FiveMethylNonane: {fileID: 7014401464275151812, guid: 7248853a689553a409a8db0d65adbcbd,
+    type: 3}
+  FiveEthylNonane: {fileID: 2114442930175762902, guid: 195b990de3243664ba3e41f653197ddc,
+    type: 3}
+  FivePropylNonane: {fileID: 91687079833983604, guid: 82f688860d629334680debbdeceb1cd5,
+    type: 3}
+  FiveButylNonane: {fileID: 2345359477560126962, guid: ee8604034237fb949bd6e7233a411d5d,
+    type: 3}
+  mediumSolutionGameObjects: []
 --- !u!4 &143797302
 Transform:
   m_ObjectHideFlags: 0
@@ -3207,6 +3254,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 618881180}
   m_CullTransparentMesh: 1
+--- !u!1 &634987558
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 634987559}
+  m_Layer: 0
+  m_Name: Cyclohexane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &634987559
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634987558}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.5351443, y: -0.66527104, z: 8.01381}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &646928334
 GameObject:
   m_ObjectHideFlags: 0

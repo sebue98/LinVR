@@ -357,7 +357,6 @@ public class IUPACAlgorithm : MonoBehaviour
                 else
                     numberToDepictNamingReversing--;
             }
-            Debug.Log(numberToDepictNamingReversing);
             if (numberToDepictNamingReversing > 0) //Reverse naming
             {
                 integersForNamingList.Reverse();

@@ -147,7 +147,7 @@ public class GameMaster : MonoBehaviour
     public (int, int) platesToRemove = (-1, -1);
 
     //Definitions for Tasks
-    public List<(int, int)> pairListForShowingTaskSolution = new List<(int, int)>{(7,5), (8,5), (9,5), (10,5)};
+    public List<List<(int, int)>> pairListForShowingTaskSolution = new List<List<(int, int)>>();
     public int tempCountIterations = 0;
     public Button IUPACNameBoardButton;
     public bool easyTaskChoosen = false;
@@ -169,12 +169,48 @@ public class GameMaster : MonoBehaviour
     public Button mediumTaskCounterButton;
     public Button hardTaskCounterButton;
     public GameObject instantiatedSolutionsGameObject;
+
     public readonly List<string> easyTasks = new List<string>{"Methan", "Ethan", "Propan", "Butan", "Pentan", "Hexan", "Heptan", "Octan", "Nonan", "Decan", "Undecan", "Duodecan"};
-    public readonly List<string> mediumTasks = new List<string>{"2-MethylPropan" , "2-MethylButan", "2-MethylPentan" , "3-MethylPentan" , "3-EthylPentan" , "2-MethylHexan" , "3-MethylHexan", "3-EthylHexan" ,
-        "2-MethylHeptan", "3-MethylHeptan", "3-EthylHeptan", "4-MethylHeptan", "4-PropylHeptan", "2-MethylNonan", "3-MethylNonan", "3-EthylNonan", "4-MethylNonan",
-        "4-EthylNonan", "4-PropylNonan", "5-MethylNonan", "5-EthylNonan", "5-PropylNonan", "5-ButylNonan"};
-    public readonly List<string> hardTasks = new List<string>{ "Cyclohexane", "1-Ethyl-Cyclohexane", "1,3,-DiEthyl-Cyclohexane", "1-Ethyl-4-Methyl-Cyclohexane", "3-Butyl-1-Pentyl-Cyclohexane", "3-Ethyl-5-PropylNonan",
-                "4-Ethyl-2-MethylHexan", "2,5,-DiMethylHexan", "3,5,-DiEthylHeptan", "3-Methyl-5-PropylOctan", "3,3,-DiEthylOctan", "5-Cyclohexyl-3-MethylOctan", "5-Cyclohexyl-4-EthylOctan"};
+    public readonly List<string> mediumTasks = new List<string>{
+        "2-MethylPropan" ,
+        "2-MethylButan",
+        "2-MethylPentan" ,
+        "3-MethylPentan" ,
+        "3-EthylPentan" ,
+
+        "2-MethylHexan" ,
+        "3-MethylHexan",
+        "3-EthylHexan" ,
+
+        "2-MethylHeptan",
+        "3-MethylHeptan",
+        "3-EthylHeptan",
+        "4-MethylHeptan",
+        "4-PropylHeptan",
+
+        "2-MethylNonan",
+        "3-MethylNonan",
+        "3-EthylNonan",
+        "4-MethylNonan",
+        "4-EthylNonan",
+        "4-PropylNonan",
+        "5-MethylNonan",
+        "5-EthylNonan",
+        "5-PropylNonan",
+        "5-ButylNonan"};
+    public readonly List<string> hardTasks = new List<string>{ "Cyclohexane",
+        "1-Ethyl-Cyclohexane",
+        "1,3,-DiEthyl-Cyclohexane",
+        "1-Ethyl-4-Methyl-Cyclohexane",
+        "3-Butyl-1-Pentyl-Cyclohexane",
+        "3-Ethyl-5-PropylNonan",
+        "4-Ethyl-2-MethylHexan",
+        "2,5,-DiMethylHexan",
+        "3,5,-DiEthylHeptan",
+        "3-Methyl-5-PropylOctan",
+        "3,3,-DiEthylOctan",
+        "5-Cyclohexyl-3-MethylOctan",
+        "5-Cyclohexyl-4-EthylOctan"};
     public bool refreshAfterSuccesfullTask = false;
     //, 
         //"Tridecan", "Tetradecan", "Pentadecan", "Hexadecan", "Heptadecan", "Octadecan", "Nonadecan", "Eicosan", "Heneicosan"};
@@ -317,12 +353,21 @@ public class GameMaster : MonoBehaviour
         {
             if(tempCountIterations < carbonGameObjects.Count())
             {
+                Debug.Log(IUPACName.text);
+                string taskString = "new List<(int, int)> {";
+                List<(int, int)> tempList = new List<(int, int)>();
                 foreach (var carbon in carbonGameObjects)
                 {
-                    pairListForShowingTaskSolution.Add((carbon.GetComponent<Carbon>().positionXOnWhiteboard, carbon.GetComponent<Carbon>().positionYOnWhiteboard));
+                    tempList.Add((carbon.GetComponent<Carbon>().positionXOnWhiteboard, carbon.GetComponent<Carbon>().positionYOnWhiteboard));
+                    taskString += "(" + carbon.GetComponent<Carbon>().positionXOnWhiteboard.ToString() + "," + carbon.GetComponent<Carbon>().positionYOnWhiteboard.ToString() + "), ";
                     tempCountIterations++;
                 }
+                taskString += "},";
+                Debug.Log(taskString);
+                pairListForShowingTaskSolution.Add(tempList);
+                tempCountIterations = 0;
             }
+
             Instuctionboard.SetActive(true);
         }
         //Top Condition

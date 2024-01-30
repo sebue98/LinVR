@@ -110,6 +110,8 @@ public class CustomGrid : MonoBehaviour
                 temp.name = count.ToString();
                 temp.GetComponent<MoleculePlacer>().positionOfPlateX = x;
                 temp.GetComponent<MoleculePlacer>().positionOfPlateY = y;
+                if (x == 9 && y == 5)
+                    temp.GetComponent<Renderer>().material.color = new Color(255, 0, 0, 255);
                 whiteboard[x, y] = temp;
                 gridPositionX += size;
                 count++;
