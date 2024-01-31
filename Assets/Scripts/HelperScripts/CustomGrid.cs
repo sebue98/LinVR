@@ -23,8 +23,6 @@ public class CustomGrid : MonoBehaviour
             for (int x = 0; x < gridSizeX; x++)
             {
                 GameObject temp = Instantiate(spawnField, new Vector3((float)gridPositionX, (float)gridPositionY, 2.7f), Quaternion.identity);
-                if (x == 9 && y == 5)
-                    temp.GetComponent<Renderer>().material.color = new Color(255, 0, 0, 255);
                 temp.name = count.ToString();
                 temp.GetComponent<MoleculePlacer>().positionOfPlateX = x;
                 temp.GetComponent<MoleculePlacer>().positionOfPlateY = y;
@@ -106,8 +104,6 @@ public class CustomGrid : MonoBehaviour
                 temp.name = count.ToString();
                 temp.GetComponent<MoleculePlacer>().positionOfPlateX = x;
                 temp.GetComponent<MoleculePlacer>().positionOfPlateY = y;
-                if (x == 9 && y == 5)
-                    temp.GetComponent<Renderer>().material.color = new Color(255, 0, 0, 255);
                 whiteboard[x, y] = temp;
                 gridPositionX += size;
                 count++;
