@@ -240,11 +240,31 @@ public class IUPACAlgorithm : MonoBehaviour
         };
         //Max amount = 21
 
-        foreach(var subtree in subtreeList)
+        Dictionary<int, int> refactoringDicitonaryForLongestList = new Dictionary<int, int>();
+        if(longestChainList[0] > 0)
         {
-            cycleSortingList[subtree.parentNode].positionOfSubstituentInRing = subtree.parentNode;
-            cycleSortingList[subtree.parentNode].lengthOfSubstituent = subtree.length;
+            int count = 0;
+            foreach(var node in longestChainList)
+            {
+                refactoringDicitonaryForLongestList.Add(node, count);
+                count++;
+            }
+
+            foreach (var subtree in subtreeList)
+            {
+                cycleSortingList[refactoringDicitonaryForLongestList[subtree.parentNode]].positionOfSubstituentInRing = subtree.parentNode;
+                cycleSortingList[refactoringDicitonaryForLongestList[subtree.parentNode]].lengthOfSubstituent = subtree.length;
+            }
         }
+        else
+        {
+            foreach (var subtree in subtreeList)
+            {
+                cycleSortingList[subtree.parentNode].positionOfSubstituentInRing = subtree.parentNode;
+                cycleSortingList[subtree.parentNode].lengthOfSubstituent = subtree.length;
+            }
+        }
+
 
         int maxNumber = 21;
         List<SortingElementForCycles> sortingListForNaming = new List<SortingElementForCycles>()
@@ -350,6 +370,19 @@ public class IUPACAlgorithm : MonoBehaviour
             int lowerMidPoint = lengthOfChain / 2;
             int higherMidPoint = lowerMidPoint + 1;
             int numberToDepictNamingReversing = 0; //If <=0, naming will not be reversed, if >=1, naming will be reversed
+            if(GameMaster.Instance.benzenObjectsInTree.Count > 0 && !CycloOnly)
+            {
+                foreach(var cyclohexane in GameMaster.Instance.benzenObjectsInTree)
+                {
+                    if (longestChainList.Contains(cyclohexane.parentNodeInChain))
+                    {
+                        if (integersForNamingList[longestChainList.IndexOf(cyclohexane.parentNodeInChain)] >= higherMidPoint)
+                            numberToDepictNamingReversing++;
+                        else
+                            numberToDepictNamingReversing--;
+                    }
+                }
+            }
             foreach (var subtree in subtreeList)
             {
                 if (integersForNamingList[longestChainList.IndexOf(subtree.parentNode)] >= higherMidPoint)
@@ -431,7 +464,20 @@ public class IUPACAlgorithm : MonoBehaviour
             int midPoint = (lengthOfChain / 2) + 1;
             int numberToDepictNamingReversing = 0; //If <=0, naming will not be reversed, if >=1, naming will be reversed
 
-            foreach(var subtree in subtreeList)
+            if (GameMaster.Instance.benzenObjectsInTree.Count > 0 && !CycloOnly)
+            {
+                foreach (var cyclohexane in GameMaster.Instance.benzenObjectsInTree)
+                {
+                    if(longestChainList.Contains(cyclohexane.parentNodeInChain))
+                    {
+                        if (integersForNamingList[longestChainList.IndexOf(cyclohexane.parentNodeInChain)] >= midPoint)
+                            numberToDepictNamingReversing++;
+                        else
+                            numberToDepictNamingReversing--;
+                    }
+                }
+            }
+            foreach (var subtree in subtreeList)
             {
                 if (integersForNamingList[longestChainList.IndexOf(subtree.parentNode)] > midPoint)
                     numberToDepictNamingReversing++;

@@ -81,7 +81,7 @@ public class ButtonBoard : MonoBehaviour
             case "carbon":
                 return "Current Mode: Carbon";
             case "benzene":
-                return "Current Mode: Benzene";
+                return "Current Mode: Cyclohexane";
             case "Delete":
                 return "Current Mode: Delete Molecule";
             case "DoubleConnection":
