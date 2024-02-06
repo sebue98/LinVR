@@ -107,6 +107,11 @@ public class ButtonBoard : MonoBehaviour
                     errorMessageButton.GetComponent<Image>().color = new Color32(255, 82, 90, 255);
                     return "Cannot place Molecule here";
                 }
+            case "namingNotPossible":
+                {
+                    errorMessageButton.GetComponent<Image>().color = new Color32(255, 82, 90, 255);
+                    return "Cannot provide naming for this structure";
+                }
             default:
                 {
                     errorMessageButton.GetComponent<Image>().color = new Color(255, 255, 255);
@@ -285,12 +290,12 @@ public class ButtonBoard : MonoBehaviour
             GameMaster.Instance.OnResetDrawingBoardWhenTaskActive();
         GameMaster.Instance.OnResetDrawingBoard(false);
         GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-        int hardNumber = GetRandomIndex(GameMaster.Instance.hardTasks.Count);
+        int hardNumber = GetRandomIndex(GameMaster.Instance.extremeTasks.Count);
         while (lastHardTaskNumber.Contains(hardNumber))
-            hardNumber = GetRandomIndex(GameMaster.Instance.hardTasks.Count);
+            hardNumber = GetRandomIndex(GameMaster.Instance.extremeTasks.Count);
 
         lastHardTaskNumber.Add(hardNumber);
-        GameMaster.Instance.currentHardTaskToSolve = GameMaster.Instance.hardTasks[hardNumber];
+        GameMaster.Instance.currentHardTaskToSolve = GameMaster.Instance.extremeTasks[hardNumber];
         IUPACNameBoardTextMeshProComponent.text = GameMaster.Instance.currentHardTaskToSolve;
         GameMaster.Instance.onlyShowTaskName = true;
         hardTaskButton.interactable = false;

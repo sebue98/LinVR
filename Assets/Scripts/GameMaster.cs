@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +25,7 @@ public enum ErrorState
 {
     illegalDoubleConnection,
     illegalSpawnPlace,
+    namingNotPossible,
     blankBoard
 }
 
@@ -210,6 +212,16 @@ public class GameMaster : MonoBehaviour
         "3,3,-DiEthylOctan",
         "5-Cyclohexyl-3-MethylOctan",
         "5-Cyclohexyl-4-EthylOctan"};
+    public readonly List<string> extremeTasks = new List<string>
+    {
+        "3,3,-DiCyclohexyl-6-Ethyl-7-PentylTetradecan",
+        "3,3,10,10,13,-PentaEthyl-6,6,-DiPropylHeptadecan",
+        "3-Butyl-2-Ethyl-4-Methyl-5-Pentyl-1-Propyl-Cyclohexane",
+        "3,6,9,12,-TetraCyclohexyl-13-Ethyl-2-Methyl-4,7,10,-TriPropylPentadecan",
+        "5,6,-DiButyl-3,3,5,6,8,8,-HexaEthyl-4,4,7,7,-TetraPropylDecan",
+        "1,6,7,12,-TetraCyclohexyl-3,4,9,10,-TetraEthylDuodecan",
+        "7,16,-DiCyclohexyl-9,9,10,10,13,-PentaEthyl-12-Pentyl-15-PropylDocosan"
+    };
     public bool refreshAfterSuccesfullTask = false;
 
 
@@ -287,8 +299,8 @@ public class GameMaster : MonoBehaviour
             if (taskChoser == 3)
             {
                 IUPACName.text = nameToShow;
-                customGrid.ShowTaskSolutionOnGameBoard(solutionScript.pairListForShowingHardTaskSolution[hardTasks.IndexOf(nameToShow)]);
-                instantiatedSolutionsGameObject = Instantiate(solutionScript.hardSolutionGameObjects[hardTasks.IndexOf(nameToShow)]);
+                customGrid.ShowTaskSolutionOnGameBoard(solutionScript.pairListForShowingExtremeTaskSolutions[extremeTasks.IndexOf(nameToShow)]);
+                instantiatedSolutionsGameObject = Instantiate(solutionScript.extremeSolutionGameObjects[extremeTasks.IndexOf(nameToShow)]);
             }
 
             setShown = true;
@@ -347,6 +359,7 @@ public class GameMaster : MonoBehaviour
             // Destroy this instance if another one already exists
             Destroy(gameObject);
         }
+        currentErrorState = ErrorState.blankBoard;
         Instuctionboard.SetActive(false);
         numberDecisionBoard.SetActive(false);
         taskDecisionBoard.SetActive(false);
@@ -410,15 +423,22 @@ public class GameMaster : MonoBehaviour
         {
             if(!noRingsInChain)
             {
-                IUPACNameStructureElement tempElement = currentMoleculeGraph.findNamingForCycloAlkanes();
-                if(tempElement.lenghtOfChain > 6)
+                try
                 {
-                    IUPACName.text = iupac.CreateIUPACName(0, currentMoleculeGraph.findPathLengthsForIUPACName());
-                }
-                else
+                    IUPACNameStructureElement tempElement = currentMoleculeGraph.findNamingForCycloAlkanes();
+                    if (tempElement.lenghtOfChain > 6)
+                    {
+                        IUPACName.text = iupac.CreateIUPACName(0, currentMoleculeGraph.findPathLengthsForIUPACName());
+                    }
+                    else
+                    {
+                        IUPACName.text = iupac.CreateCycloName(tempElement);
+                    }
+                } catch( Exception e)
                 {
-                    IUPACName.text = iupac.CreateCycloName(tempElement);
+                    currentErrorState = ErrorState.namingNotPossible;
                 }
+
 
             }
             else

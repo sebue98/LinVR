@@ -353,6 +353,21 @@ MonoBehaviour:
   FiveCyclohexylFourEthylOCtane: {fileID: 4015228624173255315, guid: 6d746c1859257d047b3f4e10ce5e1149,
     type: 3}
   hardSolutionGameObjects: []
+  ExtremeOne: {fileID: 5739620976698429250, guid: a32fbb12aed096a4c96b30185aad2514,
+    type: 3}
+  ExtremeTwo: {fileID: 5739620976698429250, guid: 7cdfe0e9caf73b84d8e5bfed574ab32a,
+    type: 3}
+  ExtremeThree: {fileID: 5739620976698429250, guid: 78281e3d35847ff479a71e4ff01c92e0,
+    type: 3}
+  ExtremeFour: {fileID: 5739620976698429250, guid: 5b3426f044a467648acb559c5ea555fc,
+    type: 3}
+  ExtremeFive: {fileID: 4353806347581035318, guid: 2d1740b5fcbfa0f4a93072ca671a4b87,
+    type: 3}
+  ExtremeSix: {fileID: 6767948505283404388, guid: 192b55daced738f4989dbdb86c92b607,
+    type: 3}
+  ExtremeSeven: {fileID: 5739620976698429250, guid: a18e8d8a03cc3ee4882477597a5f57ba,
+    type: 3}
+  extremeSolutionGameObjects: []
 --- !u!4 &143797302
 Transform:
   m_ObjectHideFlags: 0
@@ -3277,37 +3292,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 618881180}
   m_CullTransparentMesh: 1
---- !u!1 &634987558
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 634987559}
-  m_Layer: 0
-  m_Name: Cyclohexane
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &634987559
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 634987558}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.5351443, y: -0.66527104, z: 8.01381}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &646928334
 GameObject:
   m_ObjectHideFlags: 0
