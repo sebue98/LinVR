@@ -172,7 +172,7 @@ public class GameMaster : MonoBehaviour
     public Button hardTaskCounterButton;
     public GameObject instantiatedSolutionsGameObject;
 
-    public readonly List<string> easyTasks = new List<string>{"Methan", "Ethan", "Propan", "Butan", "Pentan", "Hexan", "Heptan", "Octan", "Nonan", "Decan", "Undecan", "Duodecan"};
+    public readonly List<string> easyTasks = new List<string>{"Methan", "Propan", "Butan", "Pentan", "Hexan", "Octan", "Undecan", "Duodecan"};
     public readonly List<string> mediumTasks = new List<string>{
         "2-MethylPropan" ,
         "2-MethylButan",
@@ -182,7 +182,6 @@ public class GameMaster : MonoBehaviour
 
         "2-MethylHexan" ,
         "3-MethylHexan",
-        "3-EthylHexan" ,
 
         "2-MethylHeptan",
         "3-MethylHeptan",
@@ -195,7 +194,6 @@ public class GameMaster : MonoBehaviour
         "3-EthylNonan",
         "4-MethylNonan",
         "4-EthylNonan",
-        "4-PropylNonan",
         "5-MethylNonan",
         "5-EthylNonan",
         "5-PropylNonan",
