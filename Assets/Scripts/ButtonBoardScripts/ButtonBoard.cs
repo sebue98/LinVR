@@ -252,12 +252,12 @@ public class ButtonBoard : MonoBehaviour
         else
             GameMaster.Instance.OnResetDrawingBoardWhenTaskActive();
         GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-        int easyNumber = GetRandomIndex(GameMaster.Instance.easyTasks.Count);
+        int easyNumber = GetRandomIndex(GameMaster.Instance.mediumTasks.Count);
         while(lastEasyTaskNumber.Contains(easyNumber))
-            easyNumber = GetRandomIndex(GameMaster.Instance.easyTasks.Count);
+            easyNumber = GetRandomIndex(GameMaster.Instance.mediumTasks.Count);
 
         lastEasyTaskNumber.Add(easyNumber);
-        GameMaster.Instance.currentEasyTaskToSolve = GameMaster.Instance.easyTasks[easyNumber];
+        GameMaster.Instance.currentEasyTaskToSolve = GameMaster.Instance.mediumTasks[easyNumber];
         IUPACNameBoardTextMeshProComponent.text = GameMaster.Instance.currentEasyTaskToSolve;
         GameMaster.Instance.onlyShowTaskName = true;
         easyTaskButton.interactable = false;
@@ -271,12 +271,12 @@ public class ButtonBoard : MonoBehaviour
             GameMaster.Instance.OnResetDrawingBoardWhenTaskActive();
         GameMaster.Instance.OnResetDrawingBoard(false);
         GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-        int mediumNumber = GetRandomIndex(GameMaster.Instance.mediumTasks.Count);
+        int mediumNumber = GetRandomIndex(GameMaster.Instance.hardTasks.Count);
         while (lastMediumTaskNumber.Contains(mediumNumber))
-            mediumNumber = GetRandomIndex(GameMaster.Instance.mediumTasks.Count);
+            mediumNumber = GetRandomIndex(GameMaster.Instance.hardTasks.Count);
 
         lastMediumTaskNumber.Add(mediumNumber);
-        GameMaster.Instance.currentMediumTaskToSolve = GameMaster.Instance.mediumTasks[mediumNumber];
+        GameMaster.Instance.currentMediumTaskToSolve = GameMaster.Instance.hardTasks[mediumNumber];
         IUPACNameBoardTextMeshProComponent.text = GameMaster.Instance.currentMediumTaskToSolve;
         GameMaster.Instance.onlyShowTaskName = true;
         mediumTaskButton.interactable = false;

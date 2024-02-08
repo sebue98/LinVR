@@ -217,8 +217,8 @@ public class GameMaster : MonoBehaviour
         "3-Butyl-2-Ethyl-4-Methyl-5-Pentyl-1-Propyl-Cyclohexane",
         "3,6,9,12,-TetraCyclohexyl-13-Ethyl-2-Methyl-4,7,10,-TriPropylPentadecan",
         "5,6,-DiButyl-3,3,5,6,8,8,-HexaEthyl-4,4,7,7,-TetraPropylDecan",
-        "1,6,7,12,-TetraCyclohexyl-3,4,9,10,-TetraEthylDuodecan",
-        "7,16,-DiCyclohexyl-9,9,10,10,13,-PentaEthyl-12-Pentyl-15-PropylDocosan"
+        "1,6,7,12,-TetraCyclohexyl-3,4,9,10,-TetraEthylDuodecan"
+        //"7,16,-DiCyclohexyl-9,9,10,10,13,-PentaEthyl-12-Pentyl-15-PropylDocosan"
     };
     public bool refreshAfterSuccesfullTask = false;
 
@@ -285,14 +285,14 @@ public class GameMaster : MonoBehaviour
             if(taskChoser == 1)
             {
                 IUPACName.text = nameToShow;
-                customGrid.ShowTaskSolutionOnGameBoard(solutionScript.pairListForShowingEasyTaskSolution[easyTasks.IndexOf(nameToShow)]);
-                instantiatedSolutionsGameObject = Instantiate(solutionScript.easySolutionGameObjects[easyTasks.IndexOf(nameToShow)]);
+                customGrid.ShowTaskSolutionOnGameBoard(solutionScript.pairListForShowingMediumTaskSolution[mediumTasks.IndexOf(nameToShow)]);
+                instantiatedSolutionsGameObject = Instantiate(solutionScript.mediumSolutionGameObjects[mediumTasks.IndexOf(nameToShow)]);
             }
             if(taskChoser == 2)
             {
                 IUPACName.text = nameToShow;
-                customGrid.ShowTaskSolutionOnGameBoard(solutionScript.pairListForShowingMediumTaskSolution[mediumTasks.IndexOf(nameToShow)]);
-                instantiatedSolutionsGameObject = Instantiate(solutionScript.mediumSolutionGameObjects[mediumTasks.IndexOf(nameToShow)]);
+                customGrid.ShowTaskSolutionOnGameBoard(solutionScript.pairListForShowingHardTaskSolution[hardTasks.IndexOf(nameToShow)]);
+                instantiatedSolutionsGameObject = Instantiate(solutionScript.hardSolutionGameObjects[hardTasks.IndexOf(nameToShow)]);
             }
             if (taskChoser == 3)
             {

@@ -6,15 +6,15 @@ public class SolutionsScript : MonoBehaviour
 {
     //EasySolutions
     public GameObject Methane;
-    public GameObject Ethane;
+    //public GameObject Ethane;
     public GameObject Propane;
     public GameObject Butane;
     public GameObject Pentane;
     public GameObject Hexane;
-    public GameObject Heptane;
+    //public GameObject Heptane;
     public GameObject Octane;
     public GameObject Nonane;
-    public GameObject Decane;
+    //public GameObject Decane;
     public GameObject Undecane;
     public GameObject Duodecane;
 
@@ -22,15 +22,15 @@ public class SolutionsScript : MonoBehaviour
 
     public List<List<(int, int)>> pairListForShowingEasyTaskSolution = new List<List<(int, int)>> {
     new List<(int, int)> {(9, 5)}, //Methan
-    new List<(int, int)> {(8,5) , (9,5) }, //Ethan
+    //new List<(int, int)> {(8,5) , (9,5) }, //Ethan
     new List<(int, int)> {(8,5) , (9,5), (10,5) }, //Propan
     new List<(int, int)> {(7,5), (8,5), (9,5),(10,5) }, //Butan
     new List<(int, int)> {(7,5), (8,5), (9,5),(10,5), (11,5)}, //Pentan
     new List<(int, int)> {(7,5), (8,5), (9,5),(10,5), (11,5), (12,5)}, //Hexan
-    new List<(int, int)> {(6,5), (7,5), (8,5),(9,5),(10,5), (11,5), (12,5)}, //Heptan
+    //new List<(int, int)> {(6,5), (7,5), (8,5),(9,5),(10,5), (11,5), (12,5)}, //Heptan
     new List<(int, int)> {(6,5), (7,5), (8,5),(9,5),(10,5), (11,5), (12,5), (13,5)}, //Octan
     new List<(int, int)> {(6,5), (7,5), (8,5),(9,5),(10,5), (11,5), (12,5), (13,5), (14,5)}, //Nonan
-    new List<(int, int)> {(5,5), (6,5), (7,5),(8,5),(9,5),(10,5), (11,5), (12,5), (13,5), (14,5)}, //Decan
+    //new List<(int, int)> {(5,5), (6,5), (7,5),(8,5),(9,5),(10,5), (11,5), (12,5), (13,5), (14,5)}, //Decan
     new List<(int, int)> {(5,5), (6,5), (7,5),(8,5),(9,5),(10,5), (11,5), (12,5), (13,5), (14,5), (15,5)}, //Undecan
     new List<(int, int)> {(5,5), (6,5), (7,5),(8,5),(9,5),(10,5), (11,5), (12,5), (13,5), (14,5), (15,5), (16,5)}}; //Duodecan
 
@@ -42,7 +42,7 @@ public class SolutionsScript : MonoBehaviour
 
     public GameObject TwoMethylHexane;
     public GameObject ThreeMethylHexane;
-    public GameObject ThreeEthylHexane;
+    //public GameObject ThreeEthylHexane;
     public GameObject TwoMethylHeptane;
 
     public GameObject ThreeMethylHeptane;
@@ -56,7 +56,7 @@ public class SolutionsScript : MonoBehaviour
     public GameObject FourMethylNonane;
     public GameObject FourEthylNonane;
 
-    public GameObject FourPropylNonane;
+    //public GameObject FourPropylNonane;
     public GameObject FiveMethylNonane;
     public GameObject FiveEthylNonane;
     public GameObject FivePropylNonane;
@@ -72,7 +72,7 @@ public class SolutionsScript : MonoBehaviour
     new List<(int, int)> {(7,5), (8,5), (9,5), (10,5), (11,5), (9,6), (9,7) }, //3-EthylPentan
     new List<(int, int)> {(7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (8,6) }, //2-MethylHexan
     new List<(int, int)> {(7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (9,6) }, //3-MethylHexan
-    new List<(int, int)> {(7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (9,6), (9,7) }, //3-EthylHexan
+    //new List<(int, int)> {(7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (9,6), (9,7) }, //3-EthylHexan
     new List<(int, int)> {(6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (7,6) }, //2-MethylHeptan
     new List<(int, int)> {(6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (8,6) }, //3-MethylHeptan
     new List<(int, int)> {(6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (8,6), (8,7) }, //3-EthylHeptan
@@ -83,7 +83,7 @@ public class SolutionsScript : MonoBehaviour
     new List<(int, int)> {(5,5), (6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (13,5), (7,6), (7,7)}, //3-EthylNonan
     new List<(int, int)> {(5,5), (6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (13,5), (8,6)}, //4-MethylNonan
     new List<(int, int)> {(5,5), (6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (13,5), (8,6), (8,7)}, //4-EthylNonan
-    new List<(int, int)> {(5,5), (6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (13,5), (8,6), (8,7), (8,8)}, //4-PropylNonan
+    //new List<(int, int)> {(5,5), (6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (13,5), (8,6), (8,7), (8,8)}, //4-PropylNonan
     new List<(int, int)> {(5,5), (6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (13,5), (9,6)}, //5-MethylNonan
     new List<(int, int)> {(5,5), (6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (13,5), (9,6), (9,7)}, //5-EthylNonan
     new List<(int, int)> {(5,5), (6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (13,5), (9,6), (9,7), (9,8)}, //5-PropylNonan
@@ -126,7 +126,7 @@ public class SolutionsScript : MonoBehaviour
     public GameObject ExtremeFour;
     public GameObject ExtremeFive;
     public GameObject ExtremeSix;
-    public GameObject ExtremeSeven;
+    //public GameObject ExtremeSeven;
 
     public List<GameObject> extremeSolutionGameObjects = new List<GameObject>();
 
@@ -137,8 +137,8 @@ public class SolutionsScript : MonoBehaviour
         new List<(int, int)> {(7,5), (8,4), (8,6), (9,4), (9,6), (10,5), (6,5), (5,5), (4,5), (4,6), (4,7), (9,3), (9,2), (10,2), (11,2), (9,7), (9,8), (9,9), (11,5), (12,5), (8,3), },
         new List<(int, int)> {(3,5), (4,5), (5,5), (6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (13,5), (14,5), (15,5), (16,5), (17,5), (5,4), (4,3), (6,3), (4,2), (6,2), (5,1), (8,4), (7,3), (9,3), (7,2), (9,2), (8,1), (11,4), (10,3), (12,3), (10,2), (12,2), (11,1), (14,4), (13,3), (15,3), (13,2), (15,2), (14,1), (4,6), (6,6), (6,7), (6,8), (9,6), (9,7), (9,8), (12,6), (12,7), (12,8), (15,6), (15,7), },
         new List<(int, int)> {(4,5), (5,5), (6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (13,5), (6,6), (6,7), (6,4), (6,3), (11,6), (11,7), (11,4), (11,3), (10,6), (10,7), (10,8), (10,4), (10,3), (10,2), (7,4), (7,3), (7,2), (7,6), (7,7), (7,8), (8,6), (8,7), (8,8), (8,9), (9,4), (9,3), (9,2), (9,1), (8,4), (8,3), (9,6), (9,7), },
-        new List<(int, int)> {(4,5), (5,5), (6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (13,5), (14,5), (15,5), (16,5), (17,6), (17,4), (18,6), (18,4), (19,5), (2,4), (2,6), (1,4), (3,5), (1,6), (0,5), (9,4), (8,3), (10,3), (8,2), (10,2), (9,1), (9,7), (11,7), (9,8), (10,6), (11,8), (10,9), (6,4), (6,3), (7,6), (7,7), (12,4), (12,3), (13,6), (13,7), },
-        new List<(int, int)> {(3,9), (3,8), (3,7), (3,6), (3,5), (4,5), (5,5), (6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (13,5), (14,5), (15,5), (16,5), (16,4), (16,3), (16,2), (16,1), (6,4), (6,3), (6,2), (9,6), (9,7), (9,8), (11,4), (11,3), (11,6), (11,7), (12,4), (12,3), (12,6), (12,7), (8,8), (7,8), (8,4), (8,3), (4,7), (6,7), (4,8), (5,6), (6,8), (5,9), (14,4), (13,3), (15,3), (13,2), (15,2), (14,2), }
+        new List<(int, int)> {(4,5), (5,5), (6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (13,5), (14,5), (15,5), (16,5), (17,6), (17,4), (18,6), (18,4), (19,5), (2,4), (2,6), (1,4), (3,5), (1,6), (0,5), (9,4), (8,3), (10,3), (8,2), (10,2), (9,1), (9,7), (11,7), (9,8), (10,6), (11,8), (10,9), (6,4), (6,3), (7,6), (7,7), (12,4), (12,3), (13,6), (13,7), }
+        //new List<(int, int)> {(3,5), (4,5), (5,5), (6,5), (7,5), (8,5), (9,5), (10,5), (11,5), (12,5), (13,5), (14,5), (15,5), (16,5), (6,4), (6,3), (6,2), (9,6), (9,7), (9,8), (11,4), (11,3), (11,6), (11,7), (12,4), (12,3), (12,6), (12,7), (8,8), (7,8), (8,4), (8,3), (4,7), (6,7), (4,8), (5,6), (6,8), (5,9), (14,4), (13,3), (15,3), (13,2), (15,2), (14,2), }
     };
 
 
@@ -150,7 +150,7 @@ public class SolutionsScript : MonoBehaviour
         extremeSolutionGameObjects.Add(ExtremeFour);
         extremeSolutionGameObjects.Add(ExtremeFive);
         extremeSolutionGameObjects.Add(ExtremeSix);
-        extremeSolutionGameObjects.Add(ExtremeSeven);
+        //extremeSolutionGameObjects.Add(ExtremeSeven);
 
         hardSolutionGameObjects.Add(OneEthylCyclohexane);
         hardSolutionGameObjects.Add(OneThreeDiEthylCyclohexane);
@@ -171,7 +171,7 @@ public class SolutionsScript : MonoBehaviour
         mediumSolutionGameObjects.Add(ThreeEthylPentane);
         mediumSolutionGameObjects.Add(TwoMethylHexane);
         mediumSolutionGameObjects.Add(ThreeMethylHexane);
-        mediumSolutionGameObjects.Add(ThreeEthylHexane);
+        //mediumSolutionGameObjects.Add(ThreeEthylHexane);
         mediumSolutionGameObjects.Add(TwoMethylHeptane);
         mediumSolutionGameObjects.Add(ThreeMethylHeptane);
         mediumSolutionGameObjects.Add(ThreeEthylHeptane);
@@ -182,22 +182,22 @@ public class SolutionsScript : MonoBehaviour
         mediumSolutionGameObjects.Add(ThreeEthylNonane);
         mediumSolutionGameObjects.Add(FourMethylNonane);
         mediumSolutionGameObjects.Add(FourEthylNonane);
-        mediumSolutionGameObjects.Add(FourPropylNonane);
+        //mediumSolutionGameObjects.Add(FourPropylNonane);
         mediumSolutionGameObjects.Add(FiveMethylNonane);
         mediumSolutionGameObjects.Add(FiveEthylNonane);
         mediumSolutionGameObjects.Add(FivePropylNonane);
         mediumSolutionGameObjects.Add(FiveButylNonane);
 
         easySolutionGameObjects.Add(Methane);
-        easySolutionGameObjects.Add(Ethane);
+        //easySolutionGameObjects.Add(Ethane);
         easySolutionGameObjects.Add(Propane);
         easySolutionGameObjects.Add(Butane);
         easySolutionGameObjects.Add(Pentane);
         easySolutionGameObjects.Add(Hexane);
-        easySolutionGameObjects.Add(Heptane);
+        //easySolutionGameObjects.Add(Heptane);
         easySolutionGameObjects.Add(Octane);
         easySolutionGameObjects.Add(Nonane);
-        easySolutionGameObjects.Add(Decane);
+        //easySolutionGameObjects.Add(Decane);
         easySolutionGameObjects.Add(Undecane);
         easySolutionGameObjects.Add(Duodecane);
     }
