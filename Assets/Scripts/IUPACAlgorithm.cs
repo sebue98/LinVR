@@ -50,6 +50,31 @@ public class IUPACAlgorithm : MonoBehaviour
 
         if(GameMaster.Instance.onlyShowTaskName)
         {
+            if (GameMaster.Instance.mediumTaskChoosen)
+            {
+                if (!returnString.Equals(GameMaster.Instance.currentMediumTaskToSolve))
+                {
+                    GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 82, 90, 255);
+                    return GameMaster.Instance.currentMediumTaskToSolve;
+                }
+                else
+                {
+                    GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+                    GameMaster.Instance.mediumTasksSolved++;
+                    GameMaster.Instance.mediumTaskCounterTextMeshProComponent.text = GameMaster.Instance.mediumTasksSolved.ToString() + "/3";
+                    GameMaster.Instance.mediumTaskButton.interactable = true;
+                    GameMaster.Instance.onlyShowTaskName = false;
+                    if (GameMaster.Instance.mediumTasksSolved == 3)
+                    {
+                        GameMaster.Instance.mediumTaskCounterButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+                        GameMaster.Instance.mediumTaskButton.interactable = false;
+                    }
+                    GameMaster.Instance.OnResetDrawingBoard(false);
+                    GameMaster.Instance.refreshAfterSuccesfullTask = true;
+                    return GameMaster.Instance.currentMediumTaskToSolve;
+                }
+            }
+
             if (GameMaster.Instance.hardTaskChoosen)
             {
                 if (!returnString.Equals(GameMaster.Instance.currentHardTaskToSolve))
@@ -347,7 +372,7 @@ public class IUPACAlgorithm : MonoBehaviour
     public List<string> CalculateSubNames(List<LengthAndListAndParentNodePair> subtreeList, List<int> longestChainList, bool CycloOnly)
     {
         string[] branchedChainNames = {"", "Methyl", "Ethyl", "Propyl", "Butyl", "Pentyl", "Hexyl", "Heptyl", "Octyl", "Nonyl" };
-        string[] prefixesForSubstituents = { "", "", "Di", "Tri", "Tetra", "Penta", "Hexa", "Hepta", "Octa", "Nona", "Deca", "Undeca", "Duodeca" };
+        string[] prefixesForSubstituents = { "", "", "Di", "Tri", "Tetra", "Penta", "Hexa", "Hepta", "Octa", "Nona", "Deca", "Undeca", "Dodeca" };
         //Sorted alphabetically: Butyl, Ethyl, Heptyl, Hexyl, Methyl, Nonyl, Octyl, Pentyl, Propyl
         List<string> iupacSubtreeNames = new List<string>();
         List<int> integersForNamingList = CreateList(longestChainList.Count());
