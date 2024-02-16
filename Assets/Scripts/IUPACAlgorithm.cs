@@ -77,6 +77,23 @@ public class IUPACAlgorithm : MonoBehaviour
 
             if (GameMaster.Instance.hardTaskChoosen)
             {
+                if(GameMaster.Instance.currentHardTaskToSolve == "3-Butyl-2-Ethyl-4-Methyl-5-Pentyl-1-Propyl-Cyclohexane" &&
+                    returnString == "3-Butyl-4-Ethyl-2-Methyl-1-Pentyl-5-Propyl-Cyclohexane")
+                {
+                    GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+                    GameMaster.Instance.hardTasksSolved++;
+                    GameMaster.Instance.hardTaskCounterTextMeshProComponent.text = GameMaster.Instance.hardTasksSolved.ToString() + "/3";
+                    GameMaster.Instance.hardTaskButton.interactable = true;
+                    GameMaster.Instance.onlyShowTaskName = false;
+                    if (GameMaster.Instance.hardTasksSolved == 3)
+                    {
+                        GameMaster.Instance.hardTaskCounterButton.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+                        GameMaster.Instance.hardTaskButton.interactable = false;
+                    }
+                    GameMaster.Instance.OnResetDrawingBoard(false);
+                    GameMaster.Instance.refreshAfterSuccesfullTask = true;
+                    return GameMaster.Instance.currentHardTaskToSolve;
+                }
                 if (!returnString.Equals(GameMaster.Instance.currentHardTaskToSolve))
                 {
                     GameMaster.Instance.IUPACNameBoardButton.GetComponent<Image>().color = new Color32(255, 82, 90, 255);
