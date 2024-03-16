@@ -130,8 +130,8 @@ public class IUPACAlgorithm : MonoBehaviour
         List<int> longestChainList = namingElement.longestChainList;
         List<string> subtreeNames = CalculateSubNames(subtreeList, longestChainList, false);
 
-        string[] startMolecules = { "Methan", "Ethan", "Propan", "Butan", "Pentan", "Hexan", "Heptan", "Octan", "Nonan", "Decan", "Undecan", "Duodecan",
-        "Tridecan", "Tetradecan", "Pentadecan", "Hexadecan", "Heptadecan", "Octadecan", "Nonadecan", "Eicosan", "Heneicosan"};
+        string[] startMolecules = { "Methane", "Ethane", "Propane", "Butane", "Pentane", "Hexane", "Heptane", "Octane", "Nonane", "Decane", "Undecane", "Dodecane",
+        "Tridecane", "Tetradecane", "Pentadecane", "Hexadecane", "Heptadecane", "Octadecane", "Nonadecane", "Eicosane", "Heneicosane"};
         string[] prefixes = {"", "Hen", "Do", "Tri", "Tetra", "Penta", "Hexa", "Hepta", "Octa", "Nona" }; //Will only be used for molecules with size > 21
         string[] suffixes = { "n", "en", "in" }; //single connection, double connection, triple connection
         string[] middlePart = {"", "deca", "cosa", "triaconta", "tetraconta", "pentaconta", "hexaconta", "heptaconta", "octaconta", "nonaconta"};
@@ -223,7 +223,7 @@ public class IUPACAlgorithm : MonoBehaviour
                 }
             }
 
-            if(GameMaster.Instance.hardTaskChoosen)
+            if (GameMaster.Instance.hardTaskChoosen)
             {
                 if (!lengthName.Equals(GameMaster.Instance.currentHardTaskToSolve))
                 {
@@ -271,7 +271,7 @@ public class IUPACAlgorithm : MonoBehaviour
     public List<string> CalculateSubNamesForCycles(List<LengthAndListAndParentNodePair> subtreeList, List<int> longestChainList, bool CycloOnly)
     {
         string[] branchedChainNames = { "", "Methyl", "Ethyl", "Propyl", "Butyl", "Pentyl", "Hexyl", "Heptyl", "Octyl", "Nonyl" };
-        string[] prefixesForSubstituents = { "", "", "Di", "Tri", "Tetra", "Penta", "Hexa", "Hepta", "Octa", "Nona", "Deca", "Undeca", "Duodeca" };
+        string[] prefixesForSubstituents = { "", "", "Di", "Tri", "Tetra", "Penta", "Hexa", "Hepta", "Octa", "Nona", "Deca", "Undeca", "Dodeca" };
         List<int> integersForNamingList = CreateList(longestChainList.Count());
         List<string> iupacSubtreeNames = new List<string>();
         SortedDictionary<string, List<int>> nameAndPositionsOfSubstituent = new SortedDictionary<string, List<int>>();
@@ -521,6 +521,8 @@ public class IUPACAlgorithm : MonoBehaviour
             }
             foreach (var subtree in subtreeList)
             {
+                if (integersForNamingList[longestChainList.IndexOf(subtree.parentNode)] == midPoint)
+                    continue;
                 if (integersForNamingList[longestChainList.IndexOf(subtree.parentNode)] > midPoint)
                     numberToDepictNamingReversing++;
                 else

@@ -172,52 +172,52 @@ public class GameMaster : MonoBehaviour
     public Button hardTaskCounterButton;
     public GameObject instantiatedSolutionsGameObject;
 
-    public readonly List<string> easyTasks = new List<string>{"Methan", "Propan", "Butan", "Pentan", "Hexan", "Octan", "Undecan", "Dodecan"};
+    public readonly List<string> easyTasks = new List<string>{"Methane", "Propane", "Butane", "Pentane", "Hexane", "Octane", "Undecane", "Dodecane"};
     public readonly List<string> mediumTasks = new List<string>{
-        "2-MethylPropan" ,
-        "2-MethylButan",
-        "2-MethylPentan" ,
-        "3-MethylPentan" ,
-        "3-EthylPentan" ,
+        "2-MethylPropane" ,
+        "2-MethylButane",
+        "2-MethylPentane" ,
+        "3-MethylPentane" ,
+        "3-EthylPentane" ,
 
-        "2-MethylHexan" ,
-        "3-MethylHexan",
+        "2-MethylHexane" ,
+        "3-MethylHexane",
 
-        "2-MethylHeptan",
-        "3-MethylHeptan",
-        "3-EthylHeptan",
-        "4-MethylHeptan",
-        "4-PropylHeptan",
+        "2-MethylHeptane",
+        "3-MethylHeptane",
+        "3-EthylHeptane",
+        "4-MethylHeptane",
+        "4-PropylHeptane",
 
-        "2-MethylNonan",
-        "3-MethylNonan",
-        "3-EthylNonan",
-        "4-MethylNonan",
-        "4-EthylNonan",
-        "5-MethylNonan",
-        "5-EthylNonan",
-        "5-PropylNonan",
-        "5-ButylNonan"};
+        "2-MethylNonane",
+        "3-MethylNonane",
+        "3-EthylNonane",
+        "4-MethylNonane",
+        "4-EthylNonane",
+        "5-MethylNonane",
+        "5-EthylNonane",
+        "5-PropylNonane",
+        "5-ButylNonane"};
     public readonly List<string> hardTasks = new List<string>{ 
         "1-Ethyl-Cyclohexane",
         "1,3,-DiEthyl-Cyclohexane",
         "3-Butyl-1-Pentyl-Cyclohexane",
-        "3-Ethyl-5-PropylNonan",
-        "4-Ethyl-2-MethylHexan",
-        "2,5,-DiMethylHexan",
-        "3,5,-DiEthylHeptan",
-        "3-Methyl-5-PropylOctan",
-        "3,3,-DiEthylOctan",
-        "5-Cyclohexyl-3-MethylOctan",
-        "5-Cyclohexyl-4-EthylOctan"};
+        "3-Ethyl-5-PropylNonane",
+        "4-Ethyl-2-MethylHexane",
+        "2,5,-DiMethylHexane",
+        "3,5,-DiEthylHeptane",
+        "3-Methyl-5-PropylOctane",
+        "3,3,-DiEthylOctane",
+        "5-Cyclohexyl-3-MethylOctane",
+        "5-Cyclohexyl-4-EthylOctane"};
     public readonly List<string> extremeTasks = new List<string>
     {
-        "3,3,-DiCyclohexyl-6-Ethyl-7-PentylTetradecan",
-        "3,3,10,10,13,-PentaEthyl-6,6,-DiPropylHeptadecan",
+        "3,3,-DiCyclohexyl-6-Ethyl-7-PentylTetradecane",
+        "3,3,10,10,13,-PentaEthyl-6,6,-DiPropylHeptadecane",
         "3-Butyl-2-Ethyl-4-Methyl-5-Pentyl-1-Propyl-Cyclohexane",
-        "3,6,9,12,-TetraCyclohexyl-13-Ethyl-2-Methyl-4,7,10,-TriPropylPentadecan",
-        "5,6,-DiButyl-3,3,5,6,8,8,-HexaEthyl-4,4,7,7,-TetraPropylDecan",
-        "1,6,7,12,-TetraCyclohexyl-3,4,9,10,-TetraEthylDodecan"
+        "3,6,9,12,-TetraCyclohexyl-13-Ethyl-2-Methyl-4,7,10,-TriPropylPentadecane",
+        "5,6,-DiButyl-3,3,5,6,8,8,-HexaEthyl-4,4,7,7,-TetraPropylDecane",
+        "1,6,7,12,-TetraCyclohexyl-3,4,9,10,-TetraEthylDodecane"
         //"7,16,-DiCyclohexyl-9,9,10,10,13,-PentaEthyl-12-Pentyl-15-PropylDocosan"
     };
     public bool refreshAfterSuccesfullTask = false;
